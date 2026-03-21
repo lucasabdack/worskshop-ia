@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Helper DS 2026 — Design Tokens
+   ============================================================ */
+
+@theme inline {
+  /* ---------- Primary ---------- */
+  --color-primary-pure:      #321CB2;
+  --color-primary-light:     #5B4FCA;
+  --color-primary-lightest:  #C8C2EB;
+  --color-primary-dark:      #1E1180;
+  --color-primary-darkest:   #0D0850;
+
+  /* ---------- Success ---------- */
+  --color-success-pure:      #34C47C;
+  --color-success-light:     #E8F5EE;
+  --color-success-low:       #0F5C33;
+
+  /* ---------- Warning ---------- */
+  --color-warning-pure:      #F5A623;
+  --color-warning-light:     #FFF4E0;
+  --color-warning-low:       #7A4800;
+
+  /* ---------- Error ---------- */
+  --color-error-pure:        #E03A3A;
+  --color-error-light:       #FDEAEA;
+
+  /* ---------- Info ---------- */
+  --color-info-pure:         #4A90D9;
+  --color-info-light:        #E8F1FB;
+
+  /* ---------- Neutral ---------- */
+  --color-neutral-pure:      #E5E3E3;
+  --color-neutral-light:     #F0F0F0;
+  --color-neutral-dark:      #5A5A5A;
+  --color-neutral-darkest:   #1A1A1A;
+
+  /* ---------- Brand Teal-Gray ---------- */
+  --color-teal-gray:         #8B9EAD;
+
+  /* ---------- Font Families ---------- */
+  --font-display: "Livvic", sans-serif;
+  --font-body:    "Open Sans", sans-serif;
+
+  /* ---------- Border Radius ---------- */
+  --radius-card:        12px;
+  --radius-pill:        100px;
+  --radius-bottom-sheet: 12px;
+
+  /* ---------- Shadows ---------- */
+  --shadow-level-1: 0 1px 4px rgba(0,0,0,0.08);
+  --shadow-level-2: 0 2px 8px rgba(0,0,0,0.10);
+  --shadow-level-3: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* ============================================================
+   Base Styles
+   ============================================================ */
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #1A1A1A;
+  }
+
+  html {
+    font-family: var(--font-body);
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+  }
+}
+
+/* ============================================================
+   DS Component Utilities
+   ============================================================ */
+
+@layer utilities {
+  /* btn-primary baseline */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 24px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-primary-pure);
+    color: #fff;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+    transition: opacity 0.15s;
+  }
+
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* btn-ghost */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 24px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--color-primary-pure);
+    color: var(--color-primary-pure);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 16px;
+    background: transparent;
+    transition: background 0.15s;
+  }
+
+  .btn-ghost:hover { background: var(--color-primary-lightest); }
+
+  /* chip */
+  .chip-default {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-neutral-pure);
+    background: #fff;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-neutral-dark);
+    cursor: pointer;
+  }
+
+  .chip-active {
+    border-color: var(--color-primary-pure);
+    background: var(--color-primary-lightest);
+    color: var(--color-primary-pure);
+    font-weight: 600;
+  }
+
+  /* card */
+  .card {
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-neutral-pure);
+    background: #fff;
+    box-shadow: var(--shadow-level-1);
+  }
+
+  /* infobar */
+  .infobar-default {
+    background: var(--color-primary-pure);
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  .infobar-success {
+    background: var(--color-success-pure);
+    color: var(--color-success-low);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  .infobar-warning {
+    background: var(--color-warning-light);
+    color: var(--color-warning-low);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  /* bottom-sheet */
+  .bottom-sheet {
+    border-radius: var(--radius-bottom-sheet) var(--radius-bottom-sheet) 0 0;
+    box-shadow: var(--shadow-level-3);
+    background: #fff;
+    padding: 24px;
+  }
+
+  /* badge */
+  .badge-active {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: var(--color-success-light);
+    color: var(--color-success-pure);
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--font-body);
+  }
+}

@@ -1,0 +1,416 @@
+// Help App — Prisma Schema
+// Helper DS 2026 · https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+// ============================================================
+// Auth / Users
+// ============================================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  phone         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  addresses     Address[]
+  orders        Order[]
+  reviews       Review[]
+  subscription  Subscription?
+  savedCards    SavedCard[]
+  conversations Conversation[]
+  notifications Notification[]
+  accounts      Account[]
+  sessions      Session[]
+
+  @@map("users")
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ============================================================
+// Providers (Prestadores)
+// ============================================================
+
+model Provider {
+  id           String   @id @default(cuid())
+  name         String
+  bio          String?
+  image        String?
+  phone        String?
+  averageRate  Decimal  @default(0) @db.Decimal(3, 2)
+  totalReviews Int      @default(0)
+  verified     Boolean  @default(false)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  services    ProviderService[]
+  orders      Order[]
+  reviews     Review[]
+  compliments ProviderCompliment[]
+
+  @@map("providers")
+}
+
+// ============================================================
+// Services / Categories
+// ============================================================
+
+model Category {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  icon   String?
+  slug   String  @unique
+  active Boolean @default(true)
+
+  services Service[]
+
+  @@map("categories")
+}
+
+model Service {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  categoryId  String
+  active      Boolean @default(true)
+
+  category         Category          @relation(fields: [categoryId], references: [id])
+  providerServices ProviderService[]
+  orderItems       OrderItem[]
+
+  @@map("services")
+}
+
+model ProviderService {
+  id          String    @id @default(cuid())
+  providerId  String
+  serviceId   String
+  price       Decimal   @db.Decimal(10, 2)
+  priceType   PriceType @default(FIXED)
+  description String?
+  active      Boolean   @default(true)
+
+  provider Provider @relation(fields: [providerId], references: [id])
+  service  Service  @relation(fields: [serviceId], references: [id])
+
+  @@unique([providerId, serviceId])
+  @@map("provider_services")
+}
+
+enum PriceType {
+  FIXED
+  HOURLY
+  FROM
+}
+
+// ============================================================
+// Addresses
+// ============================================================
+
+model Address {
+  id           String   @id @default(cuid())
+  userId       String
+  label        String   @default("Casa")
+  street       String
+  number       String
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  zipCode      String
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id])
+  orders Order[]
+
+  @@map("addresses")
+}
+
+// ============================================================
+// Orders (Pedidos)
+// ============================================================
+
+model Order {
+  id          String      @id @default(cuid())
+  userId      String
+  providerId  String
+  addressId   String
+  status      OrderStatus @default(PENDING)
+  type        OrderType   @default(ONE_TIME)
+  scheduledAt DateTime
+  notes       String?
+  total       Decimal     @db.Decimal(10, 2)
+  paidViaClub Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  user         User        @relation(fields: [userId], references: [id])
+  provider     Provider    @relation(fields: [providerId], references: [id])
+  address      Address     @relation(fields: [addressId], references: [id])
+  items        OrderItem[]
+  payment      Payment?
+  review       Review?
+  messages     Message[]
+  conversation Conversation?
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  serviceId String
+  price     Decimal @db.Decimal(10, 2)
+  quantity  Int     @default(1)
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  service Service @relation(fields: [serviceId], references: [id])
+
+  @@map("order_items")
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}
+
+enum OrderType {
+  ONE_TIME
+  RECURRING
+}
+
+// ============================================================
+// Payments
+// ============================================================
+
+model Payment {
+  id               String        @id @default(cuid())
+  orderId          String        @unique
+  amount           Decimal       @db.Decimal(10, 2)
+  status           PaymentStatus @default(PENDING)
+  method           PaymentMethod
+  stripePaymentId  String?
+  stripeCustomerId String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@map("payments")
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CARD
+  PIX
+  CLUB
+}
+
+model SavedCard {
+  id                    String   @id @default(cuid())
+  userId                String
+  last4                 String
+  brand                 String
+  stripePaymentMethodId String   @unique
+  isDefault             Boolean  @default(false)
+  createdAt             DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("saved_cards")
+}
+
+// ============================================================
+// Clube Help (Subscription)
+// ============================================================
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  userId               String             @unique
+  status               SubscriptionStatus @default(ACTIVE)
+  plan                 String             @default("clube-help")
+  quotaPerMonth        Int                @default(3)
+  quotaUsed            Int                @default(0)
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  stripeSubscriptionId String?            @unique
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("subscriptions")
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  PAST_DUE
+  TRIALING
+}
+
+// ============================================================
+// Reviews & Compliments
+// ============================================================
+
+model Review {
+  id         String   @id @default(cuid())
+  userId     String
+  providerId String
+  orderId    String   @unique
+  rating     Int
+  comment    String?
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id])
+  provider Provider @relation(fields: [providerId], references: [id])
+  order    Order    @relation(fields: [orderId], references: [id])
+
+  @@map("reviews")
+}
+
+model ProviderCompliment {
+  id         String @id @default(cuid())
+  providerId String
+  label      String
+  count      Int    @default(0)
+
+  provider Provider @relation(fields: [providerId], references: [id])
+
+  @@unique([providerId, label])
+  @@map("provider_compliments")
+}
+
+// ============================================================
+// Conversations & Messages
+// ============================================================
+
+model Conversation {
+  id        String   @id @default(cuid())
+  userId    String
+  orderId   String?  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id])
+  order    Order?    @relation(fields: [orderId], references: [id])
+  messages Message[]
+
+  @@map("conversations")
+}
+
+model Message {
+  id             String     @id @default(cuid())
+  conversationId String
+  orderId        String?
+  senderId       String
+  senderType     SenderType
+  content        String
+  read           Boolean    @default(false)
+  createdAt      DateTime   @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  order        Order?       @relation(fields: [orderId], references: [id])
+
+  @@map("messages")
+}
+
+enum SenderType {
+  USER
+  PROVIDER
+}
+
+// ============================================================
+// Notifications
+// ============================================================
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  body      String
+  read      Boolean          @default(false)
+  data      Json?
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
+}
+
+enum NotificationType {
+  ORDER_CONFIRMED
+  ORDER_REMINDER
+  ORDER_COMPLETED
+  PAYMENT_RECEIVED
+  REVIEW_REQUEST
+  CLUB_RENEWAL
+  CLUB_QUOTA_LOW
+  SYSTEM
+}
