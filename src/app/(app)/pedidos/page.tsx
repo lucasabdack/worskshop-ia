@@ -127,20 +127,13 @@ const STATUS_LABEL: Record<Order["status"], string> = {
   CANCELLED: "Cancelado",
 };
 
-const STATUS_DOT: Record<Order["status"], string> = {
-  CONFIRMED: "#4A90D9",
-  PENDING: "#F5A623",
-  IN_PROGRESS: "#4A90D9",
-  COMPLETED: "#34C47C",
-  CANCELLED: "#E03A3A",
-};
-
-const STATUS_TEXT: Record<Order["status"], string> = {
-  CONFIRMED: "#4A90D9",
-  PENDING: "#7A4800",
-  IN_PROGRESS: "#4A90D9",
-  COMPLETED: "#0F5C33",
-  CANCELLED: "#E03A3A",
+// bullet colors only — text always neutral-dark
+const STATUS_DOT_COLOR: Record<Order["status"], string> = {
+  CONFIRMED: "#22C55E",   // green
+  PENDING: "#EAB308",     // yellow
+  IN_PROGRESS: "#22C55E",
+  COMPLETED: "neutral-medium", // handled separately with check
+  CANCELLED: "#EF4444",   // red
 };
 
 const RefreshIcon = () => (
@@ -149,6 +142,26 @@ const RefreshIcon = () => (
     <path d="M13.5 4v4h-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
+
+const CheckDot = () => (
+  <div
+    className="w-2 h-2 rounded-full shrink-0 flex items-center justify-center"
+    style={{ background: "var(--color-neutral-medium, #9CA3AF)" }}
+  >
+    <svg width="5" height="4" viewBox="0 0 5 4" fill="none">
+      <path d="M0.75 2L1.85 3L4.25 1" stroke="var(--color-neutral-dark, #374151)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  </div>
+);
+
+const StatusBullet = ({ status }: { status: Order["status"] }) => {
+  if (status === "COMPLETED") return <CheckDot />;
+  const color =
+    status === "CONFIRMED" || status === "IN_PROGRESS" ? "#22C55E"
+    : status === "PENDING" ? "#EAB308"
+    : "#EF4444"; // CANCELLED
+  return <div className="w-2 h-2 rounded-full shrink-0" style={{ background: color }} />;
+};
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -206,20 +219,20 @@ export default function PedidosPage() {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5">
-            <div className="w-2 h-2 rounded-full shrink-0" style={{ background: STATUS_DOT[order.status] }} />
-            <span className="font-body text-xs" style={{ color: STATUS_TEXT[order.status] }}>
+            <StatusBullet status={order.status} />
+            <span className="font-body text-neutral-dark" style={{ fontSize: "10px" }}>
               {STATUS_LABEL[order.status]}
             </span>
           </div>
-          <p className="font-display font-bold text-base text-primary-pure leading-tight">
+          <p className="font-display font-bold text-primary-pure leading-tight" style={{ fontSize: "22px" }}>
             {order.providerName}
           </p>
           {order.status === "COMPLETED" ? (
-            <p className="font-body text-xs text-neutral-dark">
+            <p className="font-body text-neutral-dark" style={{ fontSize: "10px" }}>
               Duração: {order.duration} • {order.price}
             </p>
           ) : (
-            <p className="font-body text-xs text-neutral-dark">
+            <p className="font-body text-neutral-dark" style={{ fontSize: "10px" }}>
               {order.scheduledTime ? `Às ${order.scheduledTime} • ` : ""}{order.price}
             </p>
           )}
@@ -238,7 +251,7 @@ export default function PedidosPage() {
           </button>
         ) : (
           <button
-            className="w-full h-11 rounded-full flex items-center justify-center gap-2 font-body font-semibold text-sm border border-neutral-pure text-neutral-dark"
+            className="w-full h-11 rounded-full flex items-center justify-center gap-2 font-body font-semibold text-sm border border-error-pure text-error-pure"
           >
             Cancelar agendamento
           </button>
@@ -290,16 +303,16 @@ export default function PedidosPage() {
           </div>
         ) : (
           <>
-            {/* ── Por vir ── */}
+            {/* ── Solicitados ── */}
             {upcomingGroups.length > 0 && (
               <div>
                 <p className="font-display font-bold text-base text-neutral-low mb-4">
-                  Pedidos por vir
+                  Pedidos solicitados
                 </p>
                 <div className="space-y-6">
                   {upcomingGroups.map((group) => (
                     <div key={group.date}>
-                      <p className="font-body text-xs text-neutral-dark mb-3">{group.date}</p>
+                      <p className="font-body text-xs text-neutral-low mb-3">{group.date}</p>
                       <div className="space-y-3">
                         {group.orders.map((o) => <OrderCard key={o.id} order={o} mLimpezaIdx={mLimpezaIndexMap[o.id]} />)}
                       </div>
@@ -318,7 +331,7 @@ export default function PedidosPage() {
                 <div className="space-y-6">
                   {pastGroups.map((group) => (
                     <div key={group.date}>
-                      <p className="font-body text-xs text-neutral-dark mb-3">{group.date}</p>
+                      <p className="font-body text-xs text-neutral-low mb-3">{group.date}</p>
                       <div className="space-y-3">
                         {group.orders.map((o) => <OrderCard key={o.id} order={o} mLimpezaIdx={mLimpezaIndexMap[o.id]} />)}
                       </div>
