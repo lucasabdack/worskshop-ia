@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
+import { getProviderImage } from "@/lib/mock-data";
 
 // ─── Mock data (flat array, sorted correctly) ─────────────────────────────────
 // Today = 2026-03-22. Future dates → "por vir". Past → "realizados" newest first.
@@ -13,6 +15,7 @@ type Order = {
   category: string;
   service: string;
   providerName: string;
+  gender: "M" | "F";
   status: "CONFIRMED" | "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
   duration?: string;
   scheduledTime?: string;
@@ -30,6 +33,7 @@ const ALL_ORDERS: Order[] = [
     category: "Serviços Domésticos",
     service: "Serviços de limpeza",
     providerName: "Ana Lima",
+    gender: "F" as const,
     status: "CONFIRMED",
     scheduledTime: "09:00",
     price: "R$120,00",
@@ -43,6 +47,7 @@ const ALL_ORDERS: Order[] = [
     category: "Manutenções e reparos",
     service: "Reparos elétricos",
     providerName: "Carlos Mendes",
+    gender: "M" as const,
     status: "PENDING",
     scheduledTime: "14:00",
     price: "R$70,00",
@@ -57,6 +62,7 @@ const ALL_ORDERS: Order[] = [
     category: "Serviços Domésticos",
     service: "Serviços de limpeza",
     providerName: "Daniel Soares",
+    gender: "M" as const,
     status: "COMPLETED",
     duration: "3h 30min",
     price: "R$124,90",
@@ -70,6 +76,7 @@ const ALL_ORDERS: Order[] = [
     category: "Serviços Domésticos",
     service: "Serviços de limpeza",
     providerName: "Daniel Soares",
+    gender: "M" as const,
     status: "COMPLETED",
     duration: "3h 30min",
     price: "R$124,90",
@@ -83,6 +90,7 @@ const ALL_ORDERS: Order[] = [
     category: "Manutenções e reparos",
     service: "Reparos elétricos",
     providerName: "Carlos Mendes",
+    gender: "M" as const,
     status: "COMPLETED",
     duration: "2h 00min",
     price: "R$80,00",
@@ -174,10 +182,16 @@ export default function PedidosPage() {
       {/* Provider row */}
       <div className="flex items-center gap-3 px-4 py-3">
         <div
-          className="w-11 h-11 rounded-full shrink-0 flex items-center justify-center"
+          className="w-11 h-11 rounded-full shrink-0 overflow-hidden"
           style={{ background: order.avatarBg }}
         >
-          <span className="font-display font-bold text-white">{order.providerName[0]}</span>
+          <Image
+            src={getProviderImage(order.id, order.gender)}
+            alt={order.providerName}
+            width={44}
+            height={44}
+            className="w-full h-full object-cover object-top"
+          />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5">

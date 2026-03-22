@@ -11,10 +11,19 @@ export const CATEGORIES = [
   { id: "8", name: "Reparos", slug: "reparos", icon: "🔨" },
 ];
 
+export function getProviderImage(id: string, gender: "M" | "F"): string {
+  const n = id.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  if (gender === "F") {
+    return `/assets/prestadora-${(n % 2) + 1}.png`;
+  }
+  return `/assets/prestador-${(n % 3) + 1}.png`;
+}
+
 export const PROVIDERS = [
   {
     id: "1",
     name: "Carlos Mendes",
+    gender: "M" as const,
     category: "Elétrica",
     categorySlug: "eletrica",
     rating: 4.9,
@@ -35,6 +44,7 @@ export const PROVIDERS = [
   {
     id: "2",
     name: "Ana Lima",
+    gender: "F" as const,
     category: "Limpeza",
     categorySlug: "limpeza",
     rating: 5.0,
@@ -55,6 +65,7 @@ export const PROVIDERS = [
   {
     id: "3",
     name: "Rafael Santos",
+    gender: "M" as const,
     category: "Hidráulica",
     categorySlug: "hidraulica",
     rating: 4.8,
@@ -75,6 +86,7 @@ export const PROVIDERS = [
   {
     id: "4",
     name: "Mariana Costa",
+    gender: "F" as const,
     category: "Jardinagem",
     categorySlug: "jardinagem",
     rating: 4.7,

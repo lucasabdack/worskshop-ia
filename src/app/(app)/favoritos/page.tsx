@@ -1,12 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
+import { getProviderImage } from "@/lib/mock-data";
 
 const MOCK_FAVORITES = [
   {
     id: "1",
     providerName: "Antônio Carlos",
+    gender: "M" as const,
     category: "Manutenções e reparos",
     service: "Serviços Hidráulicos",
     lastService: "24/04/2024",
@@ -16,6 +19,7 @@ const MOCK_FAVORITES = [
   {
     id: "2",
     providerName: "Bruna Almeida",
+    gender: "F" as const,
     category: "Serviços Domésticos",
     service: "Serviços de limpeza",
     lastService: "10/04/2024",
@@ -25,6 +29,7 @@ const MOCK_FAVORITES = [
   {
     id: "3",
     providerName: "Camila Silva",
+    gender: "F" as const,
     category: "Serviços Domésticos",
     service: "Serviços de limpeza",
     lastService: "03/01/2024",
@@ -34,6 +39,7 @@ const MOCK_FAVORITES = [
   {
     id: "4",
     providerName: "Daniel Soares",
+    gender: "M" as const,
     category: "Serviços Domésticos",
     service: "Serviços de limpeza",
     lastService: "10/04/2024",
@@ -43,6 +49,7 @@ const MOCK_FAVORITES = [
   {
     id: "5",
     providerName: "Eduardo Lima",
+    gender: "M" as const,
     category: "Manutenções e reparos",
     service: "Reparos elétricos",
     lastService: "15/03/2024",
@@ -138,11 +145,13 @@ export default function FavoritosPage() {
                 style={{ minHeight: "100px" }}
               >
                 {/* Left image area */}
-                <div
-                  className="w-24 shrink-0 flex items-center justify-center text-4xl"
-                  style={{ background: item.bgColor }}
-                >
-                  {item.categorySlug === "reparos" ? "👷" : "🧹"}
+                <div className="w-24 shrink-0 relative overflow-hidden" style={{ background: item.bgColor }}>
+                  <Image
+                    src={getProviderImage(item.id, item.gender)}
+                    alt={item.providerName}
+                    fill
+                    className="object-cover object-top"
+                  />
                 </div>
 
                 {/* Content */}
