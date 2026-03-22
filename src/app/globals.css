@@ -185,6 +185,25 @@
 
   .btn-ghost:hover { background: var(--color-primary-lightest); }
 
+  /* btn-ghost-neutral — outline = text (neutral-dark) */
+  .btn-ghost-neutral {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 24px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--color-neutral-dark);
+    color: var(--color-neutral-dark);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 16px;
+    background: transparent;
+    transition: background 0.15s;
+  }
+
+  .btn-ghost-neutral:disabled { opacity: 0.4; cursor: not-allowed; }
+
   /* chip */
   .chip-default {
     display: inline-flex;

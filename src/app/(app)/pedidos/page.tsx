@@ -249,6 +249,10 @@ export default function PedidosPage() {
             <RefreshIcon />
             Contratar novamente
           </button>
+        ) : order.status === "CANCELLED" ? (
+          <button disabled className="btn-ghost-neutral w-full h-9 text-sm font-semibold">
+            Cancelar agendamento
+          </button>
         ) : (
           <button
             className="w-full h-11 rounded-full flex items-center justify-center gap-2 font-body font-semibold text-sm border border-error-pure text-error-pure"
