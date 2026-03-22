@@ -43,8 +43,7 @@ export default function LoginPage() {
       >
         <style>{`
           @keyframes logoFall {
-            0%   { transform: translate(  0px, -115vh) rotate(  0deg); opacity: 0; }
-            6%   { opacity: 1; }
+            0%   { transform: translate(  0px, -115vh) rotate(  0deg); }
             14%  { transform: translate(-60px,  -72vh) rotate(-14deg); }
             22%  { transform: translate( 70px,  -40vh) rotate( 16deg); }
             30%  { transform: translate(-50px,  -16vh) rotate(-12deg); }
@@ -56,18 +55,33 @@ export default function LoginPage() {
             74%  { transform: translate( -4px,   -1px) rotate(-1.2deg);}
             81%  { transform: translate(  2px,  0.5px) rotate( 0.6deg);}
             88%  { transform: translate( -1px, -0.3px) rotate(-0.2deg);}
-            100% { transform: translate(  0px,    0px) rotate(  0deg); opacity: 1; }
+            100% { transform: translate(  0px,    0px) rotate(  0deg); }
+          }
+          @keyframes letterPop {
+            0%   { opacity: 0; transform: scale(0.4) translateY(8px); }
+            60%  { opacity: 1; transform: scale(1.08) translateY(-2px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
           }
           .logo-fall {
-            animation: logoFall 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+            animation: logoFall 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
           }
+          .letter { display: inline-block; opacity: 0; }
+          .l0 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 0.55s both; }
+          .l1 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 0.75s both; }
+          .l2 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 0.95s both; }
+          .l3 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 1.15s both; }
+          .l4 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 1.38s both; }
         `}</style>
 
         <span
           className="logo-fall font-display font-bold text-white select-none"
           style={{ fontSize: "clamp(56px, 18vw, 96px)" }}
         >
-          Help!
+          <span className="letter l0">H</span>
+          <span className="letter l1">e</span>
+          <span className="letter l2">l</span>
+          <span className="letter l3">p</span>
+          <span className="letter l4">!</span>
         </span>
       </main>
     );
