@@ -180,10 +180,10 @@ export default function PedidosPage() {
       {/* Card header */}
       <div className="flex items-center px-4 pt-4 pb-3">
         <div className="flex flex-col flex-1" style={{ gap: "2px" }}>
-          <p className="font-body text-xs text-neutral-dark">{order.category}</p>
+          <p className="font-body text-neutral-dark" style={{ fontSize: "10px" }}>{order.category}</p>
           <p className="font-body text-sm text-neutral-low">{order.service}</p>
         </div>
-        <Link href="/perfil/ajuda" className="font-body text-xs font-semibold text-primary-pure self-center">
+        <Link href="/perfil/ajuda" className="font-body font-bold text-primary-pure self-center" style={{ fontSize: "10px" }}>
           Ajuda
         </Link>
       </div>
