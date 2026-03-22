@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const tabs = [
   {
     href: "/home",
-    label: "Home",
+    label: "Início",
     icon: (active: boolean) => (
       <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
         <path
@@ -25,6 +25,21 @@ const tabs = [
     ),
   },
   {
+    href: "/favoritos",
+    label: "Favoritos",
+    icon: (active: boolean) => (
+      <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path
+          d="M12 21C12 21 3 14 3 8.5A4.5 4.5 0 0112 6.5 4.5 4.5 0 0121 8.5C21 14 12 21 12 21z"
+          stroke={active ? "#321CB2" : "#5A5A5A"}
+          strokeWidth="1.8"
+          fill={active ? "#321CB2" : "none"}
+          fillOpacity={active ? 0.15 : 0}
+        />
+      </svg>
+    ),
+  },
+  {
     href: "/pedidos",
     label: "Pedidos",
     icon: (active: boolean) => (
@@ -37,21 +52,6 @@ const tabs = [
           fillOpacity={active ? 0.12 : 0}
         />
         <path d="M7 8h10M7 12h7M7 16h5" stroke={active ? "#321CB2" : "#5A5A5A"} strokeWidth="1.8" strokeLinecap="round"/>
-      </svg>
-    ),
-  },
-  {
-    href: "/favoritos",
-    label: "Favoritos",
-    icon: (active: boolean) => (
-      <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path
-          d="M12 21C12 21 3 14 3 8.5A4.5 4.5 0 0112 6.5 4.5 4.5 0 0121 8.5C21 14 12 21 12 21z"
-          stroke={active ? "#321CB2" : "#5A5A5A"}
-          strokeWidth="1.8"
-          fill={active ? "#321CB2" : "none"}
-          fillOpacity={active ? 0.15 : 0}
-        />
       </svg>
     ),
   },
