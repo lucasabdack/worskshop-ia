@@ -68,12 +68,12 @@ export default function HomePage() {
                 key={i}
                 href={`/categorias/${cat.slug}`}
                 className="flex rounded-2xl overflow-hidden items-center justify-between"
-                style={{ background: cat.bg, minHeight: "110px" }}
+                style={{ background: cat.bg, minHeight: "160px" }}
               >
                 <p className="font-display font-bold text-white text-xl leading-tight p-5 whitespace-pre-line flex-shrink-0 w-1/2">
                   {cat.name}
                 </p>
-                <div className="relative h-[110px] w-1/2 pr-2">
+                <div className="relative h-[160px] w-1/2 pr-2">
                   <Image
                     src={cat.image}
                     alt={cat.name}
