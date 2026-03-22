@@ -1,31 +1,6 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth";
-
-const CARD_BG = "#5A909A";
-
-const BANNERS = [
-  {
-    title: "Reparos elétricos",
-    discount: "até 15%",
-    discountText: "em descontos",
-    emoji: "⚡",
-    href: "/categorias/eletrica",
-  },
-  {
-    title: "Hidráulica",
-    discount: "até 20%",
-    discountText: "em descontos",
-    emoji: "💧",
-    href: "/categorias/hidraulica",
-  },
-  {
-    title: "Limpeza",
-    discount: "até 10%",
-    discountText: "em descontos",
-    emoji: "🧹",
-    href: "/categorias/limpeza",
-  },
-];
+import HomeBanner from "@/components/HomeBanner";
 
 const CATEGORY_CARDS = [
   { name: "Manutenções\ne reparos", emoji: "🔧", slug: "reparos" },
@@ -63,34 +38,7 @@ export default async function HomePage() {
       </div>
 
       {/* Banner Carousel */}
-      <div className="pb-5">
-        <div className="flex gap-3 px-4 overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden">
-          {BANNERS.map((b, i) => (
-            <Link
-              key={i}
-              href={b.href}
-              className="snap-start shrink-0 rounded-2xl overflow-hidden flex justify-between items-end"
-              style={{ background: CARD_BG, width: "85%", minHeight: "165px" }}
-            >
-              <div className="p-5 flex flex-col justify-between h-full">
-                <p className="font-display font-bold text-white text-xl leading-tight">{b.title}</p>
-                <div>
-                  <p className="font-display font-bold text-white text-base">{b.discount}</p>
-                  <p className="font-body text-xs text-white/80">{b.discountText}</p>
-                </div>
-              </div>
-              <div className="pr-5 pb-4 text-6xl self-end">{b.emoji}</div>
-            </Link>
-          ))}
-        </div>
-
-        {/* Dot indicators */}
-        <div className="flex justify-center gap-1.5 mt-4">
-          <div className="h-1.5 w-5 rounded-full bg-primary-pure" />
-          <div className="h-1.5 w-1.5 rounded-full bg-neutral-pure" />
-          <div className="h-1.5 w-1.5 rounded-full bg-neutral-pure" />
-        </div>
-      </div>
+      <HomeBanner />
 
       {/* Categories */}
       <div className="mt-4 px-4 pb-6">
@@ -101,7 +49,7 @@ export default async function HomePage() {
               key={i}
               href={`/categorias/${cat.slug}`}
               className="flex rounded-2xl overflow-hidden items-end justify-between"
-              style={{ background: CARD_BG, minHeight: "130px" }}
+              style={{ background: "#5A8FA0", minHeight: "130px" }}
             >
               <p className="font-display font-bold text-white text-xl leading-tight p-5 whitespace-pre-line">
                 {cat.name}
