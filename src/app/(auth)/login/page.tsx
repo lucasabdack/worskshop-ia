@@ -24,15 +24,15 @@ export default function SplashPage() {
     >
       <style>{`
         @keyframes logoFall {
-          0%   { transform: translate(0px,   -110vh); opacity: 0; }
+          0%   { transform: translate(0px,   -110vh) rotate(0deg);    opacity: 0; }
           12%  { opacity: 1; }
-          25%  { transform: translate(14px,  -52vh); }
-          42%  { transform: translate(-10px, -16vh); }
-          57%  { transform: translate(6px,    6px);  }
-          70%  { transform: translate(-3px,  -3px);  }
-          82%  { transform: translate(1.5px,  1.5px);}
-          91%  { transform: translate(-0.5px,-0.5px);}
-          100% { transform: translate(0px,    0px);  opacity: 1; }
+          25%  { transform: translate(14px,  -52vh)  rotate(-12deg); }
+          42%  { transform: translate(-10px, -16vh)  rotate(8deg);   }
+          57%  { transform: translate(6px,    6px)   rotate(-4deg);  }
+          70%  { transform: translate(-3px,  -3px)   rotate(2.5deg); }
+          82%  { transform: translate(1.5px,  1.5px) rotate(-1deg);  }
+          91%  { transform: translate(-0.5px,-0.5px) rotate(0.3deg); }
+          100% { transform: translate(0px,    0px)   rotate(0deg);   opacity: 1; }
         }
         .logo-fall {
           animation: logoFall 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
