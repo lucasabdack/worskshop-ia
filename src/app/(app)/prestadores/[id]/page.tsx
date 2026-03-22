@@ -261,8 +261,8 @@ export default function ProviderPage() {
             onClick={() => setActiveTab(tab)}
             className={`h-9 px-4 rounded-full text-sm font-body font-semibold border transition-colors capitalize ${
               activeTab === tab
-                ? "border-primary-pure text-primary-pure bg-white"
-                : "border-neutral-pure text-neutral-dark bg-white"
+                ? "border-primary-lightest text-primary-pure bg-primary-lightest"
+                : "border-neutral-pure text-neutral-darkest bg-white"
             }`}
           >
             {tab === "elogios" ? "Elogios" : tab === "recomendacoes" ? "Recomendações" : "Conquistas"}
