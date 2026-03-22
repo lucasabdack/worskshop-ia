@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import HomeBanner from "@/components/HomeBanner";
 
 const CATEGORY_CARDS = [
-  { name: "Manutenções\ne reparos", emoji: "🔧", slug: "reparos" },
-  { name: "Assistência\ntécnica", emoji: "💻", slug: "eletrica" },
-  { name: "Limpeza\ne organização", emoji: "🧹", slug: "limpeza" },
-  { name: "Jardinagem\ne paisagismo", emoji: "🌿", slug: "jardinagem" },
+  { name: "Manutenções\ne reparos", image: "/assets/card-manutencoes.png", slug: "reparos" },
+  { name: "Assistência\ntécnica", image: "/assets/card-assistencia-tecnica.png", slug: "eletrica" },
+  { name: "Limpeza\ne organização", image: "/assets/card-servicos-domesticos.png", slug: "limpeza" },
+  { name: "Jardinagem\ne paisagismo", image: "/assets/card-reforma-de-imoveis.png", slug: "jardinagem" },
 ];
 
 export default function HomePage() {
@@ -65,13 +66,19 @@ export default function HomePage() {
               <Link
                 key={i}
                 href={`/categorias/${cat.slug}`}
-                className="flex rounded-2xl overflow-hidden items-end justify-between"
+                className="relative flex rounded-2xl overflow-hidden items-end justify-between"
                 style={{ background: "#5A8FA0", minHeight: "130px" }}
               >
-                <p className="font-display font-bold text-white text-xl leading-tight p-5 whitespace-pre-line">
+                <Image
+                  src={cat.image}
+                  alt={cat.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <p className="relative z-10 font-display font-bold text-white text-xl leading-tight p-5 whitespace-pre-line drop-shadow-md">
                   {cat.name}
                 </p>
-                <div className="pr-5 pb-4 text-7xl">{cat.emoji}</div>
               </Link>
             ))}
           </div>
