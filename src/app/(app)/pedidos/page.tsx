@@ -183,7 +183,7 @@ export default function PedidosPage() {
           <p className="font-body text-neutral-dark" style={{ fontSize: "10px" }}>{order.category}</p>
           <p className="font-body text-sm text-neutral-low">{order.service}</p>
         </div>
-        <Link href="/perfil/ajuda" className="font-body font-bold text-primary-pure self-center" style={{ fontSize: "10px" }}>
+        <Link href="/perfil/ajuda" className="font-body font-bold text-primary-pure self-center underline underline-offset-2" style={{ fontSize: "10px" }}>
           Ajuda
         </Link>
       </div>
