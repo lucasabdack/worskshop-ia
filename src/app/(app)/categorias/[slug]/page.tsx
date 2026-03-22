@@ -11,9 +11,11 @@ import {
   TreeIcon, ScissorsIcon, FlowerIcon, LandscapeIcon, WaterDropIcon, SeedlingIcon,
 } from "@/components/ds/ServiceIcons";
 
+import { CATEGORY_SERVICES } from "@/lib/category-data";
+
 type SubCategory = { label: string; icon: string };
 type DiscountService = { name: string; discountLabel: string; discountSub: string; Icon: () => React.ReactElement };
-type Service = { name: string; Icon: () => React.ReactElement };
+type Service = { name: string; slug: string; Icon: () => React.ReactElement };
 type CategoryConfig = {
   title: string;
   heroEmoji: string;
@@ -38,12 +40,12 @@ const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
       { name: "Pintura\nresidencial", discountLabel: "até 10%", discountSub: "em descontos", Icon: PaintRollerIcon },
     ],
     services: [
-      { name: "Instalação elétrica", Icon: OutletIcon },
-      { name: "Reparo hidráulico", Icon: FaucetIcon },
-      { name: "Pintura", Icon: PaintRollerIcon },
-      { name: "Montagem de móveis", Icon: AssemblyIcon },
-      { name: "Ar-condicionado", Icon: AcIcon },
-      { name: "Desentupimento", Icon: DrainIcon },
+      { name: "Reparo de tomadas", slug: "reparo-de-tomadas", Icon: OutletIcon },
+      { name: "Reparo de chuveiro", slug: "reparo-de-chuveiro", Icon: ShowerIcon },
+      { name: "Instalação de iluminação", slug: "instalacao-de-iluminacao", Icon: BulbIcon },
+      { name: "Manutenção de ar-cond.", slug: "manutencao-de-ar-condicionado", Icon: AcIcon },
+      { name: "Montagem de móveis", slug: "montagem-de-moveis", Icon: AssemblyIcon },
+      { name: "Pintura residencial", slug: "pintura-residencial", Icon: PaintRollerIcon },
     ],
   },
   eletrica: {
@@ -61,12 +63,12 @@ const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
       { name: "Manutenção\nde PC", discountLabel: "até 12%", discountSub: "em descontos", Icon: ComputerIcon },
     ],
     services: [
-      { name: "Instalação de tomada", Icon: OutletIcon },
-      { name: "Troca de disjuntor", Icon: CircuitBreakerIcon },
-      { name: "Instalação de luminária", Icon: BulbIcon },
-      { name: "Config. de Wi-Fi", Icon: WifiIcon },
-      { name: "Manutenção de PC", Icon: ComputerIcon },
-      { name: "Câmeras de segurança", Icon: CameraIcon },
+      { name: "Instalação de tomada", slug: "instalacao-de-tomada", Icon: OutletIcon },
+      { name: "Troca de disjuntor", slug: "troca-de-disjuntor", Icon: CircuitBreakerIcon },
+      { name: "Instalação de luminária", slug: "instalacao-de-luminaria", Icon: BulbIcon },
+      { name: "Config. de Wi-Fi", slug: "config-de-wi-fi", Icon: WifiIcon },
+      { name: "Manutenção de PC", slug: "manutencao-de-pc", Icon: ComputerIcon },
+      { name: "Câmeras de segurança", slug: "cameras-de-seguranca", Icon: CameraIcon },
     ],
   },
   limpeza: {
@@ -84,12 +86,12 @@ const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
       { name: "Higienização\nde estofado", discountLabel: "até 18%", discountSub: "em descontos", Icon: SofaIcon },
     ],
     services: [
-      { name: "Limpeza básica", Icon: BroomIcon },
-      { name: "Limpeza profunda", Icon: SparkleIcon },
-      { name: "Limpeza pós-obra", Icon: ShovelIcon },
-      { name: "Organização", Icon: BoxIcon },
-      { name: "Limpeza de estofado", Icon: SofaIcon },
-      { name: "Higienização", Icon: SprayIcon },
+      { name: "Limpeza básica", slug: "limpeza-basica", Icon: BroomIcon },
+      { name: "Limpeza profunda", slug: "limpeza-profunda", Icon: SparkleIcon },
+      { name: "Limpeza pós-obra", slug: "limpeza-pos-obra", Icon: ShovelIcon },
+      { name: "Organização", slug: "organizacao", Icon: BoxIcon },
+      { name: "Limpeza de estofado", slug: "limpeza-de-estofado", Icon: SofaIcon },
+      { name: "Higienização", slug: "higienizacao", Icon: SprayIcon },
     ],
   },
   jardinagem: {
@@ -107,12 +109,12 @@ const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
       { name: "Irrigação\nautomática", discountLabel: "até 12%", discountSub: "em descontos", Icon: WaterDropIcon },
     ],
     services: [
-      { name: "Poda de árvores", Icon: TreeIcon },
-      { name: "Corte de grama", Icon: ScissorsIcon },
-      { name: "Plantio de flores", Icon: FlowerIcon },
-      { name: "Paisagismo", Icon: LandscapeIcon },
-      { name: "Irrigação", Icon: WaterDropIcon },
-      { name: "Adubação", Icon: SeedlingIcon },
+      { name: "Poda de árvores", slug: "poda-de-arvores", Icon: TreeIcon },
+      { name: "Corte de grama", slug: "corte-de-grama", Icon: ScissorsIcon },
+      { name: "Plantio de flores", slug: "plantio-de-flores", Icon: FlowerIcon },
+      { name: "Paisagismo", slug: "paisagismo", Icon: LandscapeIcon },
+      { name: "Irrigação", slug: "irrigacao", Icon: WaterDropIcon },
+      { name: "Adubação", slug: "adubacao", Icon: SeedlingIcon },
     ],
   },
 };
@@ -227,7 +229,7 @@ export default function CategoryPage() {
           {config.services.map((svc, i) => (
             <Link
               key={i}
-              href="/prestadores/1"
+              href={`/categorias/${slug}/${svc.slug}`}
               className="bg-white border border-neutral-pure rounded-2xl p-4 flex flex-col gap-3"
             >
               <svc.Icon />

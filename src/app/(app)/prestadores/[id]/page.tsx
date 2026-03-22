@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { PROVIDERS } from "@/lib/mock-data";
 import { useState, useEffect } from "react";
 import {
@@ -129,6 +129,8 @@ type Service = (typeof EXTENDED_SERVICES)[0];
 export default function ProviderPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const serviceName = searchParams.get("service");
   const provider = PROVIDERS.find((p) => p.id === id);
 
   const [activeTab, setActiveTab] = useState<"elogios" | "recomendacoes" | "conquistas">("elogios");
@@ -202,7 +204,9 @@ export default function ProviderPage() {
 
         {/* Text */}
         <div className="px-4 pt-12 pb-6 pr-28">
-          <p className="font-body text-sm text-white/80 mt-8">{provider.category}</p>
+          <p className="font-body text-sm text-white/80 mt-8">
+            {serviceName ?? provider.category}
+          </p>
           <h1 className="font-display font-bold text-3xl text-white leading-tight mt-1">
             {provider.name}
           </h1>
