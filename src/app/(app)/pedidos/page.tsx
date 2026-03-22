@@ -164,16 +164,18 @@ export default function PedidosPage() {
   const upcomingGroups = groupByDate(upcoming);
   const pastGroups = groupByDate(past);
 
-  const genderIndexMap = (() => {
+  const mLimpezaIndexMap = (() => {
     const map: Record<string, number> = {};
-    const gIdx = { M: 0, F: 0 };
-    [...upcoming, ...past].forEach((o) => { map[o.id] = gIdx[o.gender]++; });
+    let count = 0;
+    [...upcoming, ...past].forEach((o) => {
+      map[o.id] = o.gender === "M" && o.categorySlug === "limpeza" ? count++ : 0;
+    });
     return map;
   })();
 
   const isEmpty = upcoming.length === 0 && past.length === 0;
 
-  const OrderCard = ({ order, genderIndex }: { order: Order; genderIndex: number }) => (
+  const OrderCard = ({ order, mLimpezaIdx }: { order: Order; mLimpezaIdx: number }) => (
     <div className="rounded-2xl border border-neutral-pure bg-white overflow-hidden">
       {/* Card header */}
       <div className="flex items-center justify-between px-4 pt-4 pb-3">
@@ -193,7 +195,7 @@ export default function PedidosPage() {
           style={{ background: order.avatarBg }}
         >
           <Image
-            src={getProviderImage(genderIndex, order.gender)}
+            src={getProviderImage(order.categorySlug, order.gender, mLimpezaIdx)}
             alt={order.providerName}
             width={44}
             height={44}
@@ -297,7 +299,7 @@ export default function PedidosPage() {
                     <div key={group.date}>
                       <p className="font-body text-xs text-neutral-dark mb-3">{group.date}</p>
                       <div className="space-y-3">
-                        {group.orders.map((o) => <OrderCard key={o.id} order={o} genderIndex={genderIndexMap[o.id]} />)}
+                        {group.orders.map((o) => <OrderCard key={o.id} order={o} mLimpezaIdx={mLimpezaIndexMap[o.id]} />)}
                       </div>
                     </div>
                   ))}
@@ -316,7 +318,7 @@ export default function PedidosPage() {
                     <div key={group.date}>
                       <p className="font-body text-xs text-neutral-dark mb-3">{group.date}</p>
                       <div className="space-y-3">
-                        {group.orders.map((o) => <OrderCard key={o.id} order={o} genderIndex={genderIndexMap[o.id]} />)}
+                        {group.orders.map((o) => <OrderCard key={o.id} order={o} mLimpezaIdx={mLimpezaIndexMap[o.id]} />)}
                       </div>
                     </div>
                   ))}

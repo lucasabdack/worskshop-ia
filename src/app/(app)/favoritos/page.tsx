@@ -30,11 +30,11 @@ const MOCK_FAVORITES = [
     id: "3",
     providerName: "Camila Silva",
     gender: "F" as const,
-    category: "Serviços Domésticos",
-    service: "Serviços de limpeza",
+    category: "Jardinagem",
+    service: "Jardinagem e paisagismo",
     lastService: "03/01/2024",
-    bgColor: "#E8408A",
-    categorySlug: "limpeza",
+    bgColor: "#4CAF50",
+    categorySlug: "jardinagem",
   },
   {
     id: "4",
@@ -50,11 +50,11 @@ const MOCK_FAVORITES = [
     id: "5",
     providerName: "Eduardo Lima",
     gender: "M" as const,
-    category: "Manutenções e reparos",
-    service: "Reparos elétricos",
+    category: "Serviços Domésticos",
+    service: "Serviços de limpeza",
     lastService: "15/03/2024",
-    bgColor: "#F5A623",
-    categorySlug: "reparos",
+    bgColor: "#E8408A",
+    categorySlug: "limpeza",
   },
 ];
 
@@ -139,9 +139,11 @@ export default function FavoritosPage() {
         ) : (
           <div className="space-y-3 pb-6">
             {(() => {
-              const gIdx = { M: 0, F: 0 };
+              let mLimpezaIdx = 0;
               return filtered.map((item) => {
-                const genderIndex = gIdx[item.gender]++;
+                const idx = item.gender === "M" && item.categorySlug === "limpeza"
+                  ? mLimpezaIdx++
+                  : 0;
                 return (
               <div
                 key={item.id}
@@ -151,7 +153,7 @@ export default function FavoritosPage() {
                 {/* Left image area */}
                 <div className="w-24 shrink-0 relative overflow-hidden" style={{ background: item.bgColor }}>
                   <Image
-                    src={getProviderImage(genderIndex, item.gender)}
+                    src={getProviderImage(item.categorySlug, item.gender, idx)}
                     alt={item.providerName}
                     fill
                     className="object-cover object-top"

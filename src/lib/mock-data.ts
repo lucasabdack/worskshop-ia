@@ -11,12 +11,24 @@ export const CATEGORIES = [
   { id: "8", name: "Reparos", slug: "reparos", icon: "🔨" },
 ];
 
-/** genderIndex = posição do prestador entre os do mesmo gênero na lista (0, 1, 2…) */
-export function getProviderImage(genderIndex: number, gender: "M" | "F"): string {
+/**
+ * Retorna a imagem correta baseada na categoria e gênero do prestador.
+ * Para M+limpeza, mLimpezaIdx diferencia prestador-1 (par) de prestador-3 (ímpar).
+ */
+export function getProviderImage(
+  categorySlug: string,
+  gender: "M" | "F",
+  mLimpezaIdx = 0
+): string {
   if (gender === "F") {
-    return `/assets/prestadora-${(genderIndex % 2) + 1}.png`;
+    return categorySlug === "jardinagem"
+      ? "/assets/prestadora-2.png"
+      : "/assets/prestadora-1.png";
   }
-  return `/assets/prestador-${(genderIndex % 3) + 1}.png`;
+  if (categorySlug === "limpeza") {
+    return mLimpezaIdx % 2 === 0 ? "/assets/prestador-1.png" : "/assets/prestador-3.png";
+  }
+  return "/assets/prestador-2.png"; // reparos, reformas, hidraulica, eletrica…
 }
 
 export const PROVIDERS = [
