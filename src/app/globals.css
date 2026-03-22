@@ -53,6 +53,13 @@
   /* ---------- Brand Teal-Gray ---------- */
   --color-teal-gray:         #8B9EAD;
 
+  /* ---------- Category Colors ---------- */
+  --color-cat-manutencoes-reparos:      #567E94;
+  --color-cat-assistencia-tecnica:      #78A894;
+  --color-cat-assistencia-automotiva:   #5F6596;
+  --color-cat-reforma-imoveis:          #AA6767;
+  --color-cat-servicos-domesticos:      #949F6B;
+
   /* ---------- Font Families ---------- */
   --font-display: "Livvic", sans-serif;
   --font-body:    "Open Sans", sans-serif;
