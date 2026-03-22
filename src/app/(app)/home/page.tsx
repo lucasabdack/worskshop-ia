@@ -38,7 +38,7 @@ export default function HomePage() {
             <path d="M4 6l4 4 4-4" stroke="#1A1A1A" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         </button>
-        <h1 className="font-display font-bold text-xl text-primary-pure leading-tight">
+        <h1 className="font-display font-semibold text-md text-primary-pure leading-tight">
           Qual serviço você está precisando?
         </h1>
         <Link
