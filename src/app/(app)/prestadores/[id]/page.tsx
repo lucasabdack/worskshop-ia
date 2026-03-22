@@ -3,53 +3,15 @@
 import { useParams, useRouter } from "next/navigation";
 import { PROVIDERS } from "@/lib/mock-data";
 import { useState, useEffect } from "react";
+import {
+  OutletIcon, ShowerIcon, BulbIcon, AcIcon, WrenchIcon,
+} from "@/components/ds/ServiceIcons";
 
 // ─── Icons ───────────────────────────────────────────────────────────────────
 
 const BackIcon = () => (
   <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
     <path d="M15 19l-7-7 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const OutletIcon = () => (
-  <svg width="36" height="36" fill="none" viewBox="0 0 36 36">
-    <rect x="4" y="4" width="28" height="28" rx="6" stroke="#321CB2" strokeWidth="1.8" />
-    <circle cx="13" cy="16" r="2" stroke="#321CB2" strokeWidth="1.6" />
-    <circle cx="23" cy="16" r="2" stroke="#321CB2" strokeWidth="1.6" />
-    <path d="M15 22h6" stroke="#321CB2" strokeWidth="1.6" strokeLinecap="round" />
-    <path d="M20 8l-4 4h3l-4 4" stroke="#321CB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ShowerIcon = () => (
-  <svg width="36" height="36" fill="none" viewBox="0 0 36 36">
-    <path d="M8 12c0-5.5 4.5-8 9-8s9 2.5 9 8" stroke="#321CB2" strokeWidth="1.8" strokeLinecap="round" />
-    <path d="M8 12h20" stroke="#321CB2" strokeWidth="1.8" strokeLinecap="round" />
-    <path d="M10 16v2M14 16v2M18 16v2M22 16v2M26 16v2M10 22v2M14 22v2M18 22v2M22 22v2M26 22v2" stroke="#321CB2" strokeWidth="1.6" strokeLinecap="round" />
-  </svg>
-);
-
-const BulbIcon = () => (
-  <svg width="36" height="36" fill="none" viewBox="0 0 36 36">
-    <path d="M18 6a9 9 0 016 15.7V24a2 2 0 01-2 2h-8a2 2 0 01-2-2v-2.3A9 9 0 0118 6z" stroke="#321CB2" strokeWidth="1.8" />
-    <path d="M14 28h8M15 31h6" stroke="#321CB2" strokeWidth="1.6" strokeLinecap="round" />
-  </svg>
-);
-
-const AcIcon = () => (
-  <svg width="36" height="36" fill="none" viewBox="0 0 36 36">
-    <rect x="4" y="9" width="28" height="14" rx="3" stroke="#321CB2" strokeWidth="1.8" />
-    <path d="M4 15h28" stroke="#321CB2" strokeWidth="1.6" />
-    <path d="M12 23v4M18 23v4M24 23v4" stroke="#321CB2" strokeWidth="1.6" strokeLinecap="round" />
-    <circle cx="26" cy="12" r="2" fill="#321CB2" />
-  </svg>
-);
-
-const WrenchIcon = () => (
-  <svg width="36" height="36" fill="none" viewBox="0 0 36 36">
-    <path d="M10 26l12-12M22 8a5 5 0 100 10 5 5 0 000-10z" stroke="#321CB2" strokeWidth="1.8" strokeLinecap="round" />
-    <path d="M8 28l4-4" stroke="#321CB2" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 

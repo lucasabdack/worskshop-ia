@@ -1,12 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import {
+  OutletIcon, BulbIcon, CircuitBreakerIcon, WifiIcon, ComputerIcon, CameraIcon,
+  FaucetIcon, ShowerIcon, DrainIcon,
+  AcIcon, WrenchIcon, PaintRollerIcon, AssemblyIcon,
+  BroomIcon, SparkleIcon, BoxIcon, SofaIcon, SprayIcon, ShovelIcon,
+  TreeIcon, ScissorsIcon, FlowerIcon, LandscapeIcon, WaterDropIcon, SeedlingIcon,
+} from "@/components/ds/ServiceIcons";
 
 type SubCategory = { label: string; icon: string };
-type DiscountService = { name: string; discountLabel: string; discountSub: string; emoji: string };
-type Service = { name: string; emoji: string };
+type DiscountService = { name: string; discountLabel: string; discountSub: string; Icon: () => React.ReactElement };
+type Service = { name: string; Icon: () => React.ReactElement };
 type CategoryConfig = {
   title: string;
   heroEmoji: string;
@@ -26,17 +33,17 @@ const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
       { label: "Reforma", icon: "🏠" },
     ],
     discountServices: [
-      { name: "Reparos\nelétricos", discountLabel: "até 15%", discountSub: "em descontos", emoji: "⚡" },
-      { name: "Reparos\nhidráulicos", discountLabel: "até 20%", discountSub: "em descontos", emoji: "💧" },
-      { name: "Pintura\nresidencial", discountLabel: "até 10%", discountSub: "em descontos", emoji: "🎨" },
+      { name: "Reparos\nelétricos", discountLabel: "até 15%", discountSub: "em descontos", Icon: OutletIcon },
+      { name: "Reparos\nhidráulicos", discountLabel: "até 20%", discountSub: "em descontos", Icon: FaucetIcon },
+      { name: "Pintura\nresidencial", discountLabel: "até 10%", discountSub: "em descontos", Icon: PaintRollerIcon },
     ],
     services: [
-      { name: "Instalação elétrica", emoji: "⚡" },
-      { name: "Reparo hidráulico", emoji: "💧" },
-      { name: "Pintura", emoji: "🎨" },
-      { name: "Montagem de móveis", emoji: "🛠️" },
-      { name: "Ar-condicionado", emoji: "❄️" },
-      { name: "Desentupimento", emoji: "🚿" },
+      { name: "Instalação elétrica", Icon: OutletIcon },
+      { name: "Reparo hidráulico", Icon: FaucetIcon },
+      { name: "Pintura", Icon: PaintRollerIcon },
+      { name: "Montagem de móveis", Icon: AssemblyIcon },
+      { name: "Ar-condicionado", Icon: AcIcon },
+      { name: "Desentupimento", Icon: DrainIcon },
     ],
   },
   eletrica: {
@@ -49,17 +56,17 @@ const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
       { label: "Eletrodomésticos", icon: "🏠" },
     ],
     discountServices: [
-      { name: "Instalação\nelétrica", discountLabel: "até 10%", discountSub: "em descontos", emoji: "⚡" },
-      { name: "Config.\nde rede", discountLabel: "até 15%", discountSub: "em descontos", emoji: "📡" },
-      { name: "Manutenção\nde PC", discountLabel: "até 12%", discountSub: "em descontos", emoji: "💻" },
+      { name: "Instalação\nelétrica", discountLabel: "até 10%", discountSub: "em descontos", Icon: OutletIcon },
+      { name: "Config.\nde rede", discountLabel: "até 15%", discountSub: "em descontos", Icon: WifiIcon },
+      { name: "Manutenção\nde PC", discountLabel: "até 12%", discountSub: "em descontos", Icon: ComputerIcon },
     ],
     services: [
-      { name: "Instalação de tomada", emoji: "🔌" },
-      { name: "Troca de disjuntor", emoji: "⚡" },
-      { name: "Instalação de luminária", emoji: "💡" },
-      { name: "Config. de Wi-Fi", emoji: "📡" },
-      { name: "Manutenção de PC", emoji: "💻" },
-      { name: "Câmeras de segurança", emoji: "📷" },
+      { name: "Instalação de tomada", Icon: OutletIcon },
+      { name: "Troca de disjuntor", Icon: CircuitBreakerIcon },
+      { name: "Instalação de luminária", Icon: BulbIcon },
+      { name: "Config. de Wi-Fi", Icon: WifiIcon },
+      { name: "Manutenção de PC", Icon: ComputerIcon },
+      { name: "Câmeras de segurança", Icon: CameraIcon },
     ],
   },
   limpeza: {
@@ -72,17 +79,17 @@ const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
       { label: "Organização", icon: "📦" },
     ],
     discountServices: [
-      { name: "Limpeza\nprofunda", discountLabel: "até 20%", discountSub: "em descontos", emoji: "✨" },
-      { name: "Limpeza\npós-obra", discountLabel: "até 15%", discountSub: "em descontos", emoji: "🧱" },
-      { name: "Higienização\nde estofado", discountLabel: "até 18%", discountSub: "em descontos", emoji: "🛋️" },
+      { name: "Limpeza\nprofunda", discountLabel: "até 20%", discountSub: "em descontos", Icon: SparkleIcon },
+      { name: "Limpeza\npós-obra", discountLabel: "até 15%", discountSub: "em descontos", Icon: ShovelIcon },
+      { name: "Higienização\nde estofado", discountLabel: "até 18%", discountSub: "em descontos", Icon: SofaIcon },
     ],
     services: [
-      { name: "Limpeza básica", emoji: "🧹" },
-      { name: "Limpeza profunda", emoji: "✨" },
-      { name: "Limpeza pós-obra", emoji: "🧱" },
-      { name: "Organização", emoji: "📦" },
-      { name: "Limpeza de estofado", emoji: "🛋️" },
-      { name: "Higienização", emoji: "🧴" },
+      { name: "Limpeza básica", Icon: BroomIcon },
+      { name: "Limpeza profunda", Icon: SparkleIcon },
+      { name: "Limpeza pós-obra", Icon: ShovelIcon },
+      { name: "Organização", Icon: BoxIcon },
+      { name: "Limpeza de estofado", Icon: SofaIcon },
+      { name: "Higienização", Icon: SprayIcon },
     ],
   },
   jardinagem: {
@@ -95,17 +102,17 @@ const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
       { label: "Irrigação", icon: "💧" },
     ],
     discountServices: [
-      { name: "Poda e\nManutenção", discountLabel: "até 15%", discountSub: "em descontos", emoji: "✂️" },
-      { name: "Projeto de\nPaisagismo", discountLabel: "até 25%", discountSub: "em descontos", emoji: "🌸" },
-      { name: "Irrigação\nautomática", discountLabel: "até 12%", discountSub: "em descontos", emoji: "💧" },
+      { name: "Poda e\nManutenção", discountLabel: "até 15%", discountSub: "em descontos", Icon: ScissorsIcon },
+      { name: "Projeto de\nPaisagismo", discountLabel: "até 25%", discountSub: "em descontos", Icon: LandscapeIcon },
+      { name: "Irrigação\nautomática", discountLabel: "até 12%", discountSub: "em descontos", Icon: WaterDropIcon },
     ],
     services: [
-      { name: "Poda de árvores", emoji: "🌳" },
-      { name: "Corte de grama", emoji: "🌿" },
-      { name: "Plantio de flores", emoji: "🌸" },
-      { name: "Paisagismo", emoji: "🏡" },
-      { name: "Irrigação", emoji: "💧" },
-      { name: "Adubação", emoji: "🌱" },
+      { name: "Poda de árvores", Icon: TreeIcon },
+      { name: "Corte de grama", Icon: ScissorsIcon },
+      { name: "Plantio de flores", Icon: FlowerIcon },
+      { name: "Paisagismo", Icon: LandscapeIcon },
+      { name: "Irrigação", Icon: WaterDropIcon },
+      { name: "Adubação", Icon: SeedlingIcon },
     ],
   },
 };
@@ -188,9 +195,7 @@ export default function CategoryPage() {
         <h2 className="font-display font-bold text-base text-neutral-darkest px-4 mb-3">
           Serviços com desconto
         </h2>
-        <div
-          className="flex gap-3 px-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
-        >
+        <div className="flex gap-3 px-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
           {config.discountServices.map((ds, i) => (
             <div
               key={i}
@@ -200,12 +205,10 @@ export default function CategoryPage() {
               <p className="font-display font-bold text-white text-base leading-tight whitespace-pre-line z-10 relative">
                 {ds.name}
               </p>
-              <span
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-5xl opacity-40 select-none"
-                aria-hidden
-              >
-                {ds.emoji}
-              </span>
+              {/* Icon tinted white/translucent in top-right */}
+              <div className="absolute right-3 top-4 opacity-30 [&_path]:stroke-white [&_rect]:stroke-white [&_circle]:stroke-white [&_ellipse]:stroke-white [&_circle[fill]]:fill-white">
+                <ds.Icon />
+              </div>
               <div className="z-10 relative">
                 <p className="font-display font-bold text-white text-sm">{ds.discountLabel}</p>
                 <p className="font-body text-white/80 text-xs">{ds.discountSub}</p>
@@ -224,10 +227,10 @@ export default function CategoryPage() {
           {config.services.map((svc, i) => (
             <Link
               key={i}
-              href={`/prestadores/1`}
+              href="/prestadores/1"
               className="bg-white border border-neutral-pure rounded-2xl p-4 flex flex-col gap-3"
             >
-              <span className="text-3xl">{svc.emoji}</span>
+              <svc.Icon />
               <span className="font-body font-semibold text-sm text-neutral-darkest leading-tight">
                 {svc.name}
               </span>
