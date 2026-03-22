@@ -148,7 +148,7 @@ export default function FavoritosPage() {
               <div
                 key={item.id}
                 className="flex rounded-2xl overflow-hidden border border-neutral-pure bg-white"
-                style={{ minHeight: "100px" }}
+                style={{ minHeight: "100px", boxShadow: "var(--shadow-level-1)" }}
               >
                 {/* Left image area */}
                 <div className="w-24 shrink-0 relative overflow-hidden" style={{ background: item.bgColor }}>
@@ -175,13 +175,16 @@ export default function FavoritosPage() {
                   </p>
                 </Link>
 
-                {/* Heart */}
-                <button
-                  onClick={() => removeFavorite(item.id)}
-                  className="pr-4 flex items-center justify-center"
-                >
-                  <HeartFilled />
-                </button>
+                {/* Divider + Heart */}
+                <div className="flex items-center self-stretch">
+                  <div className="w-px self-stretch bg-neutral-pure mx-1" />
+                  <button
+                    onClick={() => removeFavorite(item.id)}
+                    className="px-4 flex items-center justify-center self-stretch"
+                  >
+                    <HeartFilled />
+                  </button>
+                </div>
               </div>
                 );
               });

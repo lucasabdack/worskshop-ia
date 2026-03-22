@@ -176,7 +176,7 @@ export default function PedidosPage() {
   const isEmpty = upcoming.length === 0 && past.length === 0;
 
   const OrderCard = ({ order, mLimpezaIdx }: { order: Order; mLimpezaIdx: number }) => (
-    <div className="rounded-2xl border border-neutral-pure bg-white overflow-hidden">
+    <div className="rounded-2xl border border-neutral-pure bg-white overflow-hidden" style={{ boxShadow: "var(--shadow-level-1)" }}>
       {/* Card header */}
       <div className="flex items-center justify-between px-4 pt-4 pb-3">
         <p className="font-body text-xs text-neutral-dark">{order.category}</p>
