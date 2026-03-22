@@ -1,31 +1,25 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
-const CARD_BG = "#5A8FA0";
-
 const BANNERS = [
   {
-    title: "Reparos elétricos",
+    title: "Manutenções e Reparos",
     discount: "até 15%",
     discountText: "em descontos",
-    illustration: "🔌👷🪑🪴",
-    href: "/categorias/eletrica",
+    image: "/assets/card-manutencoes.png",
+    bg: "#567E94",
+    href: "/categorias/manutencoes-reparos",
   },
   {
-    title: "Hidráulica",
+    title: "Assistência Técnica",
     discount: "até 20%",
     discountText: "em descontos",
-    illustration: "🚿🔧🪣🌿",
-    href: "/categorias/hidraulica",
-  },
-  {
-    title: "Limpeza",
-    discount: "até 10%",
-    discountText: "em descontos",
-    illustration: "🧹🧴🧺🌸",
-    href: "/categorias/limpeza",
+    image: "/assets/card-assistencia-tecnica.png",
+    bg: "#78A894",
+    href: "/categorias/assistencia-tecnica",
   },
 ];
 
@@ -36,9 +30,8 @@ export default function HomeBanner() {
   const handleScroll = () => {
     const el = scrollRef.current;
     if (!el) return;
-    // card = calc(100% - 24px) where 100% = inner content (clientWidth - 32px padding)
-    const cardWidth = (el.clientWidth - 32) - 24;
-    const step = cardWidth + 12; // card + gap
+    const cardWidth = el.clientWidth - 32 - 24;
+    const step = cardWidth + 12;
     const index = Math.min(
       Math.round(el.scrollLeft / step),
       BANNERS.length - 1
@@ -58,10 +51,10 @@ export default function HomeBanner() {
             key={i}
             href={b.href}
             className="snap-start shrink-0 rounded-2xl overflow-hidden relative"
-            style={{ background: CARD_BG, width: "calc(100% - 24px)", minHeight: "160px" }}
+            style={{ background: b.bg, width: "calc(100% - 24px)", minHeight: "160px" }}
           >
             {/* Text content */}
-            <div className="absolute inset-0 flex flex-col justify-between p-5">
+            <div className="absolute inset-0 flex flex-col justify-between p-5 z-10">
               <p className="font-display font-bold text-white text-xl leading-tight max-w-[48%]">
                 {b.title}
               </p>
@@ -71,13 +64,15 @@ export default function HomeBanner() {
               </div>
             </div>
 
-            {/* Illustration area */}
-            <div className="absolute right-0 bottom-0 w-[58%] h-full flex items-end justify-center pb-2 pr-3">
-              <div className="flex flex-wrap justify-end gap-1 text-4xl leading-none">
-                {b.illustration.split("").map((char, ci) => (
-                  <span key={ci}>{char}</span>
-                ))}
-              </div>
+            {/* Illustration */}
+            <div className="absolute right-0 bottom-0 w-[58%] h-full">
+              <Image
+                src={b.image}
+                alt={b.title}
+                fill
+                className="object-contain object-right-bottom"
+                sizes="(max-width: 768px) 58vw"
+              />
             </div>
           </Link>
         ))}
