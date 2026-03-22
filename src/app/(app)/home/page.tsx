@@ -6,10 +6,11 @@ import Image from "next/image";
 import HomeBanner from "@/components/HomeBanner";
 
 const CATEGORY_CARDS = [
-  { name: "Manutenções\ne reparos", image: "/assets/card-manutencoes.png", slug: "reparos" },
-  { name: "Assistência\ntécnica", image: "/assets/card-assistencia-tecnica.png", slug: "eletrica" },
-  { name: "Limpeza\ne organização", image: "/assets/card-servicos-domesticos.png", slug: "limpeza" },
-  { name: "Jardinagem\ne paisagismo", image: "/assets/card-reforma-de-imoveis.png", slug: "jardinagem" },
+  { name: "Manutenções\ne reparos",    image: "/assets/card-manutencoes.png",             slug: "reparos",    bg: "#5A8FA0" },
+  { name: "Assistência\ntécnica",      image: "/assets/card-assistencia-tecnica.png",      slug: "eletrica",   bg: "#4A9E8E" },
+  { name: "Serviços\ndomésticos",      image: "/assets/card-servicos-domesticos.png",      slug: "limpeza",    bg: "#5B9E6A" },
+  { name: "Reforma de\nimóveis",       image: "/assets/card-reforma-de-imoveis.png",       slug: "jardinagem", bg: "#C0566A" },
+  { name: "Assistência\nautomotiva",   image: "/assets/card-assistencia-automotiva.png",   slug: "automotiva", bg: "#3A5A8A" },
 ];
 
 export default function HomePage() {
@@ -66,19 +67,21 @@ export default function HomePage() {
               <Link
                 key={i}
                 href={`/categorias/${cat.slug}`}
-                className="relative flex rounded-2xl overflow-hidden items-end justify-between"
-                style={{ background: "#5A8FA0", minHeight: "130px" }}
+                className="flex rounded-2xl overflow-hidden items-center justify-between"
+                style={{ background: cat.bg, minHeight: "110px" }}
               >
-                <Image
-                  src={cat.image}
-                  alt={cat.name}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <p className="relative z-10 font-display font-bold text-white text-xl leading-tight p-5 whitespace-pre-line drop-shadow-md">
+                <p className="font-display font-bold text-white text-xl leading-tight p-5 whitespace-pre-line flex-shrink-0 w-1/2">
                   {cat.name}
                 </p>
+                <div className="relative h-[110px] w-1/2 pr-2">
+                  <Image
+                    src={cat.image}
+                    alt={cat.name}
+                    fill
+                    className="object-contain object-bottom"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
+                </div>
               </Link>
             ))}
           </div>
