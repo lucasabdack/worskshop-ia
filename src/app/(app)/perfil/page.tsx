@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth";
-import { signOut } from "@/lib/auth";
+import { signOutAction } from "@/lib/actions";
 
 const MENU_ITEMS = [
   { href: "/conversas", icon: "💬", label: "Conversas", description: "Histórico de mensagens" },
@@ -73,12 +73,7 @@ export default async function PerfilPage() {
 
       {/* Logout */}
       <div className="mx-4 mt-3 mb-4">
-        <form
-          action={async () => {
-            "use server";
-            await signOut({ redirectTo: "/login" });
-          }}
-        >
+        <form action={signOutAction}>
           <button
             type="submit"
             className="w-full h-12 rounded-2xl border border-error-pure font-body font-semibold text-sm text-error-pure"

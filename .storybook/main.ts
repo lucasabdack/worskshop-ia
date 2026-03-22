@@ -19,6 +19,14 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
+  babel: async (options) => ({
+    ...options,
+    presets: [
+      ["@babel/preset-env", { targets: { esmodules: true } }],
+      ["@babel/preset-react", { runtime: "automatic" }],
+      "@babel/preset-typescript",
+    ],
+  }),
 };
 
 export default config;

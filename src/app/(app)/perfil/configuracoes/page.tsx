@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { auth, signOut } from "@/lib/auth";
+import { auth } from "@/lib/auth";
+import { signOutAction } from "@/lib/actions";
 
 export default async function ConfiguracoesPage() {
   const session = await auth();
@@ -88,12 +89,7 @@ export default async function ConfiguracoesPage() {
         </div>
 
         {/* Logout */}
-        <form
-          action={async () => {
-            "use server";
-            await signOut({ redirectTo: "/login" });
-          }}
-        >
+        <form action={signOutAction}>
           <button
             type="submit"
             className="w-full h-12 rounded-2xl border border-error-pure font-body font-semibold text-sm text-error-pure"
