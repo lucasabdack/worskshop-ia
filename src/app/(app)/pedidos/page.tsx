@@ -224,7 +224,7 @@ export default function PedidosPage() {
               {STATUS_LABEL[order.status]}
             </span>
           </div>
-          <p className="font-display font-bold text-primary-pure leading-none mt-0.5" style={{ fontSize: "22px" }}>
+          <p className="font-display font-bold text-primary-pure leading-none" style={{ fontSize: "22px" }}>
             {order.providerName}
           </p>
           {order.status === "COMPLETED" ? (
