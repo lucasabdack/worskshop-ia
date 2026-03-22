@@ -10,7 +10,7 @@ const BANNERS = [
     discount: "até 15%",
     discountText: "em descontos",
     image: "/assets/card-manutencoes.png",
-    bg: "#567E94",
+    bg: "var(--color-cat-manutencoes-reparos)",
     href: "/categorias/manutencoes-reparos",
   },
   {
@@ -18,7 +18,7 @@ const BANNERS = [
     discount: "até 20%",
     discountText: "em descontos",
     image: "/assets/card-assistencia-tecnica.png",
-    bg: "#78A894",
+    bg: "var(--color-cat-assistencia-tecnica)",
     href: "/categorias/assistencia-tecnica",
   },
 ];

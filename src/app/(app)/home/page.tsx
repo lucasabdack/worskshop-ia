@@ -6,11 +6,11 @@ import Image from "next/image";
 import HomeBanner from "@/components/HomeBanner";
 
 const CATEGORY_CARDS = [
-  { name: "Manutenções\ne reparos",    image: "/assets/card-manutencoes.png",             slug: "reparos",    bg: "#5A8FA0" },
-  { name: "Assistência\ntécnica",      image: "/assets/card-assistencia-tecnica.png",      slug: "eletrica",   bg: "#4A9E8E" },
-  { name: "Serviços\ndomésticos",      image: "/assets/card-servicos-domesticos.png",      slug: "limpeza",    bg: "#5B9E6A" },
-  { name: "Reforma de\nimóveis",       image: "/assets/card-reforma-de-imoveis.png",       slug: "jardinagem", bg: "#C0566A" },
-  { name: "Assistência\nautomotiva",   image: "/assets/card-assistencia-automotiva.png",   slug: "automotiva", bg: "#3A5A8A" },
+  { name: "Manutenções\ne reparos",    image: "/assets/card-manutencoes.png",             slug: "reparos",    bg: "var(--color-cat-manutencoes-reparos)" },
+  { name: "Assistência\ntécnica",      image: "/assets/card-assistencia-tecnica.png",      slug: "eletrica",   bg: "var(--color-cat-assistencia-tecnica)" },
+  { name: "Serviços\ndomésticos",      image: "/assets/card-servicos-domesticos.png",      slug: "limpeza",    bg: "var(--color-cat-servicos-domesticos)" },
+  { name: "Reforma de\nimóveis",       image: "/assets/card-reforma-de-imoveis.png",       slug: "jardinagem", bg: "var(--color-cat-reforma-imoveis)" },
+  { name: "Assistência\nautomotiva",   image: "/assets/card-assistencia-automotiva.png",   slug: "automotiva", bg: "var(--color-cat-assistencia-automotiva)" },
 ];
 
 export default function HomePage() {
