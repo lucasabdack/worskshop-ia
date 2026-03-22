@@ -7,3 +7,5 @@ export { Avatar } from "./Avatar";
 export { BottomSheet } from "./BottomSheet";
 export { ProgressBar } from "./ProgressBar";
 export { StarRating } from "./StarRating";
+export { Input } from "./Input";
+export { Tag } from "./Tag";
