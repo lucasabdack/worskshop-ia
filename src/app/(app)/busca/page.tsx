@@ -36,7 +36,7 @@ export default function SearchPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar serviços..."
-              className="flex-1 bg-transparent font-body text-sm text-neutral-darkest outline-none placeholder:text-neutral-dark"
+              className="flex-1 bg-transparent font-body text-sm text-neutral-low outline-none placeholder:text-neutral-dark"
             />
             {query && (
               <button onClick={() => setQuery("")}>
@@ -52,7 +52,7 @@ export default function SearchPage() {
       {/* Empty state: show categories */}
       {query.length < 2 && (
         <div className="px-4 mt-5">
-          <h2 className="font-display font-bold text-base text-neutral-darkest mb-3">
+          <h2 className="font-display font-bold text-base text-neutral-low mb-3">
             Navegar por categoria
           </h2>
           <div className="grid grid-cols-4 gap-3">
@@ -94,7 +94,7 @@ export default function SearchPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="font-body font-semibold text-sm text-neutral-darkest truncate">
+                      <span className="font-body font-semibold text-sm text-neutral-low truncate">
                         {p.name}
                       </span>
                       {p.verified && <span className="text-info-pure text-xs">✓</span>}

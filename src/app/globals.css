@@ -7,34 +7,48 @@
 @theme inline {
   /* ---------- Primary ---------- */
   --color-primary-pure:      #321CB2;
-  --color-primary-light:     #5B4FCA;
+  --color-primary-light:     #654FE3;
   --color-primary-lightest:  #C8C2EB;
-  --color-primary-dark:      #1E1180;
-  --color-primary-darkest:   #0D0850;
+  --color-primary-medium:    #240F8A;
+  --color-primary-dark:      #190E58;
+  --color-primary-low:       #0C072C;
 
   /* ---------- Success ---------- */
   --color-success-pure:      #34C47C;
   --color-success-light:     #E8F5EE;
+  --color-success-dark:      #1E9A58;
   --color-success-low:       #0F5C33;
 
   /* ---------- Warning ---------- */
   --color-warning-pure:      #F5A623;
   --color-warning-light:     #FFF4E0;
+  --color-warning-dark:      #C47D0E;
   --color-warning-low:       #7A4800;
 
   /* ---------- Error ---------- */
   --color-error-pure:        #E03A3A;
-  --color-error-light:       #FDEAEA;
+  --color-error-light:       #FDECEA;
+  --color-error-dark:        #B02020;
+  --color-error-low:         #6E1212;
 
   /* ---------- Info ---------- */
-  --color-info-pure:         #4A90D9;
-  --color-info-light:        #E8F1FB;
+  --color-info-pure:         #654FE3;
+  --color-info-light:        #C8C2EB;
+  --color-info-dark:         #321CB2;
+  --color-info-low:          #0C072C;
 
   /* ---------- Neutral ---------- */
-  --color-neutral-pure:      #E5E3E3;
+  --color-neutral-high:      #FFFFFF;
   --color-neutral-light:     #F0F0F0;
+  --color-neutral-pure:      #E5E3E3;
+  --color-neutral-medium:    #A3A3A3;
   --color-neutral-dark:      #5A5A5A;
-  --color-neutral-darkest:   #1A1A1A;
+  --color-neutral-low:       #292929;
+
+  /* ---------- Disabled ---------- */
+  --color-disabled-bg:       #E5E3E3;
+  --color-disabled-border:   #A3A3A3;
+  --color-disabled-text:     #5A5A5A;
 
   /* ---------- Brand Teal-Gray ---------- */
   --color-teal-gray:         #8B9EAD;
@@ -237,7 +251,7 @@
     background: #fff;
     font-family: var(--font-body);
     font-size: var(--text-base);
-    color: var(--color-neutral-darkest);
+    color: var(--color-neutral-low);
     outline: none;
     transition: border-color 0.15s;
   }

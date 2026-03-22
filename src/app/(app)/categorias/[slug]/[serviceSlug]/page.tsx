@@ -82,7 +82,7 @@ export default function ProvidersListPage() {
                 className={`shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full border font-body text-sm transition-colors duration-200 ${
                   activeFilter === i
                     ? "border-primary-pure bg-primary-pure text-white"
-                    : "border-neutral-pure bg-white text-neutral-darkest"
+                    : "border-neutral-pure bg-white text-neutral-low"
                 }`}
               >
                 {f.icon}
@@ -95,7 +95,7 @@ export default function ProvidersListPage() {
 
       {/* Providers list */}
       <div className="bg-white mt-2 pt-4 pb-6 px-4">
-        <h2 className="font-display font-bold text-base text-neutral-darkest mb-3">Prestadores</h2>
+        <h2 className="font-display font-bold text-base text-neutral-low mb-3">Prestadores</h2>
         <div className="space-y-3">
           {MOCK_PROVIDERS.map((p) => (
             <div key={p.id} className="bg-white rounded-2xl border border-neutral-pure p-4">

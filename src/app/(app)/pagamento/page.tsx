@@ -47,20 +47,20 @@ function PagamentoContent() {
               <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <h1 className="font-display font-bold text-xl text-neutral-darkest">Pagamento</h1>
+          <h1 className="font-display font-bold text-xl text-neutral-low">Pagamento</h1>
         </div>
       </div>
 
       {/* Order summary */}
       <div className="mx-4 mt-4 card p-4 space-y-2">
-        <h2 className="font-display font-bold text-base text-neutral-darkest">Resumo</h2>
+        <h2 className="font-display font-bold text-base text-neutral-low">Resumo</h2>
         {provider && (
           <p className="font-body text-sm text-neutral-dark">{provider.name}</p>
         )}
         {selectedServices.map((s) => (
           <div key={s.name} className="flex items-center justify-between">
             <span className="font-body text-sm text-neutral-dark">{s.name}</span>
-            <span className="font-body text-sm text-neutral-darkest">{s.price}</span>
+            <span className="font-body text-sm text-neutral-low">{s.price}</span>
           </div>
         ))}
         {date && time && (
@@ -69,7 +69,7 @@ function PagamentoContent() {
           </p>
         )}
         <div className="border-t border-neutral-light pt-2 flex items-center justify-between">
-          <span className="font-body font-bold text-sm text-neutral-darkest">Total</span>
+          <span className="font-body font-bold text-sm text-neutral-low">Total</span>
           <span className="font-body font-bold text-base text-primary-pure">
             R$ {total.toFixed(0)}
           </span>
@@ -78,7 +78,7 @@ function PagamentoContent() {
 
       {/* Payment methods */}
       <div className="mx-4 mt-4 space-y-2">
-        <h2 className="font-display font-bold text-base text-neutral-darkest mb-3">
+        <h2 className="font-display font-bold text-base text-neutral-low mb-3">
           Forma de pagamento
         </h2>
         {PAYMENT_METHODS.map((method) => {
@@ -93,7 +93,7 @@ function PagamentoContent() {
             >
               <span className="text-2xl">{method.icon}</span>
               <div className="flex-1">
-                <p className="font-body font-semibold text-sm text-neutral-darkest">
+                <p className="font-body font-semibold text-sm text-neutral-low">
                   {method.label}
                 </p>
                 <p className="font-body text-xs text-neutral-dark">{method.detail}</p>

@@ -167,7 +167,7 @@ export default function PedidosPage() {
           Ajuda
         </Link>
       </div>
-      <p className="font-body text-sm text-neutral-darkest px-4 pb-3">{order.service}</p>
+      <p className="font-body text-sm text-neutral-low px-4 pb-3">{order.service}</p>
 
       <div className="border-t border-neutral-pure mx-4" />
 
@@ -226,7 +226,7 @@ export default function PedidosPage() {
     <div className="bg-neutral-light min-h-screen">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white px-4 pt-14 pb-3">
-        <h1 className="font-display font-bold text-2xl text-neutral-darkest mb-3">Pedidos</h1>
+        <h1 className="font-display font-bold text-2xl text-neutral-low mb-3">Pedidos</h1>
         {/* Filter chips */}
         <div className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden pb-1">
           {FILTERS.map((f) => (
@@ -252,7 +252,7 @@ export default function PedidosPage() {
         {isEmpty ? (
           <div className="text-center py-20">
             <div className="text-5xl mb-4">📋</div>
-            <p className="font-display font-bold text-lg text-neutral-darkest">Nenhum pedido ainda</p>
+            <p className="font-display font-bold text-lg text-neutral-low">Nenhum pedido ainda</p>
             <p className="font-body text-sm text-neutral-dark mt-2">
               Contrate seu primeiro serviço e acompanhe aqui.
             </p>
@@ -268,7 +268,7 @@ export default function PedidosPage() {
             {/* ── Por vir ── */}
             {upcomingGroups.length > 0 && (
               <div>
-                <p className="font-display font-bold text-base text-neutral-darkest mb-4">
+                <p className="font-display font-bold text-base text-neutral-low mb-4">
                   Pedidos por vir
                 </p>
                 <div className="space-y-6">
@@ -287,7 +287,7 @@ export default function PedidosPage() {
             {/* ── Realizados ── */}
             {pastGroups.length > 0 && (
               <div>
-                <p className="font-display font-bold text-base text-neutral-darkest mb-4">
+                <p className="font-display font-bold text-base text-neutral-low mb-4">
                   Pedidos realizados
                 </p>
                 <div className="space-y-6">

@@ -26,7 +26,7 @@ function ConfirmacaoContent() {
           </svg>
         </div>
 
-        <h1 className="font-display font-bold text-2xl text-neutral-darkest">
+        <h1 className="font-display font-bold text-2xl text-neutral-low">
           Pedido confirmado!
         </h1>
         <p className="font-body text-sm text-neutral-dark mt-2 leading-relaxed">
@@ -43,7 +43,7 @@ function ConfirmacaoContent() {
                 <span className="font-display font-bold text-primary-pure">{provider.name[0]}</span>
               </div>
               <div>
-                <p className="font-body font-semibold text-sm text-neutral-darkest">{provider.name}</p>
+                <p className="font-body font-semibold text-sm text-neutral-low">{provider.name}</p>
                 <p className="font-body text-xs text-neutral-dark">{provider.category}</p>
               </div>
             </div>
@@ -61,7 +61,7 @@ function ConfirmacaoContent() {
             {date && time && (
               <div className="flex items-center gap-2 border-t border-neutral-light pt-3">
                 <span className="text-base">📅</span>
-                <p className="font-body text-sm text-neutral-darkest">
+                <p className="font-body text-sm text-neutral-low">
                   {date} às {time}
                 </p>
               </div>
@@ -69,7 +69,7 @@ function ConfirmacaoContent() {
 
             <div className="flex items-center gap-2">
               <span className="text-base">📍</span>
-              <p className="font-body text-sm text-neutral-darkest">
+              <p className="font-body text-sm text-neutral-low">
                 Rua das Flores, 42 — Jardim Paulista
               </p>
             </div>
@@ -91,7 +91,7 @@ function ConfirmacaoContent() {
         </Link>
         <Link
           href="/pedidos"
-          className="flex items-center justify-center w-full h-12 rounded-full border border-neutral-pure font-body font-semibold text-sm text-neutral-darkest"
+          className="flex items-center justify-center w-full h-12 rounded-full border border-neutral-pure font-body font-semibold text-sm text-neutral-low"
         >
           Ver meus pedidos
         </Link>

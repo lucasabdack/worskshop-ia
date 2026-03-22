@@ -86,7 +86,7 @@ export default function FavoritosPage() {
     <div className="bg-neutral-light min-h-screen">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white px-4 pt-14 pb-3">
-        <h1 className="font-display font-bold text-2xl text-neutral-darkest mb-3">Favoritos</h1>
+        <h1 className="font-display font-bold text-2xl text-neutral-low mb-3">Favoritos</h1>
         {/* Filter chips */}
         <div className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden pb-1">
           {FILTERS.map((f) => (
@@ -109,14 +109,14 @@ export default function FavoritosPage() {
       <div className="bg-white mt-2 px-4 pb-6">
         {/* List */}
         <div className="pt-5">
-        <p className="font-display font-bold text-base text-neutral-darkest mb-3">
+        <p className="font-display font-bold text-base text-neutral-low mb-3">
           Prestadores favoritados
         </p>
 
         {filtered.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-5xl mb-4">🤍</div>
-            <p className="font-display font-bold text-lg text-neutral-darkest">
+            <p className="font-display font-bold text-lg text-neutral-low">
               Nenhum favorito ainda
             </p>
             <p className="font-body text-sm text-neutral-dark mt-2">
@@ -151,7 +151,7 @@ export default function FavoritosPage() {
                   className="flex-1 px-4 py-3 flex flex-col justify-center min-w-0"
                 >
                   <p className="font-body text-xs text-neutral-dark">{item.category}</p>
-                  <p className="font-body text-sm text-neutral-darkest mt-0.5">{item.service}</p>
+                  <p className="font-body text-sm text-neutral-low mt-0.5">{item.service}</p>
                   <p className="font-display font-bold text-base text-primary-pure mt-1">
                     {item.providerName}
                   </p>

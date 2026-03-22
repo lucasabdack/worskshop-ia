@@ -106,12 +106,12 @@ export default async function PerfilPage() {
             <span className="font-display font-bold text-primary-pure text-2xl">{initial}</span>
           </div>
           <div>
-            <h1 className="font-display font-bold text-xl text-neutral-darkest">{name}</h1>
+            <h1 className="font-display font-bold text-xl text-neutral-low">{name}</h1>
             <div className="flex items-center gap-1 mt-0.5">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="#F5A623">
                 <path d="M7 1l1.8 3.6L13 5.3l-3 2.9.7 4.1L7 10.1l-3.7 2.2.7-4.1L1 5.3l4.2-.7L7 1z" />
               </svg>
-              <span className="font-body text-sm text-neutral-darkest font-semibold">4.93</span>
+              <span className="font-body text-sm text-neutral-low font-semibold">4.93</span>
             </div>
           </div>
         </div>
@@ -135,7 +135,7 @@ export default async function PerfilPage() {
             <Link key={item.href} href={item.href} className="flex items-center gap-4 py-4">
               <div className="w-8 shrink-0 flex justify-center">{item.icon}</div>
               <div className="flex-1">
-                <p className="font-body font-semibold text-sm text-neutral-darkest">{item.label}</p>
+                <p className="font-body font-semibold text-sm text-neutral-low">{item.label}</p>
                 <p className="font-body text-xs text-neutral-dark mt-0.5">{item.description}</p>
               </div>
               <ChevronRight />

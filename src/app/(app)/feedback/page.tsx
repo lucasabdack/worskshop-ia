@@ -36,7 +36,7 @@ function FeedbackContent() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen px-8 text-center">
         <div className="text-5xl mb-4">🎉</div>
-        <h1 className="font-display font-bold text-2xl text-neutral-darkest">
+        <h1 className="font-display font-bold text-2xl text-neutral-low">
           Obrigado!
         </h1>
         <p className="font-body text-sm text-neutral-dark mt-2">
@@ -56,7 +56,7 @@ function FeedbackContent() {
               <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <h1 className="font-display font-bold text-xl text-neutral-darkest">Avaliação</h1>
+          <h1 className="font-display font-bold text-xl text-neutral-low">Avaliação</h1>
         </div>
       </div>
 
@@ -69,14 +69,14 @@ function FeedbackContent() {
                 {provider.name[0]}
               </span>
             </div>
-            <p className="font-display font-bold text-lg text-neutral-darkest">{provider.name}</p>
+            <p className="font-display font-bold text-lg text-neutral-low">{provider.name}</p>
             <p className="font-body text-sm text-neutral-dark">{provider.category}</p>
           </div>
         )}
 
         {/* Star rating */}
         <div>
-          <p className="font-display font-bold text-base text-neutral-darkest mb-3 text-center">
+          <p className="font-display font-bold text-base text-neutral-low mb-3 text-center">
             Como foi o serviço?
           </p>
           <div className="flex justify-center gap-3">
@@ -95,7 +95,7 @@ function FeedbackContent() {
         {/* Compliments */}
         {rating >= 4 && (
           <div>
-            <p className="font-display font-bold text-base text-neutral-darkest mb-3">
+            <p className="font-display font-bold text-base text-neutral-low mb-3">
               O que mais se destacou?
             </p>
             <div className="flex flex-wrap gap-2">
@@ -122,7 +122,7 @@ function FeedbackContent() {
         {/* Comment */}
         {rating > 0 && (
           <div>
-            <p className="font-display font-bold text-base text-neutral-darkest mb-2">
+            <p className="font-display font-bold text-base text-neutral-low mb-2">
               Deixe um comentário (opcional)
             </p>
             <textarea
@@ -130,7 +130,7 @@ function FeedbackContent() {
               onChange={(e) => setComment(e.target.value)}
               placeholder="Conta como foi sua experiência..."
               rows={4}
-              className="w-full bg-white border border-neutral-pure rounded-2xl px-4 py-3 font-body text-sm text-neutral-darkest placeholder:text-neutral-dark outline-none resize-none focus:border-primary-pure"
+              className="w-full bg-white border border-neutral-pure rounded-2xl px-4 py-3 font-body text-sm text-neutral-low placeholder:text-neutral-dark outline-none resize-none focus:border-primary-pure"
             />
           </div>
         )}

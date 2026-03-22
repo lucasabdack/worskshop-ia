@@ -54,7 +54,7 @@ function SacolaContent() {
               <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <h1 className="font-display font-bold text-xl text-neutral-darkest">Sacola</h1>
+          <h1 className="font-display font-bold text-xl text-neutral-low">Sacola</h1>
         </div>
       </div>
 
@@ -64,29 +64,29 @@ function SacolaContent() {
           <span className="font-display font-bold text-primary-pure">{provider.name[0]}</span>
         </div>
         <div>
-          <p className="font-body font-semibold text-sm text-neutral-darkest">{provider.name}</p>
+          <p className="font-body font-semibold text-sm text-neutral-low">{provider.name}</p>
           <p className="font-body text-xs text-neutral-dark">{provider.category}</p>
         </div>
       </div>
 
       {/* Services summary */}
       <div className="mx-4 mt-3 card p-4 space-y-3">
-        <h2 className="font-display font-bold text-base text-neutral-darkest">Serviços</h2>
+        <h2 className="font-display font-bold text-base text-neutral-low">Serviços</h2>
         {selectedServices.map((s) => (
           <div key={s.name} className="flex items-center justify-between">
             <span className="font-body text-sm text-neutral-dark">{s.name}</span>
-            <span className="font-body font-semibold text-sm text-neutral-darkest">{s.price}</span>
+            <span className="font-body font-semibold text-sm text-neutral-low">{s.price}</span>
           </div>
         ))}
         <div className="border-t border-neutral-light pt-3 flex items-center justify-between">
-          <span className="font-body font-bold text-sm text-neutral-darkest">Total</span>
+          <span className="font-body font-bold text-sm text-neutral-low">Total</span>
           <span className="font-body font-bold text-base text-primary-pure">{formattedTotal}</span>
         </div>
       </div>
 
       {/* Path selector */}
       <div className="mx-4 mt-4 space-y-3">
-        <h2 className="font-display font-bold text-base text-neutral-darkest">Como deseja pagar?</h2>
+        <h2 className="font-display font-bold text-base text-neutral-low">Como deseja pagar?</h2>
 
         {/* Clube Help path */}
         <button
@@ -123,7 +123,7 @@ function SacolaContent() {
           className="w-full card px-4 py-4 flex justify-between items-center text-left"
         >
           <div>
-            <p className="font-display font-bold text-base text-neutral-darkest">
+            <p className="font-display font-bold text-base text-neutral-low">
               Pagar avulso
             </p>
             <p className="font-body text-xs text-neutral-dark mt-0.5">

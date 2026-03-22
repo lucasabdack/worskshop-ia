@@ -13,7 +13,7 @@ export default async function ConfiguracoesPage() {
             <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </Link>
-        <h1 className="font-display font-bold text-xl text-neutral-darkest">Configurações</h1>
+        <h1 className="font-display font-bold text-xl text-neutral-low">Configurações</h1>
       </div>
 
       <div className="px-4 mt-4 space-y-4">
@@ -25,13 +25,13 @@ export default async function ConfiguracoesPage() {
           <div className="bg-white rounded-2xl overflow-hidden divide-y divide-neutral-light">
             <div className="flex items-center gap-4 px-4 py-3.5">
               <span className="font-body text-sm text-neutral-dark w-20">Nome</span>
-              <span className="font-body font-semibold text-sm text-neutral-darkest flex-1">
+              <span className="font-body font-semibold text-sm text-neutral-low flex-1">
                 {session?.user?.name ?? "—"}
               </span>
             </div>
             <div className="flex items-center gap-4 px-4 py-3.5">
               <span className="font-body text-sm text-neutral-dark w-20">E-mail</span>
-              <span className="font-body font-semibold text-sm text-neutral-darkest flex-1 truncate">
+              <span className="font-body font-semibold text-sm text-neutral-low flex-1 truncate">
                 {session?.user?.email ?? "—"}
               </span>
             </div>
@@ -50,7 +50,7 @@ export default async function ConfiguracoesPage() {
               { label: "Lembretes de agendamento", enabled: true },
             ].map((setting) => (
               <div key={setting.label} className="flex items-center justify-between px-4 py-3.5">
-                <span className="font-body text-sm text-neutral-darkest">{setting.label}</span>
+                <span className="font-body text-sm text-neutral-low">{setting.label}</span>
                 <div
                   className={`w-11 h-6 rounded-full transition-colors ${
                     setting.enabled ? "bg-primary-pure" : "bg-neutral-pure"
@@ -74,7 +74,7 @@ export default async function ConfiguracoesPage() {
           </h2>
           <div className="bg-white rounded-2xl overflow-hidden divide-y divide-neutral-light">
             <button className="w-full flex items-center justify-between px-4 py-3.5 text-left">
-              <span className="font-body text-sm text-neutral-darkest">Política de privacidade</span>
+              <span className="font-body text-sm text-neutral-low">Política de privacidade</span>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M6 4l4 4-4 4" stroke="#5A5A5A" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>

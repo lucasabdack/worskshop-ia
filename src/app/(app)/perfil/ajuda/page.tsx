@@ -17,17 +17,17 @@ export default function AjudaPage() {
             <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </Link>
-        <h1 className="font-display font-bold text-xl text-neutral-darkest">Ajuda</h1>
+        <h1 className="font-display font-bold text-xl text-neutral-low">Ajuda</h1>
       </div>
 
       <div className="px-4 mt-4 space-y-3">
-        <h2 className="font-display font-bold text-base text-neutral-darkest">Perguntas frequentes</h2>
+        <h2 className="font-display font-bold text-base text-neutral-low">Perguntas frequentes</h2>
 
         <div className="space-y-2">
           {FAQ.map((item, i) => (
             <details key={i} className="card px-4 py-3.5 group">
               <summary className="flex items-center justify-between cursor-pointer list-none">
-                <span className="font-body font-semibold text-sm text-neutral-darkest">{item.q}</span>
+                <span className="font-body font-semibold text-sm text-neutral-low">{item.q}</span>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="group-open:rotate-180 transition-transform shrink-0 ml-3">
                   <path d="M4 6l4 4 4-4" stroke="#5A5A5A" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
@@ -39,14 +39,14 @@ export default function AjudaPage() {
 
         {/* Contact */}
         <div className="card px-4 py-4 mt-4">
-          <h3 className="font-display font-bold text-base text-neutral-darkest mb-3">
+          <h3 className="font-display font-bold text-base text-neutral-low mb-3">
             Falar com suporte
           </h3>
           <div className="space-y-2">
-            <button className="w-full h-11 rounded-xl border border-neutral-pure font-body font-semibold text-sm text-neutral-darkest flex items-center justify-center gap-2">
+            <button className="w-full h-11 rounded-xl border border-neutral-pure font-body font-semibold text-sm text-neutral-low flex items-center justify-center gap-2">
               💬 Chat ao vivo
             </button>
-            <button className="w-full h-11 rounded-xl border border-neutral-pure font-body font-semibold text-sm text-neutral-darkest flex items-center justify-center gap-2">
+            <button className="w-full h-11 rounded-xl border border-neutral-pure font-body font-semibold text-sm text-neutral-low flex items-center justify-center gap-2">
               ✉️ Enviar e-mail
             </button>
           </div>

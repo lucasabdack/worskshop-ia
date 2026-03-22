@@ -181,7 +181,7 @@ export default function CategoryPage() {
               className={`shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full border font-body text-sm transition-colors duration-200 ${
                 activeFilter === i
                   ? "border-primary-pure bg-primary-pure text-white"
-                  : "border-neutral-pure bg-white text-neutral-darkest"
+                  : "border-neutral-pure bg-white text-neutral-low"
               }`}
             >
               <span>{sub.icon}</span>
@@ -194,7 +194,7 @@ export default function CategoryPage() {
 
       {/* Serviços com desconto */}
       <div className="bg-white mt-2 pt-4 pb-5">
-        <h2 className="font-display font-bold text-base text-neutral-darkest px-4 mb-3">
+        <h2 className="font-display font-bold text-base text-neutral-low px-4 mb-3">
           Serviços com desconto
         </h2>
         <div className="flex gap-3 px-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
@@ -222,7 +222,7 @@ export default function CategoryPage() {
 
       {/* Serviços disponíveis */}
       <div className="bg-white mt-2 pt-4 pb-6 px-4">
-        <h2 className="font-display font-bold text-base text-neutral-darkest mb-3">
+        <h2 className="font-display font-bold text-base text-neutral-low mb-3">
           Serviços disponíveis
         </h2>
         <div className="grid grid-cols-2 gap-3">
@@ -233,7 +233,7 @@ export default function CategoryPage() {
               className="bg-white border border-neutral-pure rounded-2xl p-4 flex flex-col gap-3 shadow-level-1"
             >
               <svc.Icon />
-              <span className="font-body font-semibold text-sm text-neutral-darkest leading-tight">
+              <span className="font-body font-semibold text-sm text-neutral-low leading-tight">
                 {svc.name}
               </span>
             </Link>

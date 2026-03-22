@@ -261,8 +261,8 @@ export default function ProviderPage() {
             onClick={() => setActiveTab(tab)}
             className={`h-9 px-4 rounded-full text-sm font-body font-semibold border transition-colors capitalize ${
               activeTab === tab
-                ? "border-primary-lightest text-primary-pure bg-primary-lightest"
-                : "border-neutral-pure text-neutral-darkest bg-white"
+                ? "border-primary-pure text-primary-pure bg-primary-lightest"
+                : "border-neutral-low text-neutral-low bg-white"
             }`}
           >
             {tab === "elogios" ? "Elogios" : tab === "recomendacoes" ? "Recomendações" : "Conquistas"}
@@ -310,7 +310,7 @@ export default function ProviderPage() {
 
       {/* ── Services grid ── */}
       <div className="px-4 mt-6">
-        <h2 className="font-display font-bold text-base text-neutral-darkest mb-3">
+        <h2 className="font-display font-bold text-base text-neutral-low mb-3">
           Todos os serviços prestados por {firstName}
         </h2>
         <div className="grid grid-cols-2 gap-3">
@@ -329,7 +329,7 @@ export default function ProviderPage() {
                 <div className={isSelected ? "[&_path]:stroke-white [&_rect]:stroke-white [&_circle]:stroke-white [&_circle]:fill-white" : ""}>
                   <service.Icon />
                 </div>
-                <p className={`font-display font-bold text-sm mt-3 leading-tight ${isSelected ? "text-white" : "text-neutral-darkest"}`}>
+                <p className={`font-display font-bold text-sm mt-3 leading-tight ${isSelected ? "text-white" : "text-neutral-low"}`}>
                   {service.name}
                 </p>
                 <p className={`font-body text-xs mt-1 ${isSelected ? "text-white/80" : "text-neutral-dark"}`}>
@@ -350,7 +350,7 @@ export default function ProviderPage() {
         >
           <div>
             <p className="font-body text-xs text-neutral-dark">Total dos serviços</p>
-            <p className="font-display font-bold text-base text-neutral-darkest">
+            <p className="font-display font-bold text-base text-neutral-low">
               R$ {totalPrice},00 / por 1 hora
             </p>
           </div>
@@ -381,13 +381,13 @@ export default function ProviderPage() {
             {/* Service icon + name */}
             <div className="flex items-center gap-3 mb-5">
               <previewService.Icon />
-              <h2 className="font-display font-bold text-xl text-neutral-darkest leading-tight">
+              <h2 className="font-display font-bold text-xl text-neutral-low leading-tight">
                 {previewService.name}
               </h2>
             </div>
 
             {/* Includes */}
-            <p className="font-display font-bold text-sm text-neutral-darkest mb-2">
+            <p className="font-display font-bold text-sm text-neutral-low mb-2">
               O que configura um {previewService.name.toLowerCase()}?
             </p>
             <ul className="space-y-1 mb-4">

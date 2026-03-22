@@ -48,7 +48,7 @@ export function BottomSheet({
           <span className="w-10 h-1 rounded-full bg-neutral-pure" />
         </div>
         {title && (
-          <h2 className="font-display font-bold text-xl text-neutral-darkest mb-4">
+          <h2 className="font-display font-bold text-xl text-neutral-low mb-4">
             {title}
           </h2>
         )}

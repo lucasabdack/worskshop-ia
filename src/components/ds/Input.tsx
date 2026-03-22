@@ -25,7 +25,7 @@ export function Input({
       {label && (
         <label
           htmlFor={inputId}
-          className="block mb-1 font-body text-sm font-semibold text-neutral-darkest"
+          className="block mb-1 font-body text-sm font-semibold text-neutral-low"
         >
           {label}
         </label>

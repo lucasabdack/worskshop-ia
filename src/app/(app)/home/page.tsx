@@ -30,7 +30,7 @@ export default function HomePage() {
           collapsed ? "shadow-level-1" : "shadow-none"
         }`}
       >
-        <button className="flex items-center gap-1 font-body text-sm font-semibold text-neutral-darkest">
+        <button className="flex items-center gap-1 font-body text-sm font-semibold text-neutral-low">
           Padre Leonel franca, 261
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M4 6l4 4 4-4" stroke="#1A1A1A" strokeWidth="1.5" strokeLinecap="round" />
@@ -59,7 +59,7 @@ export default function HomePage() {
       {/* Categorias: 8px de separação */}
       <div className="bg-white mt-2 pb-6">
         <div className="px-4">
-          <h2 className="font-display font-bold text-lg text-neutral-darkest mb-3">Categorias</h2>
+          <h2 className="font-display font-bold text-lg text-neutral-low mb-3">Categorias</h2>
           <div className="space-y-3">
             {CATEGORY_CARDS.map((cat, i) => (
               <Link

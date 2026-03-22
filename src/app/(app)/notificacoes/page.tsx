@@ -56,7 +56,7 @@ export default async function NotificacoesPage() {
             <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </Link>
-        <h1 className="font-display font-bold text-xl text-neutral-darkest">Notificações</h1>
+        <h1 className="font-display font-bold text-xl text-neutral-low">Notificações</h1>
       </div>
 
       <div className="divide-y divide-neutral-light">
@@ -70,7 +70,7 @@ export default async function NotificacoesPage() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between">
-                <p className="font-body font-semibold text-sm text-neutral-darkest">{n.title}</p>
+                <p className="font-body font-semibold text-sm text-neutral-low">{n.title}</p>
                 {!n.read && (
                   <div className="w-2 h-2 rounded-full bg-primary-pure shrink-0 ml-2" />
                 )}

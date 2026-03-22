@@ -94,7 +94,7 @@ export default function ChatPage() {
           </span>
         </div>
         <div>
-          <p className="font-body font-semibold text-sm text-neutral-darkest">
+          <p className="font-body font-semibold text-sm text-neutral-low">
             {provider?.name ?? "Prestador"}
           </p>
           <p className="font-body text-xs text-success-low">Online</p>
@@ -112,7 +112,7 @@ export default function ChatPage() {
               className={`max-w-[75%] px-4 py-2.5 rounded-2xl ${
                 msg.senderType === "USER"
                   ? "bg-primary-pure text-white rounded-br-sm"
-                  : "bg-white text-neutral-darkest rounded-bl-sm border border-neutral-pure"
+                  : "bg-white text-neutral-low rounded-bl-sm border border-neutral-pure"
               }`}
             >
               <p className="font-body text-sm leading-relaxed">{msg.content}</p>
@@ -133,7 +133,7 @@ export default function ChatPage() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && send()}
             placeholder="Escreva uma mensagem..."
-            className="flex-1 h-10 px-4 rounded-full bg-neutral-light font-body text-sm text-neutral-darkest outline-none placeholder:text-neutral-dark"
+            className="flex-1 h-10 px-4 rounded-full bg-neutral-light font-body text-sm text-neutral-low outline-none placeholder:text-neutral-dark"
           />
           <button
             onClick={send}

@@ -36,7 +36,7 @@ export default function LoginPage() {
             <span className="font-display font-bold text-6xl" style={{ color: "#321CB2" }}>Help!</span>
           </div>
           <div>
-            <h1 className="font-display font-bold text-2xl text-neutral-darkest">
+            <h1 className="font-display font-bold text-2xl text-neutral-low">
               Bem-vindo de volta
             </h1>
             <p className="font-body text-sm text-neutral-dark mt-1">
@@ -49,7 +49,7 @@ export default function LoginPage() {
         <button
           onClick={handleGoogle}
           disabled={loading}
-          className="w-full flex items-center justify-center gap-3 h-12 rounded-full border border-neutral-pure bg-white font-body font-semibold text-neutral-darkest text-sm hover:bg-neutral-light transition-colors disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-3 h-12 rounded-full border border-neutral-pure bg-white font-body font-semibold text-neutral-low text-sm hover:bg-neutral-light transition-colors disabled:opacity-50"
         >
           <svg width="20" height="20" viewBox="0 0 20 20">
             <path fill="#4285F4" d="M19.6 10.23c0-.68-.06-1.36-.18-2H10v3.79h5.41a4.63 4.63 0 01-2.01 3.04v2.52h3.25c1.9-1.75 3-4.33 3-7.35z"/>
@@ -74,7 +74,7 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full h-12 px-4 rounded-2xl border border-neutral-pure font-body text-sm text-neutral-darkest placeholder:text-neutral-dark outline-none focus:border-primary-pure transition-colors"
+            className="w-full h-12 px-4 rounded-2xl border border-neutral-pure font-body text-sm text-neutral-low placeholder:text-neutral-dark outline-none focus:border-primary-pure transition-colors"
           />
           <Button type="submit" fullWidth loading={loading}>
             Entrar

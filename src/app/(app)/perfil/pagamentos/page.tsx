@@ -14,11 +14,11 @@ export default function PagamentosPage() {
             <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </Link>
-        <h1 className="font-display font-bold text-xl text-neutral-darkest">Pagamentos</h1>
+        <h1 className="font-display font-bold text-xl text-neutral-low">Pagamentos</h1>
       </div>
 
       <div className="px-4 mt-4 space-y-4">
-        <h2 className="font-display font-bold text-base text-neutral-darkest">Cartões salvos</h2>
+        <h2 className="font-display font-bold text-base text-neutral-low">Cartões salvos</h2>
 
         <div className="space-y-2">
           {CARDS.map((card) => (
@@ -28,7 +28,7 @@ export default function PagamentosPage() {
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <p className="font-body font-semibold text-sm text-neutral-darkest">
+                  <p className="font-body font-semibold text-sm text-neutral-low">
                     {card.brand} •••• {card.last4}
                   </p>
                   {card.isDefault && (

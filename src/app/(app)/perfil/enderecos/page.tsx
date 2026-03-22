@@ -14,7 +14,7 @@ export default function EnderecosPage() {
             <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </Link>
-        <h1 className="font-display font-bold text-xl text-neutral-darkest">Endereços</h1>
+        <h1 className="font-display font-bold text-xl text-neutral-low">Endereços</h1>
       </div>
 
       <div className="px-4 mt-4 space-y-4">
@@ -26,7 +26,7 @@ export default function EnderecosPage() {
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <p className="font-body font-semibold text-sm text-neutral-darkest">{addr.label}</p>
+                  <p className="font-body font-semibold text-sm text-neutral-low">{addr.label}</p>
                   {addr.isDefault && (
                     <span className="bg-success-light text-success-low text-xs font-body font-bold px-2 py-0.5 rounded-full">
                       Padrão

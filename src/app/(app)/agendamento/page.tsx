@@ -50,7 +50,7 @@ function AgendamentoContent() {
             </svg>
           </button>
           <div>
-            <h1 className="font-display font-bold text-xl text-neutral-darkest">Agendamento</h1>
+            <h1 className="font-display font-bold text-xl text-neutral-low">Agendamento</h1>
             {provider && (
               <p className="font-body text-xs text-neutral-dark">{provider.name}</p>
             )}
@@ -60,7 +60,7 @@ function AgendamentoContent() {
 
       {/* Calendar */}
       <div className="px-4 mt-4">
-        <h2 className="font-display font-bold text-base text-neutral-darkest mb-3">Escolha o dia</h2>
+        <h2 className="font-display font-bold text-base text-neutral-low mb-3">Escolha o dia</h2>
         <div className="flex gap-2 overflow-x-auto pb-1">
           {days.map((day) => {
             const isSelected = selectedDay?.toDateString() === day.toDateString();
@@ -71,7 +71,7 @@ function AgendamentoContent() {
                 className={`shrink-0 w-14 rounded-2xl py-3 flex flex-col items-center gap-1 transition-all ${
                   isSelected
                     ? "bg-primary-pure text-white"
-                    : "bg-white border border-neutral-pure text-neutral-darkest"
+                    : "bg-white border border-neutral-pure text-neutral-low"
                 }`}
               >
                 <span className={`font-body text-xs ${isSelected ? "text-white/70" : "text-neutral-dark"}`}>
@@ -90,7 +90,7 @@ function AgendamentoContent() {
       {/* Time slots */}
       {selectedDay && (
         <div className="px-4 mt-6">
-          <h2 className="font-display font-bold text-base text-neutral-darkest mb-3">Escolha o horário</h2>
+          <h2 className="font-display font-bold text-base text-neutral-low mb-3">Escolha o horário</h2>
           <div className="grid grid-cols-3 gap-2">
             {TIME_SLOTS.map((time) => {
               const isSelected = selectedTime === time;
@@ -101,7 +101,7 @@ function AgendamentoContent() {
                   className={`h-11 rounded-xl font-body font-semibold text-sm transition-all ${
                     isSelected
                       ? "bg-primary-pure text-white"
-                      : "bg-white border border-neutral-pure text-neutral-darkest"
+                      : "bg-white border border-neutral-pure text-neutral-low"
                   }`}
                 >
                   {time}
@@ -117,7 +117,7 @@ function AgendamentoContent() {
         <div className="flex items-center gap-3">
           <span className="text-xl">📍</span>
           <div>
-            <p className="font-body font-semibold text-sm text-neutral-darkest">Endereço de atendimento</p>
+            <p className="font-body font-semibold text-sm text-neutral-low">Endereço de atendimento</p>
             <p className="font-body text-xs text-neutral-dark">Rua das Flores, 42 — Jardim Paulista</p>
           </div>
         </div>

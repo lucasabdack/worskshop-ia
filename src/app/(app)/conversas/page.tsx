@@ -27,14 +27,14 @@ export default function ConversasPage() {
             <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </Link>
-        <h1 className="font-display font-bold text-xl text-neutral-darkest">Conversas</h1>
+        <h1 className="font-display font-bold text-xl text-neutral-low">Conversas</h1>
       </div>
 
       <div className="divide-y divide-neutral-light bg-white">
         {CONVERSATIONS.length === 0 ? (
           <div className="text-center py-20 px-4">
             <div className="text-5xl mb-4">💬</div>
-            <p className="font-display font-bold text-lg text-neutral-darkest">
+            <p className="font-display font-bold text-lg text-neutral-low">
               Sem conversas ainda
             </p>
             <p className="font-body text-sm text-neutral-dark mt-2">
@@ -51,7 +51,7 @@ export default function ConversasPage() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
-                  <p className="font-body font-semibold text-sm text-neutral-darkest">
+                  <p className="font-body font-semibold text-sm text-neutral-low">
                     {conv.provider.name}
                   </p>
                   <p className="font-body text-xs text-neutral-dark shrink-0 ml-2">{conv.time}</p>

@@ -22,7 +22,7 @@ function NoSubscriptionState() {
             <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </Link>
-        <h1 className="font-display font-bold text-xl text-neutral-darkest">Clube Help</h1>
+        <h1 className="font-display font-bold text-xl text-neutral-low">Clube Help</h1>
       </div>
 
       {/* Hero */}
@@ -49,7 +49,7 @@ function NoSubscriptionState() {
           <div key={b.title} className="flex items-center gap-4">
             <span className="text-2xl">{b.icon}</span>
             <div>
-              <p className="font-body font-semibold text-sm text-neutral-darkest">{b.title}</p>
+              <p className="font-body font-semibold text-sm text-neutral-low">{b.title}</p>
               <p className="font-body text-xs text-neutral-dark">{b.desc}</p>
             </div>
           </div>
@@ -58,7 +58,7 @@ function NoSubscriptionState() {
 
       {/* Plans */}
       <div className="mx-4 mt-4 space-y-3">
-        <h2 className="font-display font-bold text-base text-neutral-darkest">Escolha seu plano</h2>
+        <h2 className="font-display font-bold text-base text-neutral-low">Escolha seu plano</h2>
 
         <div className="card px-4 py-4 border-2 border-primary-pure relative">
           <div className="absolute -top-2.5 left-4 bg-primary-pure rounded-full px-3 py-0.5">
@@ -66,7 +66,7 @@ function NoSubscriptionState() {
           </div>
           <div className="flex justify-between items-start">
             <div>
-              <p className="font-display font-bold text-base text-neutral-darkest">Mensal</p>
+              <p className="font-display font-bold text-base text-neutral-low">Mensal</p>
               <p className="font-body text-xs text-neutral-dark">3 serviços / mês</p>
             </div>
             <div className="text-right">
@@ -79,11 +79,11 @@ function NoSubscriptionState() {
         <div className="card px-4 py-4">
           <div className="flex justify-between items-start">
             <div>
-              <p className="font-display font-bold text-base text-neutral-darkest">Anual</p>
+              <p className="font-display font-bold text-base text-neutral-low">Anual</p>
               <p className="font-body text-xs text-neutral-dark">36 serviços / ano · economize 20%</p>
             </div>
             <div className="text-right">
-              <p className="font-display font-bold text-xl text-neutral-darkest">R$ 71</p>
+              <p className="font-display font-bold text-xl text-neutral-low">R$ 71</p>
               <p className="font-body text-xs text-neutral-dark">/mês</p>
             </div>
           </div>
@@ -108,7 +108,7 @@ function ActiveState() {
             <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </Link>
-        <h1 className="font-display font-bold text-xl text-neutral-darkest">Clube Help</h1>
+        <h1 className="font-display font-bold text-xl text-neutral-low">Clube Help</h1>
       </div>
 
       <div className="mx-4 mt-4 rounded-2xl overflow-hidden" style={{ background: "#321CB2" }}>
@@ -143,12 +143,12 @@ function PausedState() {
             <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </Link>
-        <h1 className="font-display font-bold text-xl text-neutral-darkest">Clube Help</h1>
+        <h1 className="font-display font-bold text-xl text-neutral-low">Clube Help</h1>
       </div>
 
       <div className="mx-4 mt-8 text-center">
         <div className="text-5xl mb-4">⏸️</div>
-        <h2 className="font-display font-bold text-xl text-neutral-darkest">Assinatura pausada</h2>
+        <h2 className="font-display font-bold text-xl text-neutral-low">Assinatura pausada</h2>
         <p className="font-body text-sm text-neutral-dark mt-2">
           Sua assinatura está pausada. Reative para usar seus créditos.
         </p>
