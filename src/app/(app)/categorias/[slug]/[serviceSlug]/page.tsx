@@ -56,40 +56,41 @@ export default function ProvidersListPage() {
 
   return (
     <div className="bg-neutral-light min-h-full">
-      {/* Sticky teal header */}
-      <div style={{ background: "#5A8FA0" }} className="sticky top-0 z-50 px-4 pt-12 pb-4">
-        <div className="flex items-center gap-2 mb-1">
-          <button onClick={() => router.back()} aria-label="Voltar">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 19l-7-7 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <span className="font-body text-sm text-white/80">{categoryTitle}</span>
-        </div>
-        <h1 className="font-display font-bold text-[22px] text-white leading-tight pl-8">
-          {serviceName}
-        </h1>
-      </div>
-
-      {/* Filter chips */}
-      <div className="bg-white">
-        <div className="flex gap-2 px-4 py-3 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
-          {FILTERS.map((f, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveFilter(i)}
-              className={`shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full border font-body text-sm transition-colors duration-200 ${
-                activeFilter === i
-                  ? "border-primary-pure bg-primary-pure text-white"
-                  : "border-neutral-pure bg-white text-neutral-darkest"
-              }`}
-            >
-              {f.icon}
-              {f.label}
+      {/* Sticky header: teal title + white filter chips */}
+      <div className="sticky top-0 z-50">
+        {/* Teal section */}
+        <div style={{ background: "#5A8FA0" }} className="px-4 pt-12 pb-4">
+          <div className="flex items-center gap-2 mb-1">
+            <button onClick={() => router.back()} aria-label="Voltar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15 19l-7-7 7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
-          ))}
+            <span className="font-body text-sm text-white/80">{categoryTitle}</span>
+          </div>
+          <h1 className="font-display font-bold text-[22px] text-white leading-tight pl-8">
+            {serviceName}
+          </h1>
         </div>
-        <div className="h-px bg-neutral-pure" />
+        {/* Filter chips pinned below teal */}
+        <div className="bg-white border-b border-neutral-pure">
+          <div className="flex gap-2 px-4 py-3 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
+            {FILTERS.map((f, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveFilter(i)}
+                className={`shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full border font-body text-sm transition-colors duration-200 ${
+                  activeFilter === i
+                    ? "border-primary-pure bg-primary-pure text-white"
+                    : "border-neutral-pure bg-white text-neutral-darkest"
+                }`}
+              >
+                {f.icon}
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Providers list */}
