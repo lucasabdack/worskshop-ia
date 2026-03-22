@@ -36,9 +36,11 @@ export default function HomeBanner() {
   const handleScroll = () => {
     const el = scrollRef.current;
     if (!el) return;
-    const cardWidth = el.offsetWidth * 0.85 + 12; // 85% width + 12px gap
+    // card = calc(100% - 24px) where 100% = inner content (clientWidth - 32px padding)
+    const cardWidth = (el.clientWidth - 32) - 24;
+    const step = cardWidth + 12; // card + gap
     const index = Math.min(
-      Math.round(el.scrollLeft / cardWidth),
+      Math.round(el.scrollLeft / step),
       BANNERS.length - 1
     );
     setActiveIndex(index);
@@ -49,14 +51,14 @@ export default function HomeBanner() {
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="flex gap-3 px-4 overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
+        className="flex gap-3 px-4 overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [scroll-padding-left:16px]"
       >
         {BANNERS.map((b, i) => (
           <Link
             key={i}
             href={b.href}
             className="snap-start shrink-0 rounded-2xl overflow-hidden relative"
-            style={{ background: CARD_BG, width: "85%", minHeight: "160px" }}
+            style={{ background: CARD_BG, width: "calc(100% - 24px)", minHeight: "160px" }}
           >
             {/* Text content */}
             <div className="absolute inset-0 flex flex-col justify-between p-5">
