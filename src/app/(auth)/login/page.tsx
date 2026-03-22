@@ -8,8 +8,8 @@ export default function SplashPage() {
   const [dissolve, setDissolve] = useState(false);
 
   useEffect(() => {
-    const fadeTimer = setTimeout(() => setDissolve(true), 2200);
-    const navTimer  = setTimeout(() => router.push("/home"), 2900);
+    const fadeTimer = setTimeout(() => setDissolve(true), 3200);
+    const navTimer  = setTimeout(() => router.push("/home"), 4100);
     return () => { clearTimeout(fadeTimer); clearTimeout(navTimer); };
   }, [router]);
 
@@ -24,23 +24,24 @@ export default function SplashPage() {
     >
       <style>{`
         @keyframes logoFall {
-          0%   { transform: translate(0px,  -110vh); opacity: 0; }
-          18%  { transform: translate(28px, -55vh);  opacity: 1; }
-          34%  { transform: translate(-22px,-18vh);  opacity: 1; }
-          50%  { transform: translate(14px,  10px);  opacity: 1; }
-          63%  { transform: translate(-8px,  -5px);  opacity: 1; }
-          75%  { transform: translate(4px,   3px);   opacity: 1; }
-          85%  { transform: translate(-2px,  -1px);  opacity: 1; }
-          100% { transform: translate(0px,   0px);   opacity: 1; }
+          0%   { transform: translate(0px,   -110vh); opacity: 0; }
+          12%  { opacity: 1; }
+          25%  { transform: translate(14px,  -52vh); }
+          42%  { transform: translate(-10px, -16vh); }
+          57%  { transform: translate(6px,    6px);  }
+          70%  { transform: translate(-3px,  -3px);  }
+          82%  { transform: translate(1.5px,  1.5px);}
+          91%  { transform: translate(-0.5px,-0.5px);}
+          100% { transform: translate(0px,    0px);  opacity: 1; }
         }
         .logo-fall {
-          animation: logoFall 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s both;
+          animation: logoFall 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
         }
       `}</style>
 
       <span
         className="logo-fall font-display font-bold text-white select-none"
-        style={{ fontSize: "clamp(40px, 13vw, 72px)" }}
+        style={{ fontSize: "clamp(56px, 18vw, 96px)" }}
       >
         Help!
       </span>
