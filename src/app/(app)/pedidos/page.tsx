@@ -217,22 +217,22 @@ export default function PedidosPage() {
             className="w-full h-full object-cover object-top"
           />
         </div>
-        <div className="flex-1 min-w-0 flex flex-col gap-1">
+        <div className="flex-1 min-w-0 flex flex-col">
           <div className="flex items-center gap-1.5">
             <StatusBullet status={order.status} />
             <span className="font-body text-neutral-dark" style={{ fontSize: "10px" }}>
               {STATUS_LABEL[order.status]}
             </span>
           </div>
-          <p className="font-display font-bold text-primary-pure leading-none" style={{ fontSize: "22px" }}>
+          <p className="font-display font-bold text-primary-pure leading-none mt-0.5" style={{ fontSize: "22px" }}>
             {order.providerName}
           </p>
           {order.status === "COMPLETED" ? (
-            <p className="font-body text-neutral-dark" style={{ fontSize: "10px" }}>
+            <p className="font-body text-neutral-dark mt-1" style={{ fontSize: "10px" }}>
               Duração: {order.duration} • {order.price}
             </p>
           ) : (
-            <p className="font-body text-neutral-dark" style={{ fontSize: "10px" }}>
+            <p className="font-body text-neutral-dark mt-1" style={{ fontSize: "10px" }}>
               {order.scheduledTime ? `Às ${order.scheduledTime} • ` : ""}{order.price}
             </p>
           )}
