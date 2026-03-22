@@ -1,39 +1,46 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SplashPage() {
   const router = useRouter();
+  const [dissolve, setDissolve] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.push("/home");
-    }, 2600);
-    return () => clearTimeout(timer);
+    const fadeTimer = setTimeout(() => setDissolve(true), 2200);
+    const navTimer  = setTimeout(() => router.push("/home"), 2900);
+    return () => { clearTimeout(fadeTimer); clearTimeout(navTimer); };
   }, [router]);
 
   return (
     <main
       className="min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: "var(--color-primary-pure)" }}
+      style={{
+        background: "var(--color-primary-pure)",
+        transition: "opacity 0.7s ease",
+        opacity: dissolve ? 0 : 1,
+      }}
     >
       <style>{`
         @keyframes logoFall {
-          0%   { transform: translateY(-110vh) rotate(-6deg); opacity: 0; }
-          55%  { transform: translateY(18px)  rotate(2deg);  opacity: 1; }
-          72%  { transform: translateY(-10px) rotate(-1deg); opacity: 1; }
-          85%  { transform: translateY(6px)   rotate(0.5deg); opacity: 1; }
-          100% { transform: translateY(0)     rotate(0deg);  opacity: 1; }
+          0%   { transform: translate(0px,  -110vh); opacity: 0; }
+          18%  { transform: translate(28px, -55vh);  opacity: 1; }
+          34%  { transform: translate(-22px,-18vh);  opacity: 1; }
+          50%  { transform: translate(14px,  10px);  opacity: 1; }
+          63%  { transform: translate(-8px,  -5px);  opacity: 1; }
+          75%  { transform: translate(4px,   3px);   opacity: 1; }
+          85%  { transform: translate(-2px,  -1px);  opacity: 1; }
+          100% { transform: translate(0px,   0px);   opacity: 1; }
         }
         .logo-fall {
-          animation: logoFall 1.4s cubic-bezier(0.23, 1, 0.32, 1) 0.2s both;
+          animation: logoFall 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s both;
         }
       `}</style>
 
       <span
         className="logo-fall font-display font-bold text-white select-none"
-        style={{ fontSize: "clamp(56px, 18vw, 96px)" }}
+        style={{ fontSize: "clamp(40px, 13vw, 72px)" }}
       >
         Help!
       </span>
