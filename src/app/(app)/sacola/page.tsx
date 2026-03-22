@@ -47,7 +47,7 @@ function SacolaContent() {
   return (
     <div className="bg-neutral-light min-h-screen pb-28">
       {/* Header */}
-      <div className="bg-white px-4 pt-12 pb-4">
+      <div className="sticky top-0 z-50 bg-white px-4 pt-12 pb-4">
         <div className="flex items-center gap-3">
           <button onClick={() => router.back()}>
             <svg width="24" height="24" fill="none" viewBox="0 0 24 24">

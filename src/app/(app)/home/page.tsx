@@ -8,7 +8,7 @@ export default async function HomePage() {
   return (
     <div className="bg-neutral-light min-h-screen">
       {/* Header */}
-      <div className="bg-white px-4 pt-12 pb-4 space-y-4">
+      <div className="sticky top-0 z-50 bg-white px-4 pt-12 pb-4 space-y-4">
         <div className="flex items-center justify-between">
           <div>
             <p className="font-body text-xs text-neutral-dark">Entregando em</p>

@@ -59,7 +59,7 @@ export default function ProviderPage() {
   return (
     <div className="bg-neutral-light min-h-screen pb-28">
       {/* Header */}
-      <div className="bg-white px-4 pt-12 pb-5">
+      <div className="sticky top-0 z-50 bg-white px-4 pt-12 pb-5">
         <div className="flex items-center justify-between mb-4">
           <Link href="/home" className="w-9 h-9 flex items-center justify-center">
             <svg width="24" height="24" fill="none" viewBox="0 0 24 24">

@@ -21,7 +21,7 @@ export default async function PerfilPage() {
   return (
     <div className="bg-neutral-light min-h-screen">
       {/* Header */}
-      <div className="bg-white px-4 pt-12 pb-5">
+      <div className="sticky top-0 z-50 bg-white px-4 pt-12 pb-5">
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-primary-lightest flex items-center justify-center">
             <span className="font-display font-bold text-primary-pure text-2xl">{initial}</span>

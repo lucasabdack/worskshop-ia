@@ -32,11 +32,8 @@ export default function LoginPage() {
       <div className="w-full max-w-sm space-y-8">
         {/* Logo */}
         <div className="text-center space-y-3">
-          <div
-            className="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center"
-            style={{ background: "#321CB2" }}
-          >
-            <span className="font-display font-bold text-white text-2xl">H</span>
+          <div className="mx-auto flex items-center justify-center">
+            <span className="font-display font-bold text-6xl" style={{ color: "#321CB2" }}>Help!</span>
           </div>
           <div>
             <h1 className="font-display font-bold text-2xl text-neutral-darkest">

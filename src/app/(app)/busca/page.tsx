@@ -18,7 +18,7 @@ export default function SearchPage() {
   return (
     <div className="bg-neutral-light min-h-screen">
       {/* Search Header */}
-      <div className="bg-white px-4 pt-12 pb-3 space-y-3">
+      <div className="sticky top-0 z-50 bg-white px-4 pt-12 pb-3 space-y-3">
         <div className="flex items-center gap-3">
           <Link href="/home">
             <svg width="24" height="24" fill="none" viewBox="0 0 24 24">

@@ -45,7 +45,7 @@ export default function FavoritosPage() {
 
   return (
     <div className="bg-neutral-light min-h-screen">
-      <div className="bg-white px-4 pt-12 pb-4">
+      <div className="sticky top-0 z-50 bg-white px-4 pt-12 pb-4">
         <h1 className="font-display font-bold text-xl text-neutral-darkest">Favoritos</h1>
       </div>
 

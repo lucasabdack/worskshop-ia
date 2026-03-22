@@ -7,7 +7,7 @@ export default async function ConfiguracoesPage() {
 
   return (
     <div className="bg-neutral-light min-h-screen">
-      <div className="bg-white px-4 pt-12 pb-4 flex items-center gap-3">
+      <div className="sticky top-0 z-50 bg-white px-4 pt-12 pb-4 flex items-center gap-3">
         <Link href="/perfil">
           <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>

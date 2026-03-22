@@ -82,7 +82,7 @@ export default function ChatPage() {
   return (
     <div className="bg-neutral-light flex flex-col h-screen">
       {/* Header */}
-      <div className="bg-white px-4 pt-12 pb-3 flex items-center gap-3 shrink-0">
+      <div className="sticky top-0 z-50 bg-white px-4 pt-12 pb-3 flex items-center gap-3 shrink-0">
         <Link href="/conversas">
           <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
