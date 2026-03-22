@@ -61,7 +61,7 @@ export default function HomePage() {
       {/* Categorias: 8px de separação */}
       <div className="bg-white mt-2 pb-6">
         <div className="px-4">
-          <h2 className="font-display font-bold text-lg text-neutral-low mb-3">Categorias</h2>
+          <h2 className="font-display font-semibold text-base text-neutral-low mb-3">Categorias</h2>
           <div className="space-y-3">
             {CATEGORY_CARDS.map((cat, i) => (
               <Link
