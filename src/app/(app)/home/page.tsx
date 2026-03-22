@@ -6,10 +6,10 @@ import Image from "next/image";
 import HomeBanner from "@/components/HomeBanner";
 
 const CATEGORY_CARDS = [
-  { name: "Manutenções\ne reparos", image: "/assets/card-manutencoes.png", slug: "reparos" },
-  { name: "Assistência\ntécnica", image: "/assets/card-assistencia-tecnica.png", slug: "eletrica" },
-  { name: "Limpeza\ne organização", image: "/assets/card-servicos-domesticos.png", slug: "limpeza" },
-  { name: "Jardinagem\ne paisagismo", image: "/assets/card-reforma-de-imoveis.png", slug: "jardinagem" },
+  { name: "Manutenções\ne reparos", image: "/Assets/card-manutencoes.png", slug: "reparos" },
+  { name: "Assistência\ntécnica", image: "/Assets/card-assistencia-tecnica.png", slug: "eletrica" },
+  { name: "Limpeza\ne organização", image: "/Assets/card-servicos-domesticos.png", slug: "limpeza" },
+  { name: "Jardinagem\ne paisagismo", image: "/Assets/card-reforma-de-imoveis.png", slug: "jardinagem" },
 ];
 
 export default function HomePage() {
