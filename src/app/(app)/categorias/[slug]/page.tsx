@@ -230,7 +230,7 @@ export default function CategoryPage() {
             <Link
               key={i}
               href={`/categorias/${slug}/${svc.slug}`}
-              className="bg-white border border-neutral-pure rounded-2xl p-4 flex flex-col gap-3"
+              className="bg-white border border-neutral-pure rounded-2xl p-4 flex flex-col gap-3 shadow-level-1"
             >
               <svc.Icon />
               <span className="font-body font-semibold text-sm text-neutral-darkest leading-tight">
