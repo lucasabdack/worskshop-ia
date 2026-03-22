@@ -217,14 +217,14 @@ export default function PedidosPage() {
             className="w-full h-full object-cover object-top"
           />
         </div>
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 flex flex-col gap-1">
           <div className="flex items-center gap-1.5">
             <StatusBullet status={order.status} />
             <span className="font-body text-neutral-dark" style={{ fontSize: "10px" }}>
               {STATUS_LABEL[order.status]}
             </span>
           </div>
-          <p className="font-display font-bold text-primary-pure leading-tight" style={{ fontSize: "22px" }}>
+          <p className="font-display font-bold text-primary-pure leading-none" style={{ fontSize: "22px" }}>
             {order.providerName}
           </p>
           {order.status === "COMPLETED" ? (
