@@ -19,6 +19,15 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
+  webpackFinal: async (config) => {
+    const aliases = (config.resolve?.alias ?? {}) as Record<string, string | boolean>;
+    // Next.js 16's internal webpack cannot be compiled by the storybook webpack build.
+    // Excluding it prevents the "Cannot read properties of undefined (reading 'tap')" error.
+    aliases["next/dist/compiled/webpack"] = false;
+    aliases["next/dist/compiled/webpack/bundle5"] = false;
+    config.resolve = { ...config.resolve, alias: aliases };
+    return config;
+  },
 };
 
 export default config;
