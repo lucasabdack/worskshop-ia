@@ -2,31 +2,81 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { PROVIDERS } from "@/lib/mock-data";
 
-const MOCK_MESSAGES = [
-  { id: "1", from: "provider", text: "Olá! Vi que você tem um pedido agendado. Posso confirmar?", time: "14:00" },
-  { id: "2", from: "user", text: "Sim! Pode confirmar.", time: "14:05" },
-  { id: "3", from: "provider", text: "Tudo certo! Estarei lá às 14h.", time: "14:32" },
-];
+type Message = {
+  id: string;
+  content: string;
+  senderType: "USER" | "PROVIDER";
+  createdAt: string | Date;
+};
 
 const PROVIDER_MAP: Record<string, string> = { "1": "0", "2": "1" };
+
+const MOCK_MESSAGES: Message[] = [
+  { id: "1", senderType: "PROVIDER", content: "Olá! Vi que você tem um pedido agendado. Posso confirmar?", createdAt: new Date() },
+  { id: "2", senderType: "USER", content: "Sim! Pode confirmar.", createdAt: new Date() },
+  { id: "3", senderType: "PROVIDER", content: "Tudo certo! Estarei lá às 14h.", createdAt: new Date() },
+];
+
+function formatTime(date: string | Date) {
+  return new Date(date).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+}
 
 export default function ChatPage() {
   const { id } = useParams<{ id: string }>();
   const providerIdx = PROVIDER_MAP[id] ?? "0";
   const provider = PROVIDERS[parseInt(providerIdx)];
-  const [messages, setMessages] = useState(MOCK_MESSAGES);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+  const [sending, setSending] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
-  const send = () => {
-    if (!input.trim()) return;
-    setMessages((prev) => [
-      ...prev,
-      { id: String(Date.now()), from: "user", text: input, time: "agora" },
-    ]);
+  useEffect(() => {
+    // Try to fetch real messages; fall back to mock
+    fetch(`/api/messages?conversationId=${id}`)
+      .then((r) => r.json())
+      .then((data) => {
+        setMessages(data.messages?.length ? data.messages : MOCK_MESSAGES);
+      })
+      .catch(() => setMessages(MOCK_MESSAGES));
+  }, [id]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const send = async () => {
+    if (!input.trim() || sending) return;
+    const text = input;
     setInput("");
+    const optimistic: Message = {
+      id: String(Date.now()),
+      senderType: "USER",
+      content: text,
+      createdAt: new Date(),
+    };
+    setMessages((prev) => [...prev, optimistic]);
+    setSending(true);
+
+    try {
+      const res = await fetch("/api/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ conversationId: id, content: text }),
+      });
+      const data = await res.json();
+      if (data.message) {
+        setMessages((prev) =>
+          prev.map((m) => (m.id === optimistic.id ? data.message : m))
+        );
+      }
+    } catch {
+      // optimistic message stays
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -56,22 +106,23 @@ export default function ChatPage() {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}
+            className={`flex ${msg.senderType === "USER" ? "justify-end" : "justify-start"}`}
           >
             <div
               className={`max-w-[75%] px-4 py-2.5 rounded-2xl ${
-                msg.from === "user"
+                msg.senderType === "USER"
                   ? "bg-primary-pure text-white rounded-br-sm"
                   : "bg-white text-neutral-darkest rounded-bl-sm border border-neutral-pure"
               }`}
             >
-              <p className="font-body text-sm leading-relaxed">{msg.text}</p>
-              <p className={`font-body text-xs mt-1 ${msg.from === "user" ? "text-white/60" : "text-neutral-dark"}`}>
-                {msg.time}
+              <p className="font-body text-sm leading-relaxed">{msg.content}</p>
+              <p className={`font-body text-xs mt-1 ${msg.senderType === "USER" ? "text-white/60" : "text-neutral-dark"}`}>
+                {formatTime(msg.createdAt)}
               </p>
             </div>
           </div>
         ))}
+        <div ref={bottomRef} />
       </div>
 
       {/* Input */}
@@ -86,7 +137,7 @@ export default function ChatPage() {
           />
           <button
             onClick={send}
-            disabled={!input.trim()}
+            disabled={!input.trim() || sending}
             className="w-10 h-10 rounded-full bg-primary-pure flex items-center justify-center disabled:opacity-40"
           >
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">

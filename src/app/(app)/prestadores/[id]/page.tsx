@@ -3,13 +3,34 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { PROVIDERS } from "@/lib/mock-data";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ProviderPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const provider = PROVIDERS.find((p) => p.id === id);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [favorited, setFavorited] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/favorites")
+      .then((r) => r.json())
+      .then((data) => {
+        const ids = (data.favorites ?? []).map((f: { providerId: string }) => f.providerId);
+        setFavorited(ids.includes(id));
+      })
+      .catch(() => {});
+  }, [id]);
+
+  const toggleFavorite = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    setFavorited((prev) => !prev);
+    await fetch("/api/favorites", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ providerId: id }),
+    });
+  };
 
   if (!provider) {
     return (
@@ -45,9 +66,15 @@ export default function ProviderPage() {
               <path d="M15 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </Link>
-          <button className="w-9 h-9 flex items-center justify-center">
+          <button onClick={toggleFavorite} className="w-9 h-9 flex items-center justify-center">
             <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path d="M12 21C12 21 3 14 3 8.5A4.5 4.5 0 0112 6.5 4.5 4.5 0 0121 8.5C21 14 12 21 12 21z" stroke="#5A5A5A" strokeWidth="1.8"/>
+              <path
+                d="M12 21C12 21 3 14 3 8.5A4.5 4.5 0 0112 6.5 4.5 4.5 0 0121 8.5C21 14 12 21 12 21z"
+                stroke={favorited ? "#321CB2" : "#5A5A5A"}
+                strokeWidth="1.8"
+                fill={favorited ? "#321CB2" : "none"}
+                fillOpacity={favorited ? 0.15 : 0}
+              />
             </svg>
           </button>
         </div>

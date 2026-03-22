@@ -34,8 +34,21 @@ model User {
   notifications Notification[]
   accounts      Account[]
   sessions      Session[]
+  favorites     Favorite[]
 
   @@map("users")
+}
+
+model Favorite {
+  id         String   @id @default(cuid())
+  userId     String
+  providerId String
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, providerId])
+  @@map("favorites")
 }
 
 model Account {

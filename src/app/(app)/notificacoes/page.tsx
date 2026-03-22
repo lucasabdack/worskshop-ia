@@ -1,33 +1,53 @@
 import Link from "next/link";
+import { auth } from "@/lib/auth";
+import { getNotificationsByUser } from "@/lib/db";
 
-const NOTIFICATIONS = [
+const ICON_MAP: Record<string, string> = {
+  ORDER_CONFIRMED: "✅",
+  ORDER_REMINDER: "📅",
+  ORDER_COMPLETED: "🎉",
+  PAYMENT_RECEIVED: "💳",
+  REVIEW_REQUEST: "⭐",
+  CLUB_RENEWAL: "🔄",
+  CLUB_QUOTA_LOW: "⚠️",
+  SYSTEM: "🔔",
+};
+
+const STATIC_FALLBACK = [
   {
     id: "1",
-    icon: "✅",
+    type: "ORDER_CONFIRMED",
     title: "Pedido confirmado",
     body: "Ana Lima confirmou sua limpeza para 25/03 às 09:00.",
-    time: "há 2h",
+    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
     read: false,
   },
   {
     id: "2",
-    icon: "⭐",
+    type: "CLUB_QUOTA_LOW",
     title: "Clube Help",
     body: "Você tem 3 serviços disponíveis este mês. Use antes de 31/03.",
-    time: "há 1d",
+    createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
     read: false,
-  },
-  {
-    id: "3",
-    icon: "💬",
-    title: "Nova mensagem",
-    body: "Carlos Mendes enviou uma mensagem sobre seu pedido.",
-    time: "há 2d",
-    read: true,
   },
 ];
 
-export default function NotificacoesPage() {
+function timeAgo(date: Date) {
+  const diff = Math.floor((Date.now() - new Date(date).getTime()) / 1000);
+  if (diff < 60) return "agora";
+  if (diff < 3600) return `há ${Math.floor(diff / 60)}min`;
+  if (diff < 86400) return `há ${Math.floor(diff / 3600)}h`;
+  return `há ${Math.floor(diff / 86400)}d`;
+}
+
+export default async function NotificacoesPage() {
+  const session = await auth();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userId = (session?.user as any)?.id ?? "mock";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const rawNotifications: any[] = await getNotificationsByUser(userId);
+  const notifications = rawNotifications.length > 0 ? rawNotifications : STATIC_FALLBACK;
+
   return (
     <div className="bg-neutral-light min-h-screen">
       <div className="bg-white px-4 pt-12 pb-4 flex items-center gap-3">
@@ -40,13 +60,13 @@ export default function NotificacoesPage() {
       </div>
 
       <div className="divide-y divide-neutral-light">
-        {NOTIFICATIONS.map((n) => (
+        {notifications.map((n) => (
           <div
             key={n.id}
             className={`flex gap-4 px-4 py-4 ${n.read ? "bg-neutral-light" : "bg-white"}`}
           >
             <div className="w-10 h-10 rounded-full bg-primary-lightest flex items-center justify-center shrink-0 text-lg">
-              {n.icon}
+              {ICON_MAP[n.type] ?? "🔔"}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between">
@@ -56,7 +76,7 @@ export default function NotificacoesPage() {
                 )}
               </div>
               <p className="font-body text-xs text-neutral-dark mt-0.5 leading-relaxed">{n.body}</p>
-              <p className="font-body text-xs text-neutral-dark mt-1">{n.time}</p>
+              <p className="font-body text-xs text-neutral-dark mt-1">{timeAgo(n.createdAt)}</p>
             </div>
           </div>
         ))}
