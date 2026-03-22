@@ -222,7 +222,7 @@ export default function ProviderPage() {
   const firstName = provider.name.split(" ")[0];
 
   return (
-    <div className="bg-white min-h-screen pb-32">
+    <div className="bg-neutral-light min-h-screen pb-32">
       {/* ── Hero Header ── */}
       <div className="relative overflow-hidden" style={{ background: "#5A8FA0", minHeight: 200 }}>
         {/* Back button */}
@@ -246,6 +246,9 @@ export default function ProviderPage() {
           </h1>
         </div>
       </div>
+
+      {/* ── Body — 8px gap via bg-neutral-light ── */}
+      <div className="bg-white mt-2">
 
       {/* ── Stats ── */}
       <div className="px-4 py-3">
@@ -371,6 +374,8 @@ export default function ProviderPage() {
           })}
         </div>
       </div>
+
+      </div>{/* end body */}
 
       {/* ── Bottom action bar ── */}
       {selectedServices.length > 0 && (

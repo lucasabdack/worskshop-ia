@@ -83,31 +83,32 @@ export default function FavoritosPage() {
   };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-neutral-light min-h-screen">
       {/* Header */}
-      <div className="px-4 pt-14 pb-4 bg-white">
-        <h1 className="font-display font-bold text-2xl text-neutral-darkest">Favoritos</h1>
+      <div className="sticky top-0 z-50 bg-white px-4 pt-14 pb-3">
+        <h1 className="font-display font-bold text-2xl text-neutral-darkest mb-3">Favoritos</h1>
+        {/* Filter chips */}
+        <div className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden pb-1">
+          {FILTERS.map((f) => (
+            <button
+              key={f.value}
+              onClick={() => setActiveFilter(f.value)}
+              className={`shrink-0 h-9 px-4 rounded-full text-sm font-body font-semibold border transition-colors ${
+                activeFilter === f.value
+                  ? "border-primary-pure bg-primary-lightest text-primary-pure"
+                  : "border-neutral-pure bg-white text-neutral-dark"
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Filter chips */}
-      <div className="flex gap-2 px-4 overflow-x-auto [&::-webkit-scrollbar]:hidden pb-1">
-        {FILTERS.map((f) => (
-          <button
-            key={f.value}
-            onClick={() => setActiveFilter(f.value)}
-            className={`shrink-0 h-9 px-4 rounded-full text-sm font-body font-semibold border transition-colors ${
-              activeFilter === f.value
-                ? "border-primary-pure bg-primary-lightest text-primary-pure"
-                : "border-neutral-pure bg-white text-neutral-dark"
-            }`}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
-
-      {/* List */}
-      <div className="mt-5 px-4">
+      {/* Body — 8px gap via bg-neutral-light */}
+      <div className="bg-white mt-2 px-4 pb-6">
+        {/* List */}
+        <div className="pt-5">
         <p className="font-display font-bold text-base text-neutral-darkest mb-3">
           Prestadores favoritados
         </p>
@@ -170,7 +171,8 @@ export default function FavoritosPage() {
             ))}
           </div>
         )}
-      </div>
+        </div>{/* end list */}
+      </div>{/* end body */}
     </div>
   );
 }

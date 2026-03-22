@@ -223,31 +223,32 @@ export default function PedidosPage() {
   );
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-neutral-light min-h-screen">
       {/* Header */}
-      <div className="px-4 pt-14 pb-4">
-        <h1 className="font-display font-bold text-2xl text-neutral-darkest">Pedidos</h1>
+      <div className="sticky top-0 z-50 bg-white px-4 pt-14 pb-3">
+        <h1 className="font-display font-bold text-2xl text-neutral-darkest mb-3">Pedidos</h1>
+        {/* Filter chips */}
+        <div className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden pb-1">
+          {FILTERS.map((f) => (
+            <button
+              key={f.value}
+              onClick={() => setActiveFilter(f.value)}
+              className={`shrink-0 h-9 px-4 rounded-full text-sm font-body font-semibold border transition-colors ${
+                activeFilter === f.value
+                  ? "border-primary-pure bg-primary-lightest text-primary-pure"
+                  : "border-neutral-pure bg-white text-neutral-dark"
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Filter chips */}
-      <div className="flex gap-2 px-4 overflow-x-auto [&::-webkit-scrollbar]:hidden pb-1">
-        {FILTERS.map((f) => (
-          <button
-            key={f.value}
-            onClick={() => setActiveFilter(f.value)}
-            className={`shrink-0 h-9 px-4 rounded-full text-sm font-body font-semibold border transition-colors ${
-              activeFilter === f.value
-                ? "border-primary-pure bg-primary-lightest text-primary-pure"
-                : "border-neutral-pure bg-white text-neutral-dark"
-            }`}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
-
+      {/* Body — 8px gap via bg-neutral-light */}
+      <div className="bg-white mt-2 px-4 pb-6">
       {/* Content */}
-      <div className="mt-5 px-4 pb-6 space-y-8">
+      <div className="pt-5 space-y-8">
         {isEmpty ? (
           <div className="text-center py-20">
             <div className="text-5xl mb-4">📋</div>
@@ -303,7 +304,8 @@ export default function PedidosPage() {
             )}
           </>
         )}
-      </div>
+      </div>{/* end content */}
+      </div>{/* end body */}
     </div>
   );
 }

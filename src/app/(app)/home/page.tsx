@@ -13,7 +13,7 @@ export default async function HomePage() {
   await auth();
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-neutral-light min-h-screen">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white px-4 pt-12 pb-4 space-y-3">
         <button className="flex items-center gap-1 font-body text-sm font-semibold text-neutral-darkest">
@@ -37,11 +37,13 @@ export default async function HomePage() {
         </Link>
       </div>
 
-      {/* Banner Carousel */}
-      <HomeBanner />
+      {/* Body — 8px gap via bg-neutral-light */}
+      <div className="bg-white mt-2 pb-6">
+        {/* Banner Carousel */}
+        <HomeBanner />
 
-      {/* Categories */}
-      <div className="mt-4 px-4 pb-6">
+        {/* Categories */}
+        <div className="px-4">
         <h2 className="font-display font-bold text-lg text-neutral-darkest mb-3">Categorias</h2>
         <div className="space-y-3">
           {CATEGORY_CARDS.map((cat, i) => (
@@ -58,7 +60,7 @@ export default async function HomePage() {
             </Link>
           ))}
         </div>
-      </div>
+      </div>{/* end body */}
     </div>
   );
 }
