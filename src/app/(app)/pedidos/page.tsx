@@ -178,13 +178,15 @@ export default function PedidosPage() {
   const OrderCard = ({ order, mLimpezaIdx }: { order: Order; mLimpezaIdx: number }) => (
     <div className="rounded-2xl border border-neutral-pure bg-white overflow-hidden" style={{ boxShadow: "var(--shadow-level-1)" }}>
       {/* Card header */}
-      <div className="flex items-center justify-between px-4 pt-4 pb-3">
-        <p className="font-body text-xs text-neutral-dark">{order.category}</p>
-        <Link href="/perfil/ajuda" className="font-body text-xs font-semibold text-primary-pure">
+      <div className="flex items-center px-4 pt-4 pb-3">
+        <div className="flex flex-col flex-1" style={{ gap: "2px" }}>
+          <p className="font-body text-xs text-neutral-dark">{order.category}</p>
+          <p className="font-body text-sm text-neutral-low">{order.service}</p>
+        </div>
+        <Link href="/perfil/ajuda" className="font-body text-xs font-semibold text-primary-pure self-center">
           Ajuda
         </Link>
       </div>
-      <p className="font-body text-sm text-neutral-low px-4 pb-3">{order.service}</p>
 
       <div className="border-t border-neutral-pure mx-4" />
 
