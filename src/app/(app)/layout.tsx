@@ -11,8 +11,8 @@ export default async function AppLayout({
   if (!session) redirect("/login");
 
   return (
-    <div className="flex flex-col min-h-screen bg-white w-full relative">
-      <main className="flex-1 overflow-y-auto pb-20 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">{children}</main>
+    <div className="flex flex-col h-screen bg-white w-full relative">
+      <main className="flex-1 min-h-0 overflow-y-auto pb-20 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">{children}</main>
       <TabBar />
     </div>
   );
