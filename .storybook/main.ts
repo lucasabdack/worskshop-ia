@@ -1,4 +1,4 @@
-import type { StorybookConfig } from "storybook/types";
+import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
   stories: [
@@ -12,11 +12,8 @@ const config: StorybookConfig = {
     "@storybook/addon-a11y",
   ],
   framework: {
-    name: "@storybook/react",
+    name: "@storybook/nextjs",
     options: {},
-  },
-  core: {
-    builder: "@storybook/builder-webpack5",
   },
   staticDirs: ["../public"],
   docs: {
