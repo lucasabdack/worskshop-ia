@@ -11,12 +11,12 @@ export const CATEGORIES = [
   { id: "8", name: "Reparos", slug: "reparos", icon: "🔨" },
 ];
 
-export function getProviderImage(id: string, gender: "M" | "F"): string {
-  const n = id.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
+/** genderIndex = posição do prestador entre os do mesmo gênero na lista (0, 1, 2…) */
+export function getProviderImage(genderIndex: number, gender: "M" | "F"): string {
   if (gender === "F") {
-    return `/assets/prestadora-${(n % 2) + 1}.png`;
+    return `/assets/prestadora-${(genderIndex % 2) + 1}.png`;
   }
-  return `/assets/prestador-${(n % 3) + 1}.png`;
+  return `/assets/prestador-${(genderIndex % 3) + 1}.png`;
 }
 
 export const PROVIDERS = [

@@ -138,7 +138,11 @@ export default function FavoritosPage() {
           </div>
         ) : (
           <div className="space-y-3 pb-6">
-            {filtered.map((item) => (
+            {(() => {
+              const gIdx = { M: 0, F: 0 };
+              return filtered.map((item) => {
+                const genderIndex = gIdx[item.gender]++;
+                return (
               <div
                 key={item.id}
                 className="flex rounded-2xl overflow-hidden border border-neutral-pure bg-white"
@@ -147,7 +151,7 @@ export default function FavoritosPage() {
                 {/* Left image area */}
                 <div className="w-24 shrink-0 relative overflow-hidden" style={{ background: item.bgColor }}>
                   <Image
-                    src={getProviderImage(item.id, item.gender)}
+                    src={getProviderImage(genderIndex, item.gender)}
                     alt={item.providerName}
                     fill
                     className="object-cover object-top"
@@ -177,7 +181,9 @@ export default function FavoritosPage() {
                   <HeartFilled />
                 </button>
               </div>
-            ))}
+                );
+              });
+            })()}
           </div>
         )}
         </div>{/* end list */}
