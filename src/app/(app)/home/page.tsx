@@ -35,13 +35,11 @@ export default async function HomePage() {
           </svg>
           <span className="font-body text-sm text-neutral-dark">Qual serviço você está precisando?</span>
         </Link>
+        <HomeBanner />
       </div>
 
       {/* Body — 8px gap via bg-neutral-light */}
       <div className="bg-white mt-2 pb-6">
-        {/* Banner Carousel */}
-        <HomeBanner />
-
         {/* Categories */}
         <div className="px-4">
         <h2 className="font-display font-bold text-lg text-neutral-darkest mb-3">Categorias</h2>
