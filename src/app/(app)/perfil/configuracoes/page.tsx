@@ -57,7 +57,7 @@ export default async function ConfiguracoesPage() {
                   }`}
                 >
                   <div
-                    className={`w-5 h-5 rounded-full bg-white shadow-sm mt-0.5 transition-transform ${
+                    className={`w-5 h-5 rounded-full bg-white shadow-level-1 mt-0.5 transition-transform ${
                       setting.enabled ? "translate-x-5.5" : "translate-x-0.5"
                     }`}
                   />

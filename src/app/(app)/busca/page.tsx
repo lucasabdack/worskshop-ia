@@ -62,7 +62,7 @@ export default function SearchPage() {
                 href={`/categorias/${cat.slug}`}
                 className="flex flex-col items-center gap-2"
               >
-                <div className="w-14 h-14 rounded-2xl bg-white border border-neutral-pure flex items-center justify-center shadow-sm text-2xl">
+                <div className="w-14 h-14 rounded-2xl bg-white border border-neutral-pure flex items-center justify-center shadow-level-1 text-2xl">
                   {cat.icon}
                 </div>
                 <span className="font-body text-xs text-neutral-dark text-center leading-tight">

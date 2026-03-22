@@ -84,9 +84,10 @@
   --radius-bottom-sheet: 12px;
 
   /* ---------- Shadows ---------- */
-  --shadow-level-1: 0 1px 4px rgba(0,0,0,0.08);
-  --shadow-level-2: 0 2px 8px rgba(0,0,0,0.10);
-  --shadow-level-3: 0 4px 16px rgba(0,0,0,0.12);
+  --shadow-level-1: 0 0 8px rgba(0,0,0,0.16);
+  --shadow-level-2: 0 4px 16px rgba(0,0,0,0.20);
+  --shadow-level-3: 0 8px 24px rgba(0,0,0,0.24);
+  --shadow-level-4: 0 12px 32px rgba(0,0,0,0.28);
 
   /* ---------- Opacity ---------- */
   --opacity-disabled:    0.40;

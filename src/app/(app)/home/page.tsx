@@ -27,7 +27,7 @@ export default function HomePage() {
       {/* Sticky header: address + title + search bar */}
       <div
         className={`sticky top-0 z-50 bg-white px-4 pt-12 pb-4 space-y-3 transition-[box-shadow] duration-300 ease-in-out ${
-          collapsed ? "shadow-[0_2px_8px_rgba(0,0,0,0.08)]" : "shadow-none"
+          collapsed ? "shadow-level-1" : "shadow-none"
         }`}
       >
         <button className="flex items-center gap-1 font-body text-sm font-semibold text-neutral-darkest">
