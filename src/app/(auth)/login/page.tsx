@@ -17,8 +17,8 @@ export default function LoginPage() {
   useEffect(() => {
     const t1 = setTimeout(() => setPhase("expand"),     1700);
     const t2 = setTimeout(() => setPhase("logo"),       3100);
-    const t3 = setTimeout(() => setPhase("dissolving"), 5800);
-    const t4 = setTimeout(() => setPhase("login"),      6600);
+    const t3 = setTimeout(() => setPhase("dissolving"), 4100);
+    const t4 = setTimeout(() => setPhase("login"),      4900);
     return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, []);
 
@@ -81,7 +81,8 @@ export default function LoginPage() {
             background: "var(--color-primary-pure)",
             transformOrigin: "center center",
             transform: expanding ? "scale(250)" : "scale(1)",
-            transition: "transform 0.65s cubic-bezier(0, 0, 0.2, 1)",
+            opacity: (phase === "dots" || phase === "dissolving") ? 0 : 1,
+            transition: "transform 0.65s cubic-bezier(0, 0, 0.2, 1), opacity 0.8s ease",
             zIndex: 10,
           }}
         />
