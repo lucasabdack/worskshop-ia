@@ -44,17 +44,18 @@ export default function LoginPage() {
         <style>{`
           @keyframes logoFall {
             0%   { transform: translate(  0px, -115vh) rotate(  0deg); }
-            14%  { transform: translate(-60px,  -72vh) rotate(-14deg); }
-            22%  { transform: translate( 70px,  -40vh) rotate( 16deg); }
-            30%  { transform: translate(-50px,  -16vh) rotate(-12deg); }
-            38%  { transform: translate( 44px,    6px) rotate( 10deg); }
-            46%  { transform: translate(-30px,   -4px) rotate( -7deg); }
-            53%  { transform: translate( 20px,    3px) rotate(  5deg); }
-            60%  { transform: translate(-12px,   -2px) rotate( -3deg); }
-            67%  { transform: translate(  7px,    1px) rotate(  2deg); }
-            74%  { transform: translate( -4px,   -1px) rotate(-1.2deg);}
-            81%  { transform: translate(  2px,  0.5px) rotate( 0.6deg);}
-            88%  { transform: translate( -1px, -0.3px) rotate(-0.2deg);}
+            10%  { transform: translate( -8px, -100vh) rotate( -3deg); }
+            20%  { transform: translate(-60px,  -72vh) rotate(-14deg); }
+            30%  { transform: translate( 70px,  -40vh) rotate( 16deg); }
+            38%  { transform: translate(-50px,  -16vh) rotate(-12deg); }
+            46%  { transform: translate( 44px,    6px) rotate( 10deg); }
+            53%  { transform: translate(-30px,   -4px) rotate( -7deg); }
+            60%  { transform: translate( 20px,    3px) rotate(  5deg); }
+            67%  { transform: translate(-12px,   -2px) rotate( -3deg); }
+            74%  { transform: translate(  7px,    1px) rotate(  2deg); }
+            80%  { transform: translate( -4px,   -1px) rotate(-1.2deg);}
+            87%  { transform: translate(  2px,  0.5px) rotate( 0.6deg);}
+            93%  { transform: translate( -1px, -0.3px) rotate(-0.2deg);}
             100% { transform: translate(  0px,    0px) rotate(  0deg); }
           }
           @keyframes letterPop {
@@ -63,14 +64,14 @@ export default function LoginPage() {
             100% { opacity: 1; transform: scale(1) translateY(0); }
           }
           .logo-fall {
-            animation: logoFall 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+            animation: logoFall 3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
           }
           .letter { display: inline-block; opacity: 0; }
-          .l0 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 0.55s both; }
-          .l1 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 0.75s both; }
-          .l2 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 0.95s both; }
-          .l3 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 1.15s both; }
-          .l4 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 1.38s both; }
+          .l0 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 0.7s  both; }
+          .l1 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 0.9s  both; }
+          .l2 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 1.1s  both; }
+          .l3 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 1.3s  both; }
+          .l4 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 1.55s both; }
         `}</style>
 
         <span
