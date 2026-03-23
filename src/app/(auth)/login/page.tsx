@@ -60,18 +60,20 @@ export default function LoginPage() {
           .d2  { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
 
           /*
-           * Phase 1 (1200→2000ms) — middle dot grows + slides right.
-           * Origin: center of the middle dot (left:50%, bottom:20%).
-           * scale(200) on a 12px element → ~2400px radius, covers any mobile viewport.
+           * Phase 1 (1200→2000ms) — middle dot grows to fill 100% of viewport.
+           * Origin: center of middle dot (left:50%, bottom:20%).
+           * Max distance from that point to any corner on mobile ~780px.
+           * scale(150) on 6px radius → 900px, covers any screen. Stays put.
            * Easing: cubic-bezier(0.4,0,1,1) aggressive ease-in.
            */
           @keyframes splashExpand {
-            from { transform: translateX(0)    scale(1);   }
-            to   { transform: translateX(60vw) scale(200); }
+            from { transform: scale(1);   }
+            to   { transform: scale(150); }
           }
 
           /*
            * Phase 3 (2200→3000ms) — circle at bottom-left collapses.
+           * scale(200) on 6px radius → 1200px, covers screen from corner.
            * Easing: cubic-bezier(0,0,0.6,1) smooth ease-out.
            */
           @keyframes splashContract {
