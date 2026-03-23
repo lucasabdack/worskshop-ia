@@ -98,6 +98,8 @@ export default function LoginPage() {
           style={{
             position: "fixed",
             bottom: "8%",
+            left: "50%",
+            transform: "translateX(-50%)",
             display: "flex",
             gap: "10px",
             zIndex: 5,
