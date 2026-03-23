@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ds";
 
@@ -12,8 +12,16 @@ export default function LoginPage() {
   const [phase, setPhase] = useState<Phase>("dots");
   const [email, setEmail]     = useState("");
   const [loading, setLoading] = useState(false);
+  const centerDotRef = useRef<HTMLDivElement>(null);
+  const [origin, setOrigin] = useState("50% 91%");
 
   useEffect(() => {
+    if (centerDotRef.current) {
+      const r   = centerDotRef.current.getBoundingClientRect();
+      const cx  = r.left + r.width  / 2;
+      const cy  = r.top  + r.height / 2;
+      setOrigin(`${cx}px ${cy}px`);
+    }
     const t1 = setTimeout(() => setPhase("expand"),     1700);
     const t2 = setTimeout(() => setPhase("logo"),       2400);
     const t3 = setTimeout(() => setPhase("dissolving"), 3700);
@@ -67,15 +75,15 @@ export default function LoginPage() {
           }
         `}</style>
 
-        {/* expanding circle overlay — origin at dot position near bottom */}
+        {/* expanding circle overlay — origin measured from the real center dot */}
         <div
           style={{
             position: "fixed",
             inset: 0,
             background: "var(--color-primary-pure)",
             clipPath: expanding
-              ? "circle(160% at 50% 91%)"
-              : "circle(0px at 50% 91%)",
+              ? `circle(160% at ${origin})`
+              : `circle(0px at ${origin})`,
             transition: "clip-path 0.65s cubic-bezier(0, 0, 0.2, 1)",
             zIndex: 10,
             display: "flex",
@@ -108,7 +116,7 @@ export default function LoginPage() {
           }}
         >
           <div className="dot d0" style={{ background: "var(--color-primary-light)" }} />
-          <div className="dot d1" style={{ background: "var(--color-primary-pure)"  }} />
+          <div ref={centerDotRef} className="dot d1" style={{ background: "var(--color-primary-pure)"  }} />
           <div className="dot d2" style={{ background: "var(--color-primary-dark)"  }} />
         </div>
       </main>
