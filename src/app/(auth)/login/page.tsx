@@ -53,12 +53,12 @@ export default function LoginPage() {
           .d2 { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
 
           @keyframes expandDot {
-            from { transform: scale(1); }
-            to   { transform: scale(250); }
+            from { transform: translateX(0)     scale(1);   }
+            to   { transform: translateX(30vw)  scale(250); }
           }
           @keyframes shrinkToLeft {
-            from { transform: scale(250); }
-            to   { transform: translateX(-60vw) scale(1); }
+            from { transform: translateX(30vw)  scale(250); }
+            to   { transform: translateX(-60vw) scale(1);   }
           }
 
           @keyframes logoDissolve {
@@ -91,7 +91,7 @@ export default function LoginPage() {
             transformOrigin: "center center",
             zIndex: 10,
             opacity: phase === "dots" ? 0 : 1,
-            transform: phase === "logo" ? "scale(250)" : "scale(1)",
+            transform: phase === "logo" ? "translateX(30vw) scale(250)" : "scale(1)",
             animation:
               phase === "expand"     ? "expandDot 0.65s cubic-bezier(0, 0, 0.2, 1) forwards" :
               phase === "dissolving" ? "shrinkToLeft 0.8s ease forwards" :
