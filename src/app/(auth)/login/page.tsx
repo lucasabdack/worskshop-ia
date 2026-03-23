@@ -1,14 +1,25 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ds";
 
+type Phase = "expand" | "full" | "contract" | "done" | "login";
+
 export default function LoginPage() {
   const router = useRouter();
+  const [phase, setPhase] = useState<Phase>("expand");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setPhase("full"),      800);
+    const t2 = setTimeout(() => setPhase("contract"), 1000);
+    const t3 = setTimeout(() => setPhase("done"),     1800);
+    const t4 = setTimeout(() => setPhase("login"),    2000);
+    return () => [t1, t2, t3, t4].forEach(clearTimeout);
+  }, []);
 
   async function handleGoogle() {
     setLoading(true);
@@ -27,8 +38,144 @@ export default function LoginPage() {
     else setLoading(false);
   }
 
+  /* ─────────── splash ─────────── */
+  if (phase !== "login") {
+    return (
+      <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "white" }}>
+        <style>{`
+          /*
+           * Phase 1 (0→800ms): circle starts 20px, centered-X at 80%Y.
+           * Expands via scale to cover 250% viewport + slides right 60vw.
+           * Easing: cubic-bezier(0.4,0,1,1) — aggressive ease-in.
+           */
+          @keyframes splashExpand {
+            from { transform: translateX(0)    scale(1);   }
+            to   { transform: translateX(60vw) scale(120); }
+          }
+
+          /*
+           * Phase 3 (1000→1800ms): circle at bottom-left, collapses to 0.
+           * Easing: cubic-bezier(0,0,0.6,1) — smooth ease-out.
+           */
+          @keyframes splashContract {
+            from { transform: scale(120); }
+            to   { transform: scale(0);   }
+          }
+
+          @keyframes logoFadeIn  { from { opacity: 0; } to { opacity: 1; } }
+          @keyframes logoFadeOut { from { opacity: 1; } to { opacity: 0; } }
+          @keyframes loginFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: none; }
+          }
+        `}</style>
+
+        {/*
+         * Phases 1+2 — Expand circle
+         * 20px dot, centered-X, at 80%Y.
+         * Animates once (800ms); fill-mode:both freezes it at the `to` state
+         * during Phase 2 (full-screen pause, 800→1000ms).
+         */}
+        {(phase === "expand" || phase === "full") && (
+          <div
+            style={{
+              position: "fixed",
+              left: "calc(50% - 10px)",
+              top: "calc(80% - 10px)",
+              width: "20px",
+              height: "20px",
+              borderRadius: "50%",
+              background: "var(--color-primary-pure)",
+              transformOrigin: "center center",
+              animation: "splashExpand 800ms cubic-bezier(0.4, 0, 1, 1) both",
+            }}
+          />
+        )}
+
+        {/*
+         * Phase 3 — Contract circle
+         * 20px dot at bottom-left corner, transform-origin: bottom left.
+         * fill-mode:both keeps it at scale(120) on first frame before
+         * the animation starts, avoiding any flash of the default scale(1).
+         */}
+        {phase === "contract" && (
+          <div
+            style={{
+              position: "fixed",
+              left: "0",
+              bottom: "0",
+              width: "20px",
+              height: "20px",
+              borderRadius: "50%",
+              background: "var(--color-primary-pure)",
+              transformOrigin: "bottom left",
+              animation: "splashContract 800ms cubic-bezier(0, 0, 0.6, 1) both",
+            }}
+          />
+        )}
+
+        {/* Phase 2 — Logo fades in (200ms pause window) */}
+        {phase === "full" && (
+          <div
+            style={{
+              position: "fixed", inset: 0,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              zIndex: 20,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 700,
+                fontSize: "clamp(56px, 18vw, 96px)",
+                color: "white",
+                animation: "logoFadeIn 0.25s ease both",
+              }}
+            >
+              Help!
+            </span>
+          </div>
+        )}
+
+        {/* Phase 3 — Logo fades out as circle contracts */}
+        {phase === "contract" && (
+          <div
+            style={{
+              position: "fixed", inset: 0,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              zIndex: 20,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 700,
+                fontSize: "clamp(56px, 18vw, 96px)",
+                color: "white",
+                animation: "logoFadeOut 0.4s ease both",
+              }}
+            >
+              Help!
+            </span>
+          </div>
+        )}
+      </main>
+    );
+  }
+
+  /* ─────────── login ─────────── */
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-6 bg-neutral-light">
+    <main
+      className="min-h-screen flex flex-col items-center justify-center px-6 bg-neutral-light"
+      style={{ animation: "loginFadeIn 0.5s ease both" }}
+    >
+      <style>{`
+        @keyframes loginFadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: none; }
+        }
+      `}</style>
+
       <div className="w-full max-w-sm space-y-8">
         {/* Logo */}
         <div className="text-center space-y-3">
