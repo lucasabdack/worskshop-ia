@@ -52,13 +52,13 @@ export default function LoginPage() {
           .d1 { animation: dotBounce 0.9s ease-in-out 0.16s infinite; }
           .d2 { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
 
-          @keyframes expandFromRight {
-            from { transform: translate(55vw, 35vh) scale(1); opacity: 0; }
-            to   { transform: translate(0, 0) scale(250);     opacity: 1; }
+          @keyframes expandDot {
+            from { transform: scale(1); }
+            to   { transform: scale(250); }
           }
           @keyframes shrinkToLeft {
-            from { transform: translate(0, 0) scale(250);      opacity: 1; }
-            to   { transform: translate(-65vw, 35vh) scale(1); opacity: 0; }
+            from { transform: scale(250); }
+            to   { transform: translateX(-60vw) scale(1); }
           }
 
           @keyframes logoDissolve {
@@ -77,15 +77,13 @@ export default function LoginPage() {
           }
         `}</style>
 
-        {/* ghost dot — enters from bottom-right, exits to bottom-left (counter-clockwise arc) */}
+        {/* ghost dot — same position as d1, scales up to fill screen, exits left */}
         <div
           ref={centerDotRef}
           style={{
             position: "fixed",
-            top: "50%",
-            left: "50%",
-            marginTop: "-6px",
-            marginLeft: "-6px",
+            bottom: "8%",
+            left: "calc(50% - 6px)",
             width: "12px",
             height: "12px",
             borderRadius: "50%",
@@ -93,11 +91,9 @@ export default function LoginPage() {
             transformOrigin: "center center",
             zIndex: 10,
             opacity: phase === "dots" ? 0 : 1,
-            transform: phase === "logo"
-              ? "translate(0, 0) scale(250)"
-              : "translate(55vw, 35vh) scale(1)",
+            transform: phase === "logo" ? "scale(250)" : "scale(1)",
             animation:
-              phase === "expand"    ? "expandFromRight 0.65s cubic-bezier(0, 0, 0.2, 1) forwards" :
+              phase === "expand"     ? "expandDot 0.65s cubic-bezier(0, 0, 0.2, 1) forwards" :
               phase === "dissolving" ? "shrinkToLeft 0.8s ease forwards" :
               "none",
           }}
