@@ -5,16 +5,20 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ds";
 
+type Phase = "dots" | "expand" | "logo" | "dissolving" | "login";
+
 export default function LoginPage() {
-  const router = useRouter();
-  const [phase, setPhase] = useState<"splash" | "dissolving" | "login">("splash");
-  const [email, setEmail]   = useState("");
+  const router  = useRouter();
+  const [phase, setPhase] = useState<Phase>("dots");
+  const [email, setEmail]     = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const dissolveTimer = setTimeout(() => setPhase("dissolving"), 3400);
-    const loginTimer    = setTimeout(() => setPhase("login"),      4200);
-    return () => { clearTimeout(dissolveTimer); clearTimeout(loginTimer); };
+    const t1 = setTimeout(() => setPhase("expand"),     1700);
+    const t2 = setTimeout(() => setPhase("logo"),       2400);
+    const t3 = setTimeout(() => setPhase("dissolving"), 3700);
+    const t4 = setTimeout(() => setPhase("login"),      4500);
+    return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, []);
 
   async function handleGoogle() {
@@ -30,72 +34,95 @@ export default function LoginPage() {
     else setLoading(false);
   }
 
-  /* ── splash ── */
+  /* ─────────── splash ─────────── */
   if (phase !== "login") {
+    const expanding  = phase === "expand" || phase === "logo" || phase === "dissolving";
+    const logoVisible = phase === "logo" || phase === "dissolving";
+
     return (
-      <main
-        className="min-h-screen flex items-center justify-center overflow-hidden"
-        style={{
-          background: "var(--color-primary-pure)",
-          transition: "opacity 0.8s ease",
-          opacity: phase === "dissolving" ? 0 : 1,
-        }}
-      >
+      <main className="min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white">
         <style>{`
-          @keyframes logoFall {
-            0%   { transform: translate(  0px, -115vh) rotate(  0deg); }
-            10%  { transform: translate( -8px, -100vh) rotate( -3deg); }
-            20%  { transform: translate(-60px,  -72vh) rotate(-14deg); }
-            30%  { transform: translate( 70px,  -40vh) rotate( 16deg); }
-            38%  { transform: translate(-50px,  -16vh) rotate(-12deg); }
-            46%  { transform: translate( 44px,    6px) rotate( 10deg); }
-            53%  { transform: translate(-30px,   -4px) rotate( -7deg); }
-            60%  { transform: translate( 20px,    3px) rotate(  5deg); }
-            67%  { transform: translate(-12px,   -2px) rotate( -3deg); }
-            74%  { transform: translate(  7px,    1px) rotate(  2deg); }
-            80%  { transform: translate( -4px,   -1px) rotate(-1.2deg);}
-            87%  { transform: translate(  2px,  0.5px) rotate( 0.6deg);}
-            93%  { transform: translate( -1px, -0.3px) rotate(-0.2deg);}
-            100% { transform: translate(  0px,    0px) rotate(  0deg); }
+          @keyframes dotBounce {
+            0%, 55%, 100% { transform: translateY(0);    }
+            30%            { transform: translateY(-12px); }
           }
-          @keyframes letterPop {
-            0%   { opacity: 0; transform: scale(0.4) translateY(8px); }
-            60%  { opacity: 1; transform: scale(1.08) translateY(-2px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+          .dot { width: 12px; height: 12px; border-radius: 50%; }
+          .d0 { animation: dotBounce 0.9s ease-in-out 0s    infinite; }
+          .d1 { animation: dotBounce 0.9s ease-in-out 0.16s infinite; }
+          .d2 { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
+
+          @keyframes logoDissolve {
+            from { opacity: 0; }
+            to   { opacity: 1; }
           }
-          .logo-fall {
-            animation: logoFall 3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+          .logo-in {
+            animation: logoDissolve 0.55s ease both;
           }
-          .letter { display: inline-block; opacity: 0; }
-          .l0 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 0.7s  both; }
-          .l1 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 0.9s  both; }
-          .l2 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 1.1s  both; }
-          .l3 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 1.3s  both; }
-          .l4 { animation: letterPop 0.35s cubic-bezier(0.34,1.56,0.64,1) 1.55s both; }
+          @keyframes fadeOut {
+            from { opacity: 1; }
+            to   { opacity: 0; }
+          }
+          .logo-out {
+            animation: fadeOut 0.5s ease both;
+          }
         `}</style>
 
-        <span
-          className="logo-fall font-display font-bold text-white select-none"
-          style={{ fontSize: "clamp(56px, 18vw, 96px)" }}
+        {/* expanding circle overlay */}
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "var(--color-primary-pure)",
+            clipPath: expanding
+              ? "circle(160% at 50% 72%)"
+              : "circle(12px at 50% 72%)",
+            transition: expanding
+              ? "clip-path 0.72s cubic-bezier(0.4, 0, 0.55, 1)"
+              : "none",
+            zIndex: 10,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
-          <span className="letter l0">H</span>
-          <span className="letter l1">e</span>
-          <span className="letter l2">l</span>
-          <span className="letter l3">p</span>
-          <span className="letter l4">!</span>
-        </span>
+          {logoVisible && (
+            <span
+              className={`font-display font-bold text-white select-none ${phase === "dissolving" ? "logo-out" : "logo-in"}`}
+              style={{ fontSize: "clamp(56px, 18vw, 96px)", zIndex: 11 }}
+            >
+              Help!
+            </span>
+          )}
+        </div>
+
+        {/* dots */}
+        <div
+          style={{
+            position: "fixed",
+            bottom: "28%",
+            display: "flex",
+            gap: "10px",
+            zIndex: 5,
+            opacity: expanding ? 0 : 1,
+            transition: "opacity 0.2s ease",
+          }}
+        >
+          <div className="dot d0" style={{ background: "var(--color-primary-light)" }} />
+          <div className="dot d1" style={{ background: "var(--color-primary-pure)"  }} />
+          <div className="dot d2" style={{ background: "var(--color-primary-dark)"  }} />
+        </div>
       </main>
     );
   }
 
-  /* ── login ── */
+  /* ─────────── login ─────────── */
   return (
     <main
       className="min-h-screen flex flex-col items-center justify-center px-6 bg-neutral-light"
       style={{ animation: "fadeIn 0.5s ease both" }}
     >
       <style>{`
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
       `}</style>
 
       <div className="w-full max-w-sm space-y-8">
