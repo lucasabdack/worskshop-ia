@@ -16,9 +16,9 @@ export default function LoginPage() {
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase("expand"),     1700);
-    const t2 = setTimeout(() => setPhase("logo"),       2400);
-    const t3 = setTimeout(() => setPhase("dissolving"), 3700);
-    const t4 = setTimeout(() => setPhase("login"),      4500);
+    const t2 = setTimeout(() => setPhase("logo"),       3100);
+    const t3 = setTimeout(() => setPhase("dissolving"), 5800);
+    const t4 = setTimeout(() => setPhase("login"),      6600);
     return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, []);
 
