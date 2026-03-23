@@ -13,15 +13,8 @@ export default function LoginPage() {
   const [email, setEmail]     = useState("");
   const [loading, setLoading] = useState(false);
   const centerDotRef = useRef<HTMLDivElement>(null);
-  const [origin, setOrigin] = useState("50% 91%");
 
   useEffect(() => {
-    if (centerDotRef.current) {
-      const r   = centerDotRef.current.getBoundingClientRect();
-      const cx  = r.left + r.width  / 2;
-      const cy  = r.top  + r.height / 2;
-      setOrigin(`${cx}px ${cy}px`);
-    }
     const t1 = setTimeout(() => setPhase("expand"),     1700);
     const t2 = setTimeout(() => setPhase("logo"),       2400);
     const t3 = setTimeout(() => setPhase("dissolving"), 3700);
@@ -75,31 +68,35 @@ export default function LoginPage() {
           }
         `}</style>
 
-        {/* expanding circle overlay — origin measured from the real center dot */}
+        {/* ghost dot — same position as center dot, scales up to fill screen */}
         <div
+          ref={centerDotRef}
           style={{
             position: "fixed",
-            inset: 0,
+            bottom: "8%",
+            left: "calc(50% - 6px)",
+            width: "12px",
+            height: "12px",
+            borderRadius: "50%",
             background: "var(--color-primary-pure)",
-            clipPath: expanding
-              ? `circle(160% at ${origin})`
-              : `circle(0px at ${origin})`,
-            transition: "clip-path 0.65s cubic-bezier(0, 0, 0.2, 1)",
+            transformOrigin: "center center",
+            transform: expanding ? "scale(250)" : "scale(1)",
+            transition: "transform 0.65s cubic-bezier(0, 0, 0.2, 1)",
             zIndex: 10,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
-        >
-          {logoVisible && (
+        />
+
+        {/* logo — separate overlay, not inside the scaling element */}
+        {logoVisible && (
+          <div style={{ position: "fixed", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 11 }}>
             <span
               className={`font-display font-bold text-white select-none ${phase === "dissolving" ? "logo-out" : "logo-in"}`}
-              style={{ fontSize: "clamp(56px, 18vw, 96px)", zIndex: 11 }}
+              style={{ fontSize: "clamp(56px, 18vw, 96px)" }}
             >
               Help!
             </span>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* dots */}
         <div
@@ -116,7 +113,7 @@ export default function LoginPage() {
           }}
         >
           <div className="dot d0" style={{ background: "var(--color-primary-light)" }} />
-          <div ref={centerDotRef} className="dot d1" style={{ background: "var(--color-primary-pure)"  }} />
+          <div className="dot d1" style={{ background: "var(--color-primary-pure)"  }} />
           <div className="dot d2" style={{ background: "var(--color-primary-dark)"  }} />
         </div>
       </main>
