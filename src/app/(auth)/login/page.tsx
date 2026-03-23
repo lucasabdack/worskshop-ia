@@ -14,8 +14,6 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // dots bounce for 1.2s, then the middle dot expands (800ms),
-    // full-screen pause 200ms, contract 800ms, fade 200ms → login
     const t1 = setTimeout(() => setPhase("expand"),   1200);
     const t2 = setTimeout(() => setPhase("full"),     2000);
     const t3 = setTimeout(() => setPhase("contract"), 2200);
@@ -43,11 +41,8 @@ export default function LoginPage() {
 
   /* ─────────── splash ─────────── */
   if (phase !== "login") {
-    // Dots disappear the moment expansion begins
-    const dotsOpacity = phase === "dots" ? 1 : 0;
-
     return (
-      <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "white" }}>
+      <main style={{ position: "fixed", inset: 0, background: "white" }}>
         <style>{`
           /* ── Dots ── */
           @keyframes dotBounce {
@@ -60,25 +55,22 @@ export default function LoginPage() {
           .d2  { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
 
           /*
-           * Phase 1 (1200→2000ms) — middle dot grows to fill 100% of viewport.
-           * Origin: center of middle dot (left:50%, bottom:20%).
-           * Max distance from that point to any corner on mobile ~780px.
-           * scale(150) on 6px radius → 900px, covers any screen. Stays put.
-           * Easing: cubic-bezier(0.4,0,1,1) aggressive ease-in.
+           * Onda nasce no dot do meio: left 50%, top 80% (= bottom 20%).
+           * clip-path revela o div full-screen roxo de um ponto até 150vmax,
+           * garantindo cobertura total independente do tamanho da tela.
+           * fill-mode:both mantém congelado no estado final (tela 100% roxa).
            */
           @keyframes splashExpand {
-            from { transform: scale(1);   }
-            to   { transform: scale(150); }
+            from { clip-path: circle(6px   at 50% 80%); }
+            to   { clip-path: circle(150vmax at 50% 80%); }
           }
 
           /*
-           * Phase 3 (2200→3000ms) — circle at bottom-left collapses.
-           * scale(200) on 6px radius → 1200px, covers screen from corner.
-           * Easing: cubic-bezier(0,0,0.6,1) smooth ease-out.
+           * Contração nasce do canto inferior-esquerdo e encolhe até 0.
            */
           @keyframes splashContract {
-            from { transform: scale(200); }
-            to   { transform: scale(0);   }
+            from { clip-path: circle(150vmax at 0% 100%); }
+            to   { clip-path: circle(0px   at 0% 100%); }
           }
 
           @keyframes logoFadeIn  { from { opacity: 0; } to { opacity: 1; } }
@@ -89,12 +81,7 @@ export default function LoginPage() {
           }
         `}</style>
 
-        {/*
-         * Three loading dots, centered-X at bottom 20%.
-         * Fade out instantly when expand begins.
-         * Left/middle/right dots use primary-light, primary-pure, primary-dark.
-         * The MIDDLE dot (primary-pure) is the one that "becomes" the expand circle.
-         */}
+        {/* Três dots pulsando — somem quando a onda começa */}
         <div
           style={{
             position: "fixed",
@@ -104,7 +91,7 @@ export default function LoginPage() {
             display: "flex",
             gap: "10px",
             zIndex: 5,
-            opacity: dotsOpacity,
+            opacity: phase === "dots" ? 1 : 0,
             transition: "opacity 0.15s ease",
           }}
         >
@@ -114,23 +101,16 @@ export default function LoginPage() {
         </div>
 
         {/*
-         * Ghost dot — sits exactly on top of the middle dot (primary-pure, 12px,
-         * center at left:50%, bottom:20%).
-         * Invisible during "dots" phase (behind the real dot).
-         * When "expand" starts: real dots fade out, this one animates.
-         * fill-mode:both keeps it frozen at scale(200)+translateX at end.
+         * Onda de expansão: div cobre a tela toda, clip-path circular
+         * cresce a partir do centro do dot do meio (50% / 80%).
+         * Permanece congelado em tela cheia durante a fase "full".
          */}
         {(phase === "expand" || phase === "full") && (
           <div
             style={{
               position: "fixed",
-              left: "calc(50% - 6px)",
-              bottom: "20%",
-              width: "12px",
-              height: "12px",
-              borderRadius: "50%",
+              inset: 0,
               background: "var(--color-primary-pure)",
-              transformOrigin: "center center",
               animation: "splashExpand 800ms cubic-bezier(0.4, 0, 1, 1) both",
               zIndex: 10,
             }}
@@ -138,28 +118,22 @@ export default function LoginPage() {
         )}
 
         {/*
-         * Contract circle — 12px at bottom-left corner.
-         * Starts at scale(200) (same max as expand), collapses to 0.
-         * fill-mode:both ensures first frame is scale(200), no flash.
+         * Onda de contração: mesma técnica, clip-path encolhe
+         * a partir do canto inferior-esquerdo até sumir.
          */}
         {phase === "contract" && (
           <div
             style={{
               position: "fixed",
-              left: "0",
-              bottom: "0",
-              width: "12px",
-              height: "12px",
-              borderRadius: "50%",
+              inset: 0,
               background: "var(--color-primary-pure)",
-              transformOrigin: "bottom left",
               animation: "splashContract 800ms cubic-bezier(0, 0, 0.6, 1) both",
               zIndex: 10,
             }}
           />
         )}
 
-        {/* Logo — appears only after screen is fully purple (phase "full") */}
+        {/* Logo aparece só quando a tela está 100% roxa (fase "full") */}
         {phase === "full" && (
           <div
             style={{
@@ -182,7 +156,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Logo fade-out as circle contracts */}
+        {/* Logo some enquanto a onda contrai */}
         {phase === "contract" && (
           <div
             style={{
@@ -222,7 +196,6 @@ export default function LoginPage() {
       `}</style>
 
       <div className="w-full max-w-sm space-y-8">
-        {/* Logo */}
         <div className="text-center space-y-3">
           <div className="mx-auto flex items-center justify-center">
             <span className="font-display font-bold text-6xl" style={{ color: "#321CB2" }}>Help!</span>
@@ -237,7 +210,6 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Google */}
         <button
           onClick={handleGoogle}
           disabled={loading}
@@ -258,7 +230,6 @@ export default function LoginPage() {
           <div className="flex-1 h-px bg-neutral-pure" />
         </div>
 
-        {/* Email */}
         <form onSubmit={handleEmail} className="space-y-4">
           <input
             type="email"
