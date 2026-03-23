@@ -5,20 +5,23 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ds";
 
-type Phase = "expand" | "full" | "contract" | "done" | "login";
+type Phase = "dots" | "expand" | "full" | "contract" | "done" | "login";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [phase, setPhase] = useState<Phase>("expand");
+  const [phase, setPhase] = useState<Phase>("dots");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase("full"),      800);
-    const t2 = setTimeout(() => setPhase("contract"), 1000);
-    const t3 = setTimeout(() => setPhase("done"),     1800);
-    const t4 = setTimeout(() => setPhase("login"),    2000);
-    return () => [t1, t2, t3, t4].forEach(clearTimeout);
+    // dots bounce for 1.2s, then the middle dot expands (800ms),
+    // full-screen pause 200ms, contract 800ms, fade 200ms → login
+    const t1 = setTimeout(() => setPhase("expand"),   1200);
+    const t2 = setTimeout(() => setPhase("full"),     2000);
+    const t3 = setTimeout(() => setPhase("contract"), 2200);
+    const t4 = setTimeout(() => setPhase("done"),     3000);
+    const t5 = setTimeout(() => setPhase("login"),    3200);
+    return () => [t1, t2, t3, t4, t5].forEach(clearTimeout);
   }, []);
 
   async function handleGoogle() {
@@ -40,25 +43,39 @@ export default function LoginPage() {
 
   /* ─────────── splash ─────────── */
   if (phase !== "login") {
+    // Dots disappear the moment expansion begins
+    const dotsOpacity = phase === "dots" ? 1 : 0;
+
     return (
       <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "white" }}>
         <style>{`
+          /* ── Dots ── */
+          @keyframes dotBounce {
+            0%, 55%, 100% { transform: translateY(0);     }
+            30%            { transform: translateY(-12px); }
+          }
+          .dot { width: 12px; height: 12px; border-radius: 50%; }
+          .d0  { animation: dotBounce 0.9s ease-in-out 0s    infinite; }
+          .d1  { animation: dotBounce 0.9s ease-in-out 0.16s infinite; }
+          .d2  { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
+
           /*
-           * Phase 1 (0→800ms): circle starts 20px, centered-X at 80%Y.
-           * Expands via scale to cover 250% viewport + slides right 60vw.
-           * Easing: cubic-bezier(0.4,0,1,1) — aggressive ease-in.
+           * Phase 1 (1200→2000ms) — middle dot grows + slides right.
+           * Origin: center of the middle dot (left:50%, bottom:20%).
+           * scale(200) on a 12px element → ~2400px radius, covers any mobile viewport.
+           * Easing: cubic-bezier(0.4,0,1,1) aggressive ease-in.
            */
           @keyframes splashExpand {
             from { transform: translateX(0)    scale(1);   }
-            to   { transform: translateX(60vw) scale(120); }
+            to   { transform: translateX(60vw) scale(200); }
           }
 
           /*
-           * Phase 3 (1000→1800ms): circle at bottom-left, collapses to 0.
-           * Easing: cubic-bezier(0,0,0.6,1) — smooth ease-out.
+           * Phase 3 (2200→3000ms) — circle at bottom-left collapses.
+           * Easing: cubic-bezier(0,0,0.6,1) smooth ease-out.
            */
           @keyframes splashContract {
-            from { transform: scale(120); }
+            from { transform: scale(200); }
             to   { transform: scale(0);   }
           }
 
@@ -71,32 +88,57 @@ export default function LoginPage() {
         `}</style>
 
         {/*
-         * Phases 1+2 — Expand circle
-         * 20px dot, centered-X, at 80%Y.
-         * Animates once (800ms); fill-mode:both freezes it at the `to` state
-         * during Phase 2 (full-screen pause, 800→1000ms).
+         * Three loading dots, centered-X at bottom 20%.
+         * Fade out instantly when expand begins.
+         * Left/middle/right dots use primary-light, primary-pure, primary-dark.
+         * The MIDDLE dot (primary-pure) is the one that "becomes" the expand circle.
+         */}
+        <div
+          style={{
+            position: "fixed",
+            bottom: "20%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            gap: "10px",
+            zIndex: 5,
+            opacity: dotsOpacity,
+            transition: "opacity 0.15s ease",
+          }}
+        >
+          <div className="dot d0" style={{ background: "var(--color-primary-light)" }} />
+          <div className="dot d1" style={{ background: "var(--color-primary-pure)"  }} />
+          <div className="dot d2" style={{ background: "var(--color-primary-dark)"  }} />
+        </div>
+
+        {/*
+         * Ghost dot — sits exactly on top of the middle dot (primary-pure, 12px,
+         * center at left:50%, bottom:20%).
+         * Invisible during "dots" phase (behind the real dot).
+         * When "expand" starts: real dots fade out, this one animates.
+         * fill-mode:both keeps it frozen at scale(200)+translateX at end.
          */}
         {(phase === "expand" || phase === "full") && (
           <div
             style={{
               position: "fixed",
-              left: "calc(50% - 10px)",
-              top: "calc(80% - 10px)",
-              width: "20px",
-              height: "20px",
+              left: "calc(50% - 6px)",
+              bottom: "20%",
+              width: "12px",
+              height: "12px",
               borderRadius: "50%",
               background: "var(--color-primary-pure)",
               transformOrigin: "center center",
               animation: "splashExpand 800ms cubic-bezier(0.4, 0, 1, 1) both",
+              zIndex: 10,
             }}
           />
         )}
 
         {/*
-         * Phase 3 — Contract circle
-         * 20px dot at bottom-left corner, transform-origin: bottom left.
-         * fill-mode:both keeps it at scale(120) on first frame before
-         * the animation starts, avoiding any flash of the default scale(1).
+         * Contract circle — 12px at bottom-left corner.
+         * Starts at scale(200) (same max as expand), collapses to 0.
+         * fill-mode:both ensures first frame is scale(200), no flash.
          */}
         {phase === "contract" && (
           <div
@@ -104,17 +146,18 @@ export default function LoginPage() {
               position: "fixed",
               left: "0",
               bottom: "0",
-              width: "20px",
-              height: "20px",
+              width: "12px",
+              height: "12px",
               borderRadius: "50%",
               background: "var(--color-primary-pure)",
               transformOrigin: "bottom left",
               animation: "splashContract 800ms cubic-bezier(0, 0, 0.6, 1) both",
+              zIndex: 10,
             }}
           />
         )}
 
-        {/* Phase 2 — Logo fades in (200ms pause window) */}
+        {/* Logo — appears only after screen is fully purple (phase "full") */}
         {phase === "full" && (
           <div
             style={{
@@ -137,7 +180,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Phase 3 — Logo fades out as circle contracts */}
+        {/* Logo fade-out as circle contracts */}
         {phase === "contract" && (
           <div
             style={{
