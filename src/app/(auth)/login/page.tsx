@@ -37,7 +37,7 @@ export default function LoginPage() {
 
   /* ─────────── splash ─────────── */
   if (phase !== "login") {
-    const expanding  = phase === "expand" || phase === "logo" || phase === "dissolving";
+    const dotsHidden  = phase === "expand" || phase === "logo" || phase === "dissolving";
     const logoVisible = phase === "logo" || phase === "dissolving";
 
     return (
@@ -51,6 +51,15 @@ export default function LoginPage() {
           .d0 { animation: dotBounce 0.9s ease-in-out 0s    infinite; }
           .d1 { animation: dotBounce 0.9s ease-in-out 0.16s infinite; }
           .d2 { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
+
+          @keyframes expandFromRight {
+            from { transform: translate(55vw, 35vh) scale(1); opacity: 0; }
+            to   { transform: translate(0, 0) scale(250);     opacity: 1; }
+          }
+          @keyframes shrinkToLeft {
+            from { transform: translate(0, 0) scale(250);      opacity: 1; }
+            to   { transform: translate(-65vw, 35vh) scale(1); opacity: 0; }
+          }
 
           @keyframes logoDissolve {
             from { opacity: 0; }
@@ -68,22 +77,29 @@ export default function LoginPage() {
           }
         `}</style>
 
-        {/* ghost dot — same position as center dot, scales up to fill screen */}
+        {/* ghost dot — enters from bottom-right, exits to bottom-left (counter-clockwise arc) */}
         <div
           ref={centerDotRef}
           style={{
             position: "fixed",
-            bottom: "8%",
-            left: "calc(50% - 6px)",
+            top: "50%",
+            left: "50%",
+            marginTop: "-6px",
+            marginLeft: "-6px",
             width: "12px",
             height: "12px",
             borderRadius: "50%",
             background: "var(--color-primary-pure)",
             transformOrigin: "center center",
-            transform: expanding ? "scale(250)" : "scale(1)",
-            opacity: (phase === "dots" || phase === "dissolving") ? 0 : 1,
-            transition: "transform 0.65s cubic-bezier(0, 0, 0.2, 1), opacity 0.8s ease",
             zIndex: 10,
+            opacity: phase === "dots" ? 0 : 1,
+            transform: phase === "logo"
+              ? "translate(0, 0) scale(250)"
+              : "translate(55vw, 35vh) scale(1)",
+            animation:
+              phase === "expand"    ? "expandFromRight 0.65s cubic-bezier(0, 0, 0.2, 1) forwards" :
+              phase === "dissolving" ? "shrinkToLeft 0.8s ease forwards" :
+              "none",
           }}
         />
 
@@ -109,7 +125,7 @@ export default function LoginPage() {
             display: "flex",
             gap: "10px",
             zIndex: 5,
-            opacity: expanding ? 0 : 1,
+            opacity: dotsHidden ? 0 : 1,
             transition: "opacity 0.2s ease",
           }}
         >
