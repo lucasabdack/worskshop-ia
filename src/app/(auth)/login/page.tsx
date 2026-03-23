@@ -67,7 +67,7 @@ export default function LoginPage() {
           }
         `}</style>
 
-        {/* expanding circle overlay */}
+        {/* expanding circle overlay — starts at 0 radius so it's invisible */}
         <div
           style={{
             position: "fixed",
@@ -75,10 +75,8 @@ export default function LoginPage() {
             background: "var(--color-primary-pure)",
             clipPath: expanding
               ? "circle(160% at 50% 72%)"
-              : "circle(12px at 50% 72%)",
-            transition: expanding
-              ? "clip-path 0.72s cubic-bezier(0.4, 0, 0.55, 1)"
-              : "none",
+              : "circle(0px at 50% 72%)",
+            transition: "clip-path 0.75s cubic-bezier(0.22, 1, 0.36, 1)",
             zIndex: 10,
             display: "flex",
             alignItems: "center",
