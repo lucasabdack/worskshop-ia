@@ -52,13 +52,16 @@ export default function LoginPage() {
           .d1 { animation: dotBounce 0.9s ease-in-out 0.16s infinite; }
           .d2 { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
 
-          @keyframes expandDot {
-            from { transform: translateX(0)     scale(1);   }
-            to   { transform: translateX(30vw)  scale(250); }
+          @keyframes expandArc {
+            0%   { transform: translate(0vw,    0vh)   scale(1);   }
+            25%  { transform: translate(40vw,  -15vh)  scale(55);  }
+            55%  { transform: translate(5vw,   -80vh)  scale(160); }
+            80%  { transform: translate(-35vw, -65vh)  scale(220); }
+            100% { transform: translate(-42vw, -50vh)  scale(250); }
           }
           @keyframes shrinkToLeft {
-            from { transform: translateX(30vw)  scale(250); }
-            to   { transform: translateX(-60vw) scale(1);   }
+            from { transform: translate(-42vw, -50vh)  scale(250); }
+            to   { transform: translate(-80vw, -50vh)  scale(1);   }
           }
 
           @keyframes logoDissolve {
@@ -91,9 +94,9 @@ export default function LoginPage() {
             transformOrigin: "center center",
             zIndex: 10,
             opacity: phase === "dots" ? 0 : 1,
-            transform: phase === "logo" ? "translateX(30vw) scale(250)" : "scale(1)",
+            transform: phase === "logo" ? "translate(-42vw, -50vh) scale(250)" : "scale(1)",
             animation:
-              phase === "expand"     ? "expandDot 0.65s cubic-bezier(0, 0, 0.2, 1) forwards" :
+              phase === "expand"     ? "expandArc 2.4s ease-in-out forwards" :
               phase === "dissolving" ? "shrinkToLeft 0.8s ease forwards" :
               "none",
           }}
