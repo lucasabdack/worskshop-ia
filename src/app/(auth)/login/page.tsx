@@ -16,9 +16,11 @@ export default function LoginPage() {
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase("expand"),     1700);
-    const t2 = setTimeout(() => setPhase("logo"),       3300);  // 1700 + 1500ms arc + 100ms buffer
-    const t3 = setTimeout(() => setPhase("dissolving"), 4300);  // logo visível por 1000ms
-    const t4 = setTimeout(() => setPhase("login"),      6550);  // 4300 + 2000ms exit + 250ms buffer
+    // t2 dispara em ~85% do arco (1700 + 1500*0.85 ≈ 2975ms):
+    // nesse ponto a bola já cobre 100% da tela, então o snap para o estado final é invisível
+    const t2 = setTimeout(() => setPhase("logo"),       3000);
+    const t3 = setTimeout(() => setPhase("dissolving"), 4000);  // logo visível por 1000ms
+    const t4 = setTimeout(() => setPhase("login"),      6250);  // 4000 + 2000ms exit + 250ms
     return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, []);
 
@@ -52,26 +54,26 @@ export default function LoginPage() {
           .d1 { animation: dotBounce 0.9s ease-in-out 0.16s infinite; }
           .d2 { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
 
-          /* primeira metade do círculo: dot → direita → topo */
-          /* 6 stops aproximam um semicírculo (CSS interpola linear entre pontos) */
+          /* scale segue smoothstep(t) = t²(3-2t) entre 1 e 250 para crescimento sem saltos.
+             translate aproxima semicírculo em 6 segmentos (interpolação linear entre pontos próximos).
+             timing: linear — evita mini-pausas de ease por segmento que causam "travadas". */
           @keyframes expandHalfArc {
             0%   { transform: translate(0,      0)    scale(1);   }
-            15%  { transform: translate(20vw,  -7vh)  scale(28);  }
-            30%  { transform: translate(36vw, -22vh)  scale(80);  }
-            50%  { transform: translate(42vw, -38vh)  scale(130); }
-            70%  { transform: translate(34vw, -56vh)  scale(190); }
-            85%  { transform: translate(18vw, -70vh)  scale(230); }
+            15%  { transform: translate(20vw,  -7vh)  scale(16);  }
+            30%  { transform: translate(36vw, -22vh)  scale(55);  }
+            50%  { transform: translate(42vw, -38vh)  scale(126); }
+            70%  { transform: translate(34vw, -56vh)  scale(196); }
+            85%  { transform: translate(18vw, -70vh)  scale(235); }
             100% { transform: translate(0,    -78vh)  scale(250); }
           }
 
-          /* segunda metade + saída: topo → esquerda → dot → abaixo da tela */
           @keyframes exitArc {
             0%   { transform: translate(0,     -78vh) scale(250); }
-            15%  { transform: translate(-18vw, -70vh) scale(230); }
-            30%  { transform: translate(-34vw, -56vh) scale(190); }
-            50%  { transform: translate(-42vw, -38vh) scale(130); }
-            70%  { transform: translate(-36vw, -22vh) scale(80);  }
-            85%  { transform: translate(-20vw,  -7vh) scale(28);  }
+            15%  { transform: translate(-18vw, -70vh) scale(235); }
+            30%  { transform: translate(-34vw, -56vh) scale(196); }
+            50%  { transform: translate(-42vw, -38vh) scale(126); }
+            70%  { transform: translate(-36vw, -22vh) scale(55);  }
+            85%  { transform: translate(-20vw,  -7vh) scale(16);  }
             100% { transform: translate(0,      18vh) scale(1);   }
           }
 
@@ -98,8 +100,8 @@ export default function LoginPage() {
             transform: phase === "logo" ? "translate(0, -78vh) scale(250)" : "scale(1)",
             willChange: "transform",
             animation:
-              phase === "expand"     ? "expandHalfArc 1.5s cubic-bezier(0.37, 0, 0.63, 1) forwards" :
-              phase === "dissolving" ? "exitArc 2s cubic-bezier(0.37, 0, 0.63, 1) forwards" :
+              phase === "expand"     ? "expandHalfArc 1.5s linear forwards" :
+              phase === "dissolving" ? "exitArc 2s linear forwards" :
               "none",
           }}
         />
