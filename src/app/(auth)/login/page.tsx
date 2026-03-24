@@ -53,17 +53,25 @@ export default function LoginPage() {
           .d2 { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
 
           /* primeira metade do círculo: dot → direita → topo */
+          /* 6 stops aproximam um semicírculo (CSS interpola linear entre pontos) */
           @keyframes expandHalfArc {
             0%   { transform: translate(0,      0)    scale(1);   }
-            50%  { transform: translate(42vw,  -38vh) scale(125); }
-            100% { transform: translate(0,     -78vh) scale(250); }
+            15%  { transform: translate(20vw,  -7vh)  scale(28);  }
+            30%  { transform: translate(36vw, -22vh)  scale(80);  }
+            50%  { transform: translate(42vw, -38vh)  scale(130); }
+            70%  { transform: translate(34vw, -56vh)  scale(190); }
+            85%  { transform: translate(18vw, -70vh)  scale(230); }
+            100% { transform: translate(0,    -78vh)  scale(250); }
           }
 
           /* segunda metade + saída: topo → esquerda → dot → abaixo da tela */
           @keyframes exitArc {
             0%   { transform: translate(0,     -78vh) scale(250); }
-            40%  { transform: translate(-42vw, -38vh) scale(140); }
-            75%  { transform: translate(0,       0)   scale(25);  }
+            15%  { transform: translate(-18vw, -70vh) scale(230); }
+            30%  { transform: translate(-34vw, -56vh) scale(190); }
+            50%  { transform: translate(-42vw, -38vh) scale(130); }
+            70%  { transform: translate(-36vw, -22vh) scale(80);  }
+            85%  { transform: translate(-20vw,  -7vh) scale(28);  }
             100% { transform: translate(0,      18vh) scale(1);   }
           }
 
@@ -88,9 +96,10 @@ export default function LoginPage() {
             zIndex: 10,
             opacity: phase === "dots" ? 0 : 1,
             transform: phase === "logo" ? "translate(0, -78vh) scale(250)" : "scale(1)",
+            willChange: "transform",
             animation:
-              phase === "expand"     ? "expandHalfArc 1.5s ease-in-out forwards" :
-              phase === "dissolving" ? "exitArc 2s ease-in-out forwards" :
+              phase === "expand"     ? "expandHalfArc 1.5s cubic-bezier(0.37, 0, 0.63, 1) forwards" :
+              phase === "dissolving" ? "exitArc 2s cubic-bezier(0.37, 0, 0.63, 1) forwards" :
               "none",
           }}
         />
