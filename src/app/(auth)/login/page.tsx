@@ -59,9 +59,12 @@ export default function LoginPage() {
             80%  { transform: translate(-35vw, -65vh)  scale(220); }
             100% { transform: translate(-42vw, -50vh)  scale(250); }
           }
-          @keyframes shrinkToLeft {
-            from { transform: translate(-42vw, -50vh)  scale(250); }
-            to   { transform: translate(-80vw,   0vh)  scale(1);   }
+          @keyframes shrinkArc {
+            0%   { transform: translate(-42vw, -50vh) scale(250); }
+            30%  { transform: translate(-5vw,  -78vh) scale(160); }
+            60%  { transform: translate(32vw,  -30vh) scale(70);  }
+            85%  { transform: translate(48vw,  -8vh)  scale(20);  }
+            100% { transform: translate(55vw,   0vh)  scale(1);   }
           }
 
           @keyframes logoDissolve {
@@ -97,7 +100,7 @@ export default function LoginPage() {
             transform: phase === "logo" ? "translate(-42vw, -50vh) scale(250)" : "scale(1)",
             animation:
               phase === "expand"     ? "expandArc 2.4s ease-in-out forwards" :
-              phase === "dissolving" ? "shrinkToLeft 0.8s ease forwards" :
+              phase === "dissolving" ? "shrinkArc 1.4s ease-in-out forwards" :
               "none",
           }}
         />
