@@ -16,9 +16,9 @@ export default function LoginPage() {
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase("expand"),     1700);
-    const t2 = setTimeout(() => setPhase("logo"),       3300);  // 1700 + 1500ms half-arc + 100ms buffer
-    const t3 = setTimeout(() => setPhase("dissolving"), 4650);  // logo: 50ms appear + 1000ms stay + 300ms buffer
-    const t4 = setTimeout(() => setPhase("login"),      6900);  // 4650 + 2000ms exit + 250ms buffer
+    const t2 = setTimeout(() => setPhase("logo"),       3800);  // 1700 + 2000ms half-arc + 100ms buffer
+    const t3 = setTimeout(() => setPhase("dissolving"), 5150);  // logo: 50ms appear + 1000ms stay + 300ms buffer
+    const t4 = setTimeout(() => setPhase("login"),      7400);  // 5150 + 2000ms exit + 250ms buffer
     return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, []);
 
@@ -52,11 +52,12 @@ export default function LoginPage() {
           .d1 { animation: dotBounce 0.9s ease-in-out 0.16s infinite; }
           .d2 { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
 
-          /* primeira metade do círculo: dot → direita → topo */
+          /* entra de fora (baixo-esquerda) → dot → direita → topo */
           @keyframes expandHalfArc {
-            0%   { transform: translate(0,     0)    scale(1);   }
-            50%  { transform: translate(42vw, -38vh) scale(125); }
-            100% { transform: translate(0,    -78vh) scale(250); }
+            0%   { transform: translate(-52vw,  12vh) scale(1);   }
+            18%  { transform: translate(0,       0)   scale(1);   }
+            58%  { transform: translate(42vw,  -38vh) scale(125); }
+            100% { transform: translate(0,     -78vh) scale(250); }
           }
 
           /* segunda metade + saída: topo → esquerda → dot → abaixo da tela */
@@ -89,7 +90,7 @@ export default function LoginPage() {
             opacity: phase === "dots" ? 0 : 1,
             transform: phase === "logo" ? "translate(0, -78vh) scale(250)" : "scale(1)",
             animation:
-              phase === "expand"     ? "expandHalfArc 1.5s ease-in-out forwards" :
+              phase === "expand"     ? "expandHalfArc 2s ease-in-out forwards" :
               phase === "dissolving" ? "exitArc 2s ease-in-out forwards" :
               "none",
           }}
