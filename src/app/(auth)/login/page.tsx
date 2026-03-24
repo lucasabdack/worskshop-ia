@@ -16,9 +16,9 @@ export default function LoginPage() {
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase("expand"),     1700);
-    const t2 = setTimeout(() => setPhase("logo"),       4200);  // 1700 + 2400ms expand + 100ms buffer
-    const t3 = setTimeout(() => setPhase("dissolving"), 5900);  // logo visible for ~1700ms
-    const t4 = setTimeout(() => setPhase("login"),      7300);  // 5900 + 1200ms shrink + buffer
+    const t2 = setTimeout(() => setPhase("logo"),       3300);  // 1700 + 1500ms half-arc + 100ms buffer
+    const t3 = setTimeout(() => setPhase("dissolving"), 4650);  // logo: 50ms appear + 1000ms stay + 300ms buffer
+    const t4 = setTimeout(() => setPhase("login"),      6900);  // 4650 + 2000ms exit + 250ms buffer
     return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, []);
 
@@ -52,37 +52,28 @@ export default function LoginPage() {
           .d1 { animation: dotBounce 0.9s ease-in-out 0.16s infinite; }
           .d2 { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
 
-          @keyframes expandArc {
-            0%   { transform: translate(0,      0)    scale(1);   }
-            25%  { transform: translate(42vw,  -38vh) scale(65);  }
-            50%  { transform: translate(0,     -78vh) scale(135); }
-            75%  { transform: translate(-42vw, -38vh) scale(205); }
-            100% { transform: translate(0,      0)    scale(250); }
-          }
-          @keyframes shrinkArc {
-            0%   { transform: translate(0,      0)    scale(250); }
-            30%  { transform: translate(22vw,  -18vh) scale(180); }
-            65%  { transform: translate(48vw,   -5vh) scale(70);  }
-            100% { transform: translate(58vw,    5vh) scale(1);   }
+          /* primeira metade do círculo: dot → direita → topo */
+          @keyframes expandHalfArc {
+            0%   { transform: translate(0,     0)    scale(1);   }
+            50%  { transform: translate(42vw, -38vh) scale(125); }
+            100% { transform: translate(0,    -78vh) scale(250); }
           }
 
-          @keyframes logoDissolve {
-            from { opacity: 0; }
-            to   { opacity: 1; }
+          /* segunda metade + saída: topo → esquerda → dot → abaixo da tela */
+          @keyframes exitArc {
+            0%   { transform: translate(0,     -78vh) scale(250); }
+            40%  { transform: translate(-42vw, -38vh) scale(140); }
+            75%  { transform: translate(0,       0)   scale(25);  }
+            100% { transform: translate(0,      18vh) scale(1);   }
           }
-          .logo-in {
-            animation: logoDissolve 0.55s ease both;
-          }
-          @keyframes fadeOut {
-            from { opacity: 1; }
-            to   { opacity: 0; }
-          }
-          .logo-out {
-            animation: fadeOut 0.5s ease both;
-          }
+
+          @keyframes logoFadeIn  { from { opacity: 0; } to { opacity: 1; } }
+          @keyframes logoFadeOut { from { opacity: 1; } to { opacity: 0; } }
+          .logo-in  { animation: logoFadeIn  0.05s ease both; }
+          .logo-out { animation: logoFadeOut 0.3s  ease both; }
         `}</style>
 
-        {/* ghost dot — same position as d1, scales up to fill screen, exits left */}
+        {/* bola que cresce e faz o arco circular */}
         <div
           ref={centerDotRef}
           style={{
@@ -96,15 +87,15 @@ export default function LoginPage() {
             transformOrigin: "center center",
             zIndex: 10,
             opacity: phase === "dots" ? 0 : 1,
-            transform: phase === "logo" ? "scale(250)" : "scale(1)",
+            transform: phase === "logo" ? "translate(0, -78vh) scale(250)" : "scale(1)",
             animation:
-              phase === "expand"     ? "expandArc 2.4s ease-in-out forwards" :
-              phase === "dissolving" ? "shrinkArc 1.2s ease-in-out forwards" :
+              phase === "expand"     ? "expandHalfArc 1.5s ease-in-out forwards" :
+              phase === "dissolving" ? "exitArc 2s ease-in-out forwards" :
               "none",
           }}
         />
 
-        {/* logo — separate overlay, not inside the scaling element */}
+        {/* logo — overlay separado, não afetado pelo scale */}
         {logoVisible && (
           <div style={{ position: "fixed", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 11 }}>
             <span
