@@ -18,7 +18,7 @@ export default function LoginPage() {
     const t1 = setTimeout(() => setPhase("expand"),     1700);
     const t2 = setTimeout(() => setPhase("logo"),       4200);  // 1700 + 2400ms expand + 100ms buffer
     const t3 = setTimeout(() => setPhase("dissolving"), 5900);  // logo visible for ~1700ms
-    const t4 = setTimeout(() => setPhase("login"),      6800);  // 800ms dissolve + buffer
+    const t4 = setTimeout(() => setPhase("login"),      7300);  // 5900 + 1200ms shrink + buffer
     return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, []);
 
@@ -53,18 +53,17 @@ export default function LoginPage() {
           .d2 { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
 
           @keyframes expandArc {
-            0%   { transform: translate(0vw,    0vh)   scale(1);   }
-            25%  { transform: translate(40vw,  -15vh)  scale(55);  }
-            55%  { transform: translate(5vw,   -80vh)  scale(160); }
-            80%  { transform: translate(-35vw, -65vh)  scale(220); }
-            100% { transform: translate(-42vw, -50vh)  scale(250); }
+            0%   { transform: translate(0,      0)    scale(1);   }
+            25%  { transform: translate(38vw,  -15vh) scale(65);  }
+            50%  { transform: translate(2vw,   -70vh) scale(140); }
+            75%  { transform: translate(-38vw, -15vh) scale(210); }
+            100% { transform: translate(0,      0)    scale(250); }
           }
           @keyframes shrinkArc {
-            0%   { transform: translate(-42vw, -50vh) scale(250); }
-            30%  { transform: translate(-5vw,  -78vh) scale(160); }
-            60%  { transform: translate(32vw,  -30vh) scale(70);  }
-            85%  { transform: translate(48vw,  -8vh)  scale(20);  }
-            100% { transform: translate(55vw,   0vh)  scale(1);   }
+            0%   { transform: translate(0,      0)    scale(250); }
+            30%  { transform: translate(22vw,  -18vh) scale(180); }
+            65%  { transform: translate(48vw,   -5vh) scale(70);  }
+            100% { transform: translate(58vw,    5vh) scale(1);   }
           }
 
           @keyframes logoDissolve {
@@ -97,10 +96,10 @@ export default function LoginPage() {
             transformOrigin: "center center",
             zIndex: 10,
             opacity: phase === "dots" ? 0 : 1,
-            transform: phase === "logo" ? "translate(-42vw, -50vh) scale(250)" : "scale(1)",
+            transform: phase === "logo" ? "scale(250)" : "scale(1)",
             animation:
               phase === "expand"     ? "expandArc 2.4s ease-in-out forwards" :
-              phase === "dissolving" ? "shrinkArc 1.4s ease-in-out forwards" :
+              phase === "dissolving" ? "shrinkArc 1.2s ease-in-out forwards" :
               "none",
           }}
         />
