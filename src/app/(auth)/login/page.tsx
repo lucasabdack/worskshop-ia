@@ -54,9 +54,9 @@ export default function LoginPage() {
 
           @keyframes expandArc {
             0%   { transform: translate(0,      0)    scale(1);   }
-            25%  { transform: translate(38vw,  -15vh) scale(65);  }
-            50%  { transform: translate(2vw,   -70vh) scale(140); }
-            75%  { transform: translate(-38vw, -15vh) scale(210); }
+            25%  { transform: translate(42vw,  -38vh) scale(65);  }
+            50%  { transform: translate(0,     -78vh) scale(135); }
+            75%  { transform: translate(-42vw, -38vh) scale(205); }
             100% { transform: translate(0,      0)    scale(250); }
           }
           @keyframes shrinkArc {
