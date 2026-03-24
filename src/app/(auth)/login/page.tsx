@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ds";
 
-type Phase = "dots" | "expand" | "full" | "contract" | "done" | "login";
+type Phase = "dots" | "expand" | "full" | "contract" | "login";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,12 +14,14 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // letras: H(0ms) e(200) l(400) p(600) !(900) — cada uma ~700ms
+    // última letra assenta em: 2000 + 900 + 700 = 3600ms
+    // segura 500ms → contrai em 4100ms
     const t1 = setTimeout(() => setPhase("expand"),   1200);
     const t2 = setTimeout(() => setPhase("full"),     2000);
-    const t3 = setTimeout(() => setPhase("contract"), 2200);
-    const t4 = setTimeout(() => setPhase("done"),     3000);
-    const t5 = setTimeout(() => setPhase("login"),    3200);
-    return () => [t1, t2, t3, t4, t5].forEach(clearTimeout);
+    const t3 = setTimeout(() => setPhase("contract"), 4100);
+    const t4 = setTimeout(() => setPhase("login"),    5100); // 4100 + 800ms contração + 200ms buffer
+    return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, []);
 
   async function handleGoogle() {
@@ -41,6 +43,8 @@ export default function LoginPage() {
 
   /* ─────────── splash ─────────── */
   if (phase !== "login") {
+    const isContracting = phase === "contract";
+
     return (
       <main style={{ position: "fixed", inset: 0, background: "white" }}>
         <style>{`
@@ -54,34 +58,80 @@ export default function LoginPage() {
           .d1  { animation: dotBounce 0.9s ease-in-out 0.16s infinite; }
           .d2  { animation: dotBounce 0.9s ease-in-out 0.32s infinite; }
 
-          /*
-           * Onda nasce no dot do meio: left 50%, top 80% (= bottom 20%).
-           * clip-path revela o div full-screen roxo de um ponto até 150vmax,
-           * garantindo cobertura total independente do tamanho da tela.
-           * fill-mode:both mantém congelado no estado final (tela 100% roxa).
-           */
+          /* ── Background splash ── */
           @keyframes splashExpand {
-            from { clip-path: circle(6px   at 50% 80%); }
+            from { clip-path: circle(6px     at 50% 80%); }
             to   { clip-path: circle(150vmax at 50% 80%); }
           }
-
-          /*
-           * Contração nasce do canto inferior-esquerdo e encolhe até 0.
-           */
           @keyframes splashContract {
             from { clip-path: circle(150vmax at 0% 100%); }
-            to   { clip-path: circle(0px   at 0% 100%); }
+            to   { clip-path: circle(0px     at 0% 100%); }
           }
 
-          @keyframes logoFadeIn  { from { opacity: 0; } to { opacity: 1; } }
-          @keyframes logoFadeOut { from { opacity: 1; } to { opacity: 0; } }
+          /* ── Queda das letras: cada uma vem do topo com zigzag lateral ── */
+          /*    H: entra pela direita, bate à esquerda, assenta            */
+          @keyframes fall-H {
+            0%   { transform: translate(38vw, -110vh); opacity: 0; }
+            12%  { opacity: 1; }
+            38%  { transform: translate(-28vw, -35vh); }
+            58%  { transform: translate(14vw,  0);     }
+            72%  { transform: translate(-5vw,  0);     }
+            84%  { transform: translate(2vw,   0);     }
+            100% { transform: translate(0, 0);         }
+          }
+          /*    e: entra pela esquerda, bate à direita                     */
+          @keyframes fall-e {
+            0%   { transform: translate(-42vw, -110vh); opacity: 0; }
+            12%  { opacity: 1; }
+            38%  { transform: translate(30vw, -30vh); }
+            58%  { transform: translate(-16vw, 0);    }
+            72%  { transform: translate(6vw,   0);    }
+            84%  { transform: translate(-2vw,  0);    }
+            100% { transform: translate(0, 0);        }
+          }
+          /*    l: cai reto com bounce vertical                            */
+          @keyframes fall-l {
+            0%   { transform: translateY(-110vh); opacity: 0; }
+            12%  { opacity: 1; }
+            60%  { transform: translateY(12px); }
+            74%  { transform: translateY(-7px); }
+            86%  { transform: translateY(3px);  }
+            100% { transform: translateY(0);    }
+          }
+          /*    p: entra pela esquerda                                     */
+          @keyframes fall-p {
+            0%   { transform: translate(-36vw, -110vh); opacity: 0; }
+            12%  { opacity: 1; }
+            38%  { transform: translate(26vw, -40vh); }
+            58%  { transform: translate(-13vw, 0);    }
+            72%  { transform: translate(5vw,   0);    }
+            84%  { transform: translate(-2vw,  0);    }
+            100% { transform: translate(0, 0);        }
+          }
+          /*    !: cai do topo com escala e bounce duplo — mais dramático  */
+          @keyframes fall-excl {
+            0%   { transform: translateY(-130vh) scale(2.5); opacity: 0; }
+            12%  { opacity: 1; }
+            52%  { transform: translateY(18px) scale(1.15); }
+            67%  { transform: translateY(-9px) scale(0.94); }
+            79%  { transform: translateY(5px)  scale(1.04); }
+            89%  { transform: translateY(-2px) scale(0.99); }
+            100% { transform: translateY(0)    scale(1);    }
+          }
+
+          /* ── Saída das letras junto com a contração ── */
+          @keyframes logoFadeOut {
+            from { opacity: 1; }
+            to   { opacity: 0; }
+          }
+
           @keyframes loginFadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to   { opacity: 1; transform: none; }
           }
         `}</style>
 
-        {/* Três dots pulsando — somem quando a onda começa */}
+        {/* Três dots pulsando */}
         <div
           style={{
             position: "fixed",
@@ -100,11 +150,7 @@ export default function LoginPage() {
           <div className="dot d2" style={{ background: "var(--color-primary-dark)"  }} />
         </div>
 
-        {/*
-         * Onda de expansão: div cobre a tela toda, clip-path circular
-         * cresce a partir do centro do dot do meio (50% / 80%).
-         * Permanece congelado em tela cheia durante a fase "full".
-         */}
+        {/* Fundo roxo — expande ou contrai via clip-path */}
         {(phase === "expand" || phase === "full") && (
           <div
             style={{
@@ -116,11 +162,6 @@ export default function LoginPage() {
             }}
           />
         )}
-
-        {/*
-         * Onda de contração: mesma técnica, clip-path encolhe
-         * a partir do canto inferior-esquerdo até sumir.
-         */}
         {phase === "contract" && (
           <div
             style={{
@@ -133,49 +174,52 @@ export default function LoginPage() {
           />
         )}
 
-        {/* Logo aparece só quando a tela está 100% roxa (fase "full") */}
-        {phase === "full" && (
+        {/* Letras caindo — aparecem na fase "full", somem na "contract" */}
+        {(phase === "full" || phase === "contract") && (
           <div
             style={{
-              position: "fixed", inset: 0,
-              display: "flex", alignItems: "center", justifyContent: "center",
+              position: "fixed",
+              inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               zIndex: 20,
+              animation: isContracting ? "logoFadeOut 0.5s ease both" : "none",
             }}
           >
-            <span
+            <div
               style={{
+                display: "flex",
                 fontFamily: "var(--font-display)",
                 fontWeight: 700,
                 fontSize: "clamp(56px, 18vw, 96px)",
                 color: "white",
-                animation: "logoFadeIn 0.25s ease both",
+                lineHeight: 1,
               }}
             >
-              Help!
-            </span>
-          </div>
-        )}
-
-        {/* Logo some enquanto a onda contrai */}
-        {phase === "contract" && (
-          <div
-            style={{
-              position: "fixed", inset: 0,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              zIndex: 20,
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 700,
-                fontSize: "clamp(56px, 18vw, 96px)",
-                color: "white",
-                animation: "logoFadeOut 0.4s ease both",
-              }}
-            >
-              Help!
-            </span>
+              {/* Cada letra tem sua própria animação de queda + delay */}
+              {[
+                { char: "H", anim: "fall-H",    delay: "0ms",   dur: "700ms" },
+                { char: "e", anim: "fall-e",    delay: "200ms", dur: "700ms" },
+                { char: "l", anim: "fall-l",    delay: "400ms", dur: "650ms" },
+                { char: "p", anim: "fall-p",    delay: "600ms", dur: "700ms" },
+                { char: "!", anim: "fall-excl", delay: "900ms", dur: "800ms" },
+              ].map(({ char, anim, delay, dur }) => (
+                <span
+                  key={char + anim}
+                  style={{
+                    display: "inline-block",
+                    opacity: isContracting ? undefined : 0, // começa invisível; a keyframe seta opacity:1
+                    animation: isContracting
+                      ? "none"
+                      : `${anim} ${dur} cubic-bezier(0.23, 1, 0.32, 1) ${delay} both`,
+                    willChange: "transform, opacity",
+                  }}
+                >
+                  {char}
+                </span>
+              ))}
+            </div>
           </div>
         )}
       </main>
