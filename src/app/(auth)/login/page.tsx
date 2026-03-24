@@ -16,9 +16,9 @@ export default function LoginPage() {
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase("expand"),     1700);
-    const t2 = setTimeout(() => setPhase("logo"),       3100);
-    const t3 = setTimeout(() => setPhase("dissolving"), 4100);
-    const t4 = setTimeout(() => setPhase("login"),      4900);
+    const t2 = setTimeout(() => setPhase("logo"),       4200);  // 1700 + 2400ms expand + 100ms buffer
+    const t3 = setTimeout(() => setPhase("dissolving"), 5900);  // logo visible for ~1700ms
+    const t4 = setTimeout(() => setPhase("login"),      6800);  // 800ms dissolve + buffer
     return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, []);
 
@@ -61,7 +61,7 @@ export default function LoginPage() {
           }
           @keyframes shrinkToLeft {
             from { transform: translate(-42vw, -50vh)  scale(250); }
-            to   { transform: translate(-80vw, -50vh)  scale(1);   }
+            to   { transform: translate(-80vw,   0vh)  scale(1);   }
           }
 
           @keyframes logoDissolve {
